@@ -44,29 +44,34 @@
 
     <!-- Hero -->
     <header class="bg-dark py-5 text-white">
-      <div class="container px-5">
-        <div class="row align-items-center">
-          <div class="col-lg-6 text-center text-lg-start">
-            <h1 class="display-5 fw-bolder mb-2">Haz crecer tu negocio con clientes leales</h1>
-            <p class="lead mb-4">
-              Lealtix es la plataforma sencilla para atraer, retener y fidelizar clientes con
-              promociones personalizadas.
-            </p>
-            <div class="d-grid gap-3 d-sm-flex">
-              <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#precios">Comienza gratis</a>
-              <a class="btn btn-outline-light btn-lg px-4" href="#contacto">Solicita una demo</a>
-            </div>
-          </div>
-          <div class="col-lg-6 text-center mt-4 mt-lg-0">
-            <img
-              src="assets/img/lealtix_logo_transp.png"
-              style="max-width: 300px"
-              alt="Lealtix Logo"
-            />
-          </div>
+  <div class="container px-5">
+    <div class="row align-items-center">
+      <!-- Texto principal -->
+      <div class="col-lg-6 text-center text-lg-start">
+        <h1 class="display-5 fw-bolder mb-2">
+          Deja de perder clientes: conviértelos en compradores frecuentes
+        </h1>
+        <p class="lead mb-4">
+          Con campañas de promociones fáciles de configurar, Lealtix atrae nuevos clientes,
+          recupera los que se van y aumenta tus ingresos desde el primer día.
+        </p>
+        <div class="d-grid gap-3 d-sm-flex">
+          <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#precios">Quiero aumentar mis ventas</a>
+          <a class="btn btn-outline-light btn-lg px-4" href="#contacto">Ver cómo funciona</a>
         </div>
       </div>
-    </header>
+      <!-- Imagen de apoyo -->
+      <div class="col-lg-6 text-center mt-4 mt-lg-0">
+        <img
+          src="assets/img/lealtix_logo_transp.png"
+          style="max-width: 350px"
+          alt="lealtix logo"
+        />
+      </div>
+    </div>
+  </div>
+</header>
+
 
     <!-- Beneficios -->
     <section class="py-5 border-bottom" id="beneficios">
@@ -197,14 +202,18 @@
           <div class="col-lg-6 col-xl-4">
             <div class="card mb-5 mb-xl-0">
               <div class="card-body p-5">
-                <div class="small text-uppercase fw-bold text-muted">Free</div>
+                <div class="small text-uppercase fw-bold text-muted">Basic</div>
                 <div class="mb-3">
-                  <span class="display-4 fw-bold">$0</span>
+                  <span class="display-4 fw-bold">$299</span>
                   <span class="text-muted">/ mes</span>
                 </div>
                 <ul class="list-unstyled mb-4">
                   <li><i class="bi bi-check text-primary"></i> Registro de clientes</li>
                   <li><i class="bi bi-check text-primary"></i> Campañas básicas</li>
+                  <li><i class="bi bi-check text-primary"></i> Campañas Personalizadas</li>
+                  <li><i class="bi bi-check text-primary"></i> Campañas limitadas</li>
+                  <li><i class="bi bi-check text-primary"></i> Reportes basicos</li>
+                  <li><i class="bi bi-check text-primary"></i> Soporte prioritario</li>
                 </ul>
                 <div class="d-grid">
                   <a class="btn btn-outline-primary" href="#suscripcion">Comienza gratis</a>
@@ -220,14 +229,16 @@
                   <i class="bi bi-star-fill text-warning"></i> Pro
                 </div>
                 <div class="mb-3">
-                  <span class="display-4 fw-bold">$299</span>
+                  <span class="display-4 fw-bold">$499</span>
                   <span class="text-muted">/ mes</span>
                 </div>
                 <ul class="list-unstyled mb-4">
                   <li><i class="bi bi-check text-primary"></i> Todo lo del Fee</li>
                   <li><i class="bi bi-check text-primary"></i> Campañas ilimitadas</li>
                   <li><i class="bi bi-check text-primary"></i> Reportes avanzados</li>
-                  <li><i class="bi bi-check text-primary"></i> Soporte prioritario</li>
+                  <li><i class="bi bi-check text-primary"></i> Marketing en redes sociales</li>
+                  <li><i class="bi bi-check text-primary"></i> CEO</li>
+                  <li><i class="bi bi-check text-primary"></i> Marketing WhatsApp</li>
                 </ul>
                 <div class="d-grid">
                   <a class="btn btn-primary" href="#suscripcion">Suscríbete ahora</a>
@@ -258,7 +269,7 @@
                   placeholder="Tu nombre"
                   required
                 />
-                <label for="nombre">Nombre</label>
+                <label for="nombre">Nombre completo</label>
               </div>
               <!-- Email -->
               <div class="form-floating mb-3">
@@ -270,17 +281,6 @@
                   required
                 />
                 <label for="email">Correo electrónico</label>
-              </div>
-              <!-- Número -->
-              <div class="form-floating mb-3">
-                <input
-                  type="tel"
-                  class="form-control"
-                  id="numero"
-                  placeholder="(55) 1234-5678"
-                  required
-                />
-                <label for="numero">Número de teléfono</label>
               </div>
               <!-- Botón -->
               <div class="d-grid">
