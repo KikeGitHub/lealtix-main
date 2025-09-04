@@ -1,0 +1,74 @@
+<section class="py-5 border-bottom" id="suscripcion">
+  <div class="container px-5 my-5">
+    <div class="text-center mb-5">
+      <h2 class="fw-bolder">Suscríbete a Lealtix</h2>
+      <p class="lead mb-0">
+        Completa el formulario y nos pondremos en contacto contigo
+      </p>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <form [formGroup]="suscripcionForm" (ngSubmit)="onSubmit()">
+          <!-- Nombre -->
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="nombre"
+              placeholder="Tu nombre"
+              formControlName="nombre"
+            />
+            <label for="nombre">Nombre completo</label>
+            <div
+              *ngIf="suscripcionForm.get('nombre')?.invalid && suscripcionForm.get('nombre')?.touched"
+              class="text-danger mt-1"
+            >
+              El nombre es requerido.
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-floating mb-3">
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="tu@email.com"
+              formControlName="email"
+            />
+            <label for="email">Correo electrónico</label>
+            <div
+              *ngIf="suscripcionForm.get('email')?.invalid && suscripcionForm.get('email')?.touched"
+              class="text-danger mt-1"
+            >
+              Ingresa un email válido.
+            </div>
+          </div>
+
+          <!-- Botón -->
+          <div class="d-grid">
+            <button
+              class="btn btn-primary btn-lg"
+              type="submit"
+              [disabled]="suscripcionForm.invalid || loading"
+            >
+              {{ loading ? 'Enviando...' : 'Enviar' }}
+            </button>
+          </div>
+        </form>
+        <!-- Mensaje de resultado -->
+        <div *ngIf="message" class="mt-3">
+          <div
+            class="alert"
+            [ngClass]="{
+              'alert-success': messageType === 'success',
+              'alert-danger': messageType === 'error'
+            }"
+          >
+            {{ message }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
