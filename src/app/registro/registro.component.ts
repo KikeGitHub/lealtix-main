@@ -1,13 +1,17 @@
+
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { PagoComponent } from '../pago/pago.component';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TokenValidationService } from '../services/token-validation.service';
+import { RegisterModel } from '../models/RegisterModel';
+import { RegisterService } from '../services/register.service';
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, PagoComponent],
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
 })
@@ -15,6 +19,8 @@ export class RegistroComponent {
   registroForm: FormGroup;
   submitted = false;
   pagoValido = false;
+  showPagoModal = false;
+  pagoResult: any = null;
   tiposNegocio = [
     { value: 'Cafeteria', label: 'Cafetería' },
     { value: 'Boutique', label: 'Boutique' },
@@ -27,7 +33,8 @@ export class RegistroComponent {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private tokenValidationService: TokenValidationService
+    private tokenValidationService: TokenValidationService,
+    private registerService: RegisterService
   ) {
     this.registroForm = this.fb.group({
       tenant: this.fb.group({
@@ -44,11 +51,6 @@ export class RegistroComponent {
         direccion: [''],
         telefono: [''],
         tipoNegocio: ['', Validators.required]
-      }),
-      pago: this.fb.group({
-        tarjeta: ['', Validators.required],
-        expiracion: ['', Validators.required],
-        cvc: ['', Validators.required]
       })
     });
 
@@ -64,7 +66,6 @@ export class RegistroComponent {
       }
       this.tokenValidationService.validateToken(token).subscribe({
         next: (resp) => {
-          debugger;
           if (resp && resp.ok) {
             this.loading = false;
           } else {
@@ -96,23 +97,56 @@ export class RegistroComponent {
   }
 
 
-  simularPago() {
-    this.pagoValido = true;
-    alert('Pago simulado aprobado');
+  cerrarPagoModal() {
+    this.showPagoModal = false;
+  }
+
+  onPagoResult(result: any) {
+    this.pagoResult = result;
+    if (result.status === 'success') {
+      this.pagoValido = true;
+      this.showPagoModal = false;
+    } else {
+      this.pagoValido = false;
+    }
   }
 
   onSubmit() {
+    debugger
     this.submitted = true;
     if (this.registroForm.invalid) {
+      console.log(this.registroForm.errors, this.registroForm);
       return;
     }
-    if (!this.pagoValido) {
-      alert('Pago simulado no válido');
-      return;
-    }
-    alert('Registro exitoso (simulado)');
-    this.registroForm.reset();
+    const registroData: RegisterModel = {
+      nombre: this.tenant['nombre'].value,
+      paterno: this.tenant['paterno'].value,
+      materno: this.tenant['materno'].value,
+      fechaNacimiento: this.tenant['fechaNacimiento'].value,
+      telefono: this.tenant['telefono'].value,
+      email: this.tenant['email'].value,
+      password: this.tenant['contrasena'].value,
+      nombreNegocio: this.negocio['nombreNegocio'].value,
+      direccion: this.negocio['direccion'].value,
+      telefonoNegocio: this.negocio['telefono'].value,
+      tipoNegocio: this.negocio['tipoNegocio'].value,
+      plan: 'basic',
+      status: 'active',
+      token: this.route.snapshot.queryParams['token']
+    };
+    this.registerService.register(registroData).subscribe({
+      next: (resp) => {
+        debugger;
+        this.showPagoModal = true;
+      },
+      error: (err) => {
+        this.errorMsg = 'Error al registrar usuario. Inténtalo de nuevo más tarde.';
+        this.loading = false;
+      }
+    });
     this.submitted = false;
     this.pagoValido = false;
+    this.pagoResult = null;
   }
+
 }

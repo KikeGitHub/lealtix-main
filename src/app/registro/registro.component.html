@@ -44,51 +44,56 @@
                 <h2 class="fw-bold mb-0">Registro de usuario</h2>
               </div>
               <div class="card-body p-4">
+                <div *ngIf="registroForm.invalid && submitted" class="alert alert-danger">
+                  Hay campos obligatorios sin llenar o con errores. Revisa los datos e inténtalo de nuevo.
+                </div>
                 <form [formGroup]="registroForm" (ngSubmit)="onSubmit()" novalidate>
                   <!-- Datos del tenant -->
                   <div class="card mb-4">
                     <div class="card-header">Datos del tenant</div>
                     <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-4 mb-3">
-                          <label>Nombre *</label>
-                          <input type="text" class="form-control" formControlName="nombre" [ngClass]="{'is-invalid': submitted && tenant['nombre'].errors}">
-                          <div *ngIf="submitted && tenant['nombre'].errors" class="invalid-feedback">Nombre requerido</div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                          <label>Apellido paterno *</label>
-                          <input type="text" class="form-control" formControlName="paterno" [ngClass]="{'is-invalid': submitted && tenant['paterno'].errors}">
-                          <div *ngIf="submitted && tenant['paterno'].errors" class="invalid-feedback">Apellido paterno requerido</div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                          <label>Apellido materno</label>
-                          <input type="text" class="form-control" formControlName="materno">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-4 mb-3">
-                          <label>Fecha de nacimiento *</label>
-                          <input type="date" class="form-control" formControlName="fechaNacimiento" [ngClass]="{'is-invalid': submitted && tenant['fechaNacimiento'].errors}">
-                          <div *ngIf="submitted && tenant['fechaNacimiento'].errors" class="invalid-feedback">Fecha requerida</div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                          <label>Teléfono</label>
-                          <input type="text" class="form-control" formControlName="telefono">
-                        </div>
-                        <div class="col-md-4 mb-3">
-                          <label>Email *</label>
-                          <input type="email" class="form-control" formControlName="email" [ngClass]="{'is-invalid': submitted && tenant['email'].errors}">
-                          <div *ngIf="submitted && tenant['email'].errors" class="invalid-feedback">
-                            <span *ngIf="tenant['email'].errors['required']">Email requerido</span>
-                            <span *ngIf="tenant['email'].errors['email']">Email inválido</span>
+                      <div formGroupName="tenant">
+                        <div class="row">
+                          <div class="col-md-4 mb-3">
+                            <label>Nombre *</label>
+                            <input type="text" class="form-control" formControlName="nombre" [ngClass]="{'is-invalid': submitted && tenant['nombre'].errors}">
+                            <div *ngIf="submitted && tenant['nombre'].errors" class="invalid-feedback">Nombre requerido</div>
+                          </div>
+                          <div class="col-md-4 mb-3">
+                            <label>Apellido paterno *</label>
+                            <input type="text" class="form-control" formControlName="paterno" [ngClass]="{'is-invalid': submitted && tenant['paterno'].errors}">
+                            <div *ngIf="submitted && tenant['paterno'].errors" class="invalid-feedback">Apellido paterno requerido</div>
+                          </div>
+                          <div class="col-md-4 mb-3">
+                            <label>Apellido materno</label>
+                            <input type="text" class="form-control" formControlName="materno">
                           </div>
                         </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-4 mb-3">
-                          <label>Contraseña *</label>
-                          <input type="password" class="form-control" formControlName="contrasena" [ngClass]="{'is-invalid': submitted && tenant['contrasena'].errors}">
-                          <div *ngIf="submitted && tenant['contrasena'].errors" class="invalid-feedback">Contraseña requerida</div>
+                        <div class="row">
+                          <div class="col-md-4 mb-3">
+                            <label>Fecha de nacimiento *</label>
+                            <input type="date" class="form-control" formControlName="fechaNacimiento" [ngClass]="{'is-invalid': submitted && tenant['fechaNacimiento'].errors}">
+                            <div *ngIf="submitted && tenant['fechaNacimiento'].errors" class="invalid-feedback">Fecha requerida</div>
+                          </div>
+                          <div class="col-md-4 mb-3">
+                            <label>Teléfono</label>
+                            <input type="text" class="form-control" formControlName="telefono">
+                          </div>
+                          <div class="col-md-4 mb-3">
+                            <label>Email *</label>
+                            <input type="email" class="form-control" formControlName="email" [ngClass]="{'is-invalid': submitted && tenant['email'].errors}">
+                            <div *ngIf="submitted && tenant['email'].errors" class="invalid-feedback">
+                              <span *ngIf="tenant['email'].errors['required']">Email requerido</span>
+                              <span *ngIf="tenant['email'].errors['email']">Email inválido</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-4 mb-3">
+                            <label>Contraseña *</label>
+                            <input type="password" class="form-control" formControlName="contrasena" [ngClass]="{'is-invalid': submitted && tenant['contrasena'].errors}">
+                            <div *ngIf="submitted && tenant['contrasena'].errors" class="invalid-feedback">Contraseña requerida</div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -98,63 +103,47 @@
                   <div class="card mb-4">
                     <div class="card-header">Datos del negocio</div>
                     <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-6 mb-3">
-                          <label>Nombre del negocio *</label>
-                          <input type="text" class="form-control" formControlName="nombreNegocio" [ngClass]="{'is-invalid': submitted && negocio['nombreNegocio'].errors}">
-                          <div *ngIf="submitted && negocio['nombreNegocio'].errors" class="invalid-feedback">Nombre requerido</div>
+                      <div formGroupName="negocio">
+                        <div class="row">
+                          <div class="col-md-6 mb-3">
+                            <label>Nombre del negocio *</label>
+                            <input type="text" class="form-control" formControlName="nombreNegocio" [ngClass]="{'is-invalid': submitted && negocio['nombreNegocio'].errors}">
+                            <div *ngIf="submitted && negocio['nombreNegocio'].errors" class="invalid-feedback">Nombre requerido</div>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label>Dirección</label>
+                            <input type="text" class="form-control" formControlName="direccion">
+                          </div>
                         </div>
-                        <div class="col-md-6 mb-3">
-                          <label>Dirección</label>
-                          <input type="text" class="form-control" formControlName="direccion">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6 mb-3">
-                          <label>Teléfono</label>
-                          <input type="text" class="form-control" formControlName="telefono">
-                        </div>
-                        <div class="col-md-6 mb-3">
-                          <label>Tipo de negocio *</label>
-                          <select class="form-control" formControlName="tipoNegocio" [ngClass]="{'is-invalid': submitted && negocio['tipoNegocio'].errors}">
-                            <option value="">Seleccione...</option>
-                            <option *ngFor="let tipo of tiposNegocio" [value]="tipo.value">{{tipo.label}}</option>
-                          </select>
-                          <div *ngIf="submitted && negocio['tipoNegocio'].errors" class="invalid-feedback">Tipo requerido</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Datos de pago -->
-                  <div class="card mb-4">
-                    <div class="card-header">Datos de pago (Stripe simulado)</div>
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-4 mb-3">
-                          <label>Tarjeta *</label>
-                          <input type="text" class="form-control" formControlName="tarjeta" [ngClass]="{'is-invalid': submitted && pago['tarjeta'].errors}">
-                          <div *ngIf="submitted && pago['tarjeta'].errors" class="invalid-feedback">Tarjeta requerida</div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                          <label>Expiración *</label>
-                          <input type="text" class="form-control" formControlName="expiracion" placeholder="MM/AA" [ngClass]="{'is-invalid': submitted && pago['expiracion'].errors}">
-                          <div *ngIf="submitted && pago['expiracion'].errors" class="invalid-feedback">Expiración requerida</div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                          <label>CVC *</label>
-                          <input type="text" class="form-control" formControlName="cvc" [ngClass]="{'is-invalid': submitted && pago['cvc'].errors}">
-                          <div *ngIf="submitted && pago['cvc'].errors" class="invalid-feedback">CVC requerido</div>
+                        <div class="row">
+                          <div class="col-md-6 mb-3">
+                            <label>Teléfono</label>
+                            <input type="text" class="form-control" formControlName="telefono">
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label>Tipo de negocio *</label>
+                            <select class="form-control" formControlName="tipoNegocio" [ngClass]="{'is-invalid': submitted && negocio['tipoNegocio'].errors}">
+                              <option value="">Seleccione...</option>
+                              <option *ngFor="let tipo of tiposNegocio" [value]="tipo.value">{{tipo.label}}</option>
+                            </select>
+                            <div *ngIf="submitted && negocio['tipoNegocio'].errors" class="invalid-feedback">Tipo requerido</div>
+                          </div>
                         </div>
                       </div>
-                      <button type="button" class="btn btn-success" (click)="simularPago()" [disabled]="pagoValido">Simular pago aprobado</button>
-                      <span *ngIf="pagoValido" class="text-success ms-2">Pago simulado aprobado</span>
                     </div>
                   </div>
 
                   <div class="text-end">
-                    <button type="submit" class="btn btn-primary btn-lg">Registrar</button>
+                    <button type="submit" class="btn btn-primary btn-lg">Continuar al pago</button>
                   </div>
+
+                  <!-- Modal de pago -->
+                  <app-pago *ngIf="showPagoModal"
+                    [plan]="{nombre: 'Plan Básico'}"
+                    [costo]="199"
+                    (close)="cerrarPagoModal()"
+                    (paymentResult)="onPagoResult($event)">
+                  </app-pago>
                 </form>
               </div>
             </div>

@@ -1,0 +1,23 @@
+<div class="modal">
+  <div class="modal-content card shadow-lg p-4" style="min-width:340px; max-width:400px;">
+    <div class="card-header bg-primary text-white text-center mb-3 rounded">
+      <h2 class="fw-bold mb-0">Resumen de Pago</h2>
+    </div>
+    <div class="card-body p-0">
+      <p><strong>Plan:</strong> {{ plan?.nombre || 'N/A' }}</p>
+      <p><strong>Costo:</strong> ${{ costo }}</p>
+      <form (ngSubmit)="pagar()">
+        <div class="mb-3">
+          <label for="cardNumber" class="form-label">Número de tarjeta</label>
+          <input id="cardNumber" [(ngModel)]="cardNumber" name="cardNumber" maxlength="16" required class="form-control" placeholder="1234 5678 9012 3456" />
+        </div>
+        <div class="d-flex justify-content-between">
+          <button type="submit" [disabled]="loading" class="btn btn-success">Pagar</button>
+          <button type="button" (click)="cerrar()" class="btn btn-outline-secondary">Cancelar</button>
+        </div>
+      </form>
+      <div *ngIf="message" class="alert mt-3" [ngClass]="{'alert-danger': message.includes('rechazado'), 'alert-success': message.includes('exitoso')}">{{ message }}</div>
+      <div class="seguridad small mt-3 text-success bg-light p-2 rounded">{{ securityMessage }}</div>
+    </div>
+  </div>
+</div>
