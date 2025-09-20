@@ -1,32 +1,28 @@
-.modal {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+.pago-container {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
 }
-.modal-content {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 8px;
-  min-width: 320px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.2);
-}
-.mensaje {
-  margin-top: 1rem;
-  color: #d32f2f;
-}
-.seguridad {
-  margin-top: 1.5rem;
-  font-size: 0.95em;
-  color: #388e3c;
-  background: #e8f5e9;
-  padding: 0.5rem;
-  border-radius: 4px;
-}
+
 button {
-  margin-right: 0.5rem;
-  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  border: none;
+  background-color: #635bff;
+  color: white;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.error {
+  color: red;
+  margin-top: 0.5rem;
 }

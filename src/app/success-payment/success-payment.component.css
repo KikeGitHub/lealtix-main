@@ -1,0 +1,45 @@
+/* success-payment.component.css */
+:host {
+  display: block;
+}
+.card {
+  border-radius: 1rem;
+}
+.card-header h2 {
+  font-size: 2rem;
+}
+.card-footer {
+  font-size: 0.95em;
+}
+.btn-primary {
+  background-color: #1976d2;
+  border-color: #1976d2;
+}
+.btn-primary:hover {
+  background-color: #1565c0;
+  border-color: #1565c0;
+}
+.btn-outline-secondary {
+  border-radius: 0.5rem;
+}
+.bg-light {
+  background-color: #f5f7fa !important;
+}
+.text-primary {
+  color: #1976d2 !important;
+}
+.text-success {
+  color: #43a047 !important;
+}
+.card .card {
+  box-shadow: none;
+}
+@media (max-width: 576px) {
+  .card {
+    max-width: 95vw;
+    margin: 1rem;
+  }
+  .card-header h2 {
+    font-size: 1.5rem;
+  }
+}

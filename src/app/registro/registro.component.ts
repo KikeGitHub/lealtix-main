@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PagoComponent } from '../pago/pago.component';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,7 +12,7 @@ import { RegisterService } from '../services/register.service';
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, PagoComponent],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
 })
@@ -34,7 +35,8 @@ export class RegistroComponent {
     private route: ActivatedRoute,
     private router: Router,
     private tokenValidationService: TokenValidationService,
-    private registerService: RegisterService
+    private registerService: RegisterService,
+     private dialog: MatDialog
   ) {
     this.registroForm = this.fb.group({
       tenant: this.fb.group({
@@ -66,8 +68,28 @@ export class RegistroComponent {
       }
       this.tokenValidationService.validateToken(token).subscribe({
         next: (resp) => {
-          if (resp && resp.ok) {
-            this.loading = false;
+          debugger;
+            if (resp && resp.code) {
+              const tenantGroup = this.registroForm.get('tenant') as FormGroup;
+              tenantGroup.patchValue({
+                email: resp.object.registroDto.email,
+                nombre: resp.object.registroDto.nombre || '',
+                paterno: resp.object.registroDto.paterno || '',
+                materno: resp.object.registroDto.materno || '',
+                fechaNacimiento: resp.object.registroDto.fechaNacimiento
+                  ? new Date(resp.object.registroDto.fechaNacimiento).toISOString().substring(0, 10)
+                  : '',
+                telefono: resp.object.registroDto.telefono || ''
+              });
+              const negocioGroup = this.registroForm.get('negocio') as FormGroup;
+              negocioGroup.patchValue({
+                nombreNegocio: resp.object.registroDto.nombreNegocio || '',
+                direccion: resp.object.registroDto.direccion || '',
+                telefono: resp.object.registroDto.telefono || '',
+                tipoNegocio: resp.object.registroDto.tipoNegocio || ''
+              });
+              tenantGroup.get('email')?.disable();
+              this.loading = false;
           } else {
             this.errorMsg = resp?.message || 'Invitación inválida o expirada.';
             this.loading = false;
@@ -136,8 +158,11 @@ export class RegistroComponent {
     };
     this.registerService.register(registroData).subscribe({
       next: (resp) => {
-        debugger;
-        this.showPagoModal = true;
+        // Abrir PagoComponent como modal y pasar el email
+        this.dialog.open(PagoComponent, {
+          width: '400px',
+          data: { tenantId: resp.object }
+        });
       },
       error: (err) => {
         this.errorMsg = 'Error al registrar usuario. Inténtalo de nuevo más tarde.';

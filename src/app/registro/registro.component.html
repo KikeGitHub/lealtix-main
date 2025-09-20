@@ -137,13 +137,6 @@
                     <button type="submit" class="btn btn-primary btn-lg">Continuar al pago</button>
                   </div>
 
-                  <!-- Modal de pago -->
-                  <app-pago *ngIf="showPagoModal"
-                    [plan]="{nombre: 'Plan Básico'}"
-                    [costo]="199"
-                    (close)="cerrarPagoModal()"
-                    (paymentResult)="onPagoResult($event)">
-                  </app-pago>
                 </form>
               </div>
             </div>
