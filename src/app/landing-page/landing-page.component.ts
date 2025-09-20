@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { SubscriptionComponent } from './subscription/subscription.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports: [SubscriptionComponent],
+  imports: [SubscriptionComponent, RouterModule],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.css',
 })

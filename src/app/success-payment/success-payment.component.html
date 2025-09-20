@@ -1,0 +1,78 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container px-5">
+    <a class="navbar-brand fw-bold" href="/">Lealtix</a>
+  </div>
+</nav>
+<section class="py-5 bg-light min-vh-100">
+  <div class="container px-5 my-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <ng-container *ngIf="loading; else loaded">
+          <div class="text-center w-100 py-5">
+            <div class="spinner-border text-primary mb-3" role="status">
+              <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="text-primary">Procesando tu pago...</p>
+          </div>
+        </ng-container>
+        <ng-template #loaded>
+          <div *ngIf="error; else success" class="card shadow-lg">
+            <div class="card-header bg-danger text-white text-center">
+              <h2 class="fw-bold mb-0">Ocurrió un error</h2>
+            </div>
+            <div class="card-body p-4 text-center">
+              <i class="bi bi-exclamation-triangle display-1 text-danger mb-3"></i>
+              <h4 class="mb-3">{{ error }}</h4>
+              <a class="btn btn-primary mt-3" href="/">Volver al inicio</a>
+            </div>
+          </div>
+          <ng-template #success>
+            <div class="card shadow-lg">
+              <div class="card-header bg-success text-white text-center">
+                <h2 class="fw-bold mb-0">🎉 Bienvenido a Lealtix</h2>
+              </div>
+              <div class="card-body p-4 text-center">
+                <i class="bi bi-check-circle display-1 text-success mb-3"></i>
+                <h4 class="mb-3">¡Tu pago fue procesado con éxito!</h4>
+                <p class="fs-5 fw-semibold mb-2">Gracias {{ userName }} 🙌</p>
+                <p class="text-secondary mb-3">Tu suscripción al plan <span class="fw-bold text-primary">{{ planName }}</span> está activa.<br>
+                  Hemos enviado un correo con tus credenciales y acceso a tu panel.<br>
+                  ¡Prepárate para potenciar tu negocio y conectar con tus clientes como nunca antes! ✨🚀</p>
+                <div class="card mb-3 border-primary bg-light">
+                  <div class="card-body p-2">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                      <span class="fw-bold">Plan:</span>
+                      <span>{{ planName }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                      <span class="fw-bold">Costo:</span>
+                      <span>{{ cost }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                      <span class="fw-bold">Fecha de compra:</span>
+                      <span>{{ purchaseDate }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <span class="fw-bold">Próxima renovación:</span>
+                      <span>{{ nextRenewal }}</span>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-primary w-100 mb-2" (click)="goToDashboard()">Ir a mi panel / dashboard</button>
+              </div>
+            </div>
+          </ng-template>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="py-5 bg-dark mt-auto">
+  <div class="container px-5 text-center text-white">
+    <h5 class="fw-bold">Lealtix</h5>
+    <ul class="list-inline">
+      <li class="list-inline-item"><a class="text-white" href="/">Inicio</a></li>
+    </ul>
+    <p class="mt-3 mb-0">© 2025 Lealtix. Todos los derechos reservados.</p>
+  </div>
+</footer>

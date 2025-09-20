@@ -2,15 +2,17 @@ import { Component, signal } from '@angular/core';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RegistroComponent } from './registro/registro.component';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    LandingPageComponent,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
