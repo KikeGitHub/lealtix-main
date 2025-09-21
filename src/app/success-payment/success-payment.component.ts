@@ -30,11 +30,11 @@ export class SuccessPaymentComponent implements OnInit {
         this.paymentService.getPaymentSuccess(sessionId).subscribe({
           next: (data) => {
             debugger
-            this.userName = data.name;
-            this.planName = data.plan;
-            this.cost = data.cost + ' ' + data.currency;
-            this.purchaseDate = data.paymentDate;
-            this.nextRenewal = data.nextPaymentDate;
+            this.userName = data.object.name;
+            this.planName = data.object.plan;
+            this.cost = data.object.cost + ' ' + data.object.currency;
+            this.purchaseDate = data.object.paymentDate;
+            this.nextRenewal = data.object.nextPaymentDate;
             this.loading = false;
           },
           error: (err) => {
