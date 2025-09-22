@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-@charset "UTF-8";
+body.crema-bg {
+  background-color: #FFFBF2 !important;
+}
+
 /*!
 * Start Bootstrap - Business Frontpage v5.0.9 (https://startbootstrap.com/template/business-frontpage)
 * Copyright 2013-2023 Start Bootstrap

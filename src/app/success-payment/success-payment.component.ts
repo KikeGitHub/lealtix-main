@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PaymentService } from '../services/payment.service';
 
@@ -20,7 +20,8 @@ export class SuccessPaymentComponent implements OnInit {
   error: string = '';
 
   constructor(private route: ActivatedRoute,
-              private paymentService: PaymentService) {}
+              private paymentService: PaymentService,
+              private router: Router) {}
 
   ngOnInit() {
     debugger
@@ -50,7 +51,8 @@ export class SuccessPaymentComponent implements OnInit {
   }
 
   goToDashboard() {
-    // Redirige al dashboard
+    // Redirige a landing-page/demo
+    this.router.navigate(['/landing-page/demo']);
   }
 
   goToConfig() {

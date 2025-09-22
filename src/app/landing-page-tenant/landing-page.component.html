@@ -1,0 +1,22 @@
+
+  <app-nav-bar></app-nav-bar>
+  <app-about> </app-about>
+  <app-offer></app-offer>
+  <app-menu></app-menu>
+  <app-footer></app-footer>
+
+  <!-- Back to Top -->
+  <button
+    *ngIf="showBackToTop"
+    (click)="scrollToTop()"
+    class="btn btn-lg btn-light btn-lg-square back-to-top"
+    style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; box-shadow: 0 4px 16px rgba(0,0,0,0.15); border-radius: 50%; border: none;"
+  >
+    <span style="display: inline-block; width: 1.5em; height: 1.5em; color: #222;">
+      <svg width="1.5em" height="1.5em" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 8.5l-5 5 1.41 1.41L12 11.33l3.59 3.58L17 13.5l-5-5z"/>
+        <path d="M12 4.5l-5 5 1.41 1.41L12 7.33l3.59 3.58L17 9.5l-5-5z"/>
+      </svg>
+    </span>
+  </button>
+
