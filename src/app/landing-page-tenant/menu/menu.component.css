@@ -147,7 +147,6 @@
 /* Título principal y subtítulo */
 .section-title {
   position: relative;
-  padding: 115px 0 35px 0;
   text-align: center;
 }
 .section-title h4 {
@@ -209,4 +208,13 @@
 }
 .m-0 {
   margin: 0 !important;
+}
+
+.menu-title {
+  color: #DA9F5B !important;
+  text-transform: uppercase !important;
+  letter-spacing: 5px;
+  font-size: 3.5rem;
+  font-weight: 300;
+  line-height: 1.2;
 }
