@@ -1,0 +1,40 @@
+
+.shared-bg {
+  background-image: url('../../../public/assets/img/carousel-1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+}
+
+.back-to-top {
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  transition: opacity 0.3s;
+}
+.back-to-top:hover {
+  opacity: 0.8;
+}
+
+.text-primary {
+  color: #DA9F5B !important;
+}
+
+.m-0 {
+  margin: 0 !important;
+}
+
+.font-weight-medium {
+  font-weight: 500 !important;
+}
+
+.body {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #555;
+  text-align: left;
+  background-color: #FFFBF2;
+}

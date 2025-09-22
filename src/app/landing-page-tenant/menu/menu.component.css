@@ -1,0 +1,212 @@
+/* Posiciona el precio encima de la imagen */
+.menu-img-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.menu-price-custom {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  background: rgba(0,0,0,0.6);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  z-index: 2;
+  pointer-events: none;
+}
+/* Estilo personalizado para el precio del menú */
+:host ::ng-deep .menu-price-custom {
+  position: absolute;
+  margin: 0;
+  top: -5px;
+  right: 10px;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 45px;
+  color: #33211D;
+  background: #DA9F5B;
+  font-size: 1rem;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+/* Estilos personalizados para los precios del menú */
+:host ::ng-deep .menu-price {
+  position: absolute;
+  margin: 0;
+  top: -5px;
+  right: 10px;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 45px;
+  color: #33211D;
+  background: #DA9F5B;
+}
+
+:host ::ng-deep h5,
+:host ::ng-deep h6,
+:host ::ng-deep .font-weight-normal {
+  font-weight: 400 !important;
+}
+:host ::ng-deep h5,
+:host ::ng-deep .h5 {
+  font-size: 1.25rem;
+}
+/* Estilos personalizados y responsivos para imágenes y márgenes en Menu */
+:host ::ng-deep .mb-3,
+:host ::ng-deep .my-3 {
+  margin-bottom: 1rem !important;
+}
+:host ::ng-deep .w-100 {
+  width: 100% !important;
+}
+:host ::ng-deep .rounded-circle {
+  border-radius: 50% !important;
+}
+:host ::ng-deep img {
+  vertical-align: middle;
+  border-style: none;
+}
+@media (min-width: 576px) {
+  :host ::ng-deep .mb-sm-0,
+  :host ::ng-deep .my-sm-0 {
+    margin-bottom: 0 !important;
+  }
+}
+:host ::ng-deep p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  unicode-bidi: isolate;
+}
+:host ::ng-deep h4 {
+  display: block;
+  margin-block-start: 1.33em;
+  margin-block-end: 1.33em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+  unicode-bidi: isolate;
+}
+/* Tipografía y títulos personalizados para Menu */
+:host ::ng-deep h1,
+:host ::ng-deep h2,
+:host ::ng-deep .font-weight-bold {
+  font-weight: 700 !important;
+}
+:host ::ng-deep h1,
+:host ::ng-deep .h1 {
+  font-size: 2.5rem;
+}
+:host ::ng-deep h1,
+:host ::ng-deep h2,
+:host ::ng-deep h3,
+:host ::ng-deep h4,
+:host ::ng-deep h5,
+:host ::ng-deep h6,
+:host ::ng-deep .h1,
+:host ::ng-deep .h2,
+:host ::ng-deep .h3,
+:host ::ng-deep .h4,
+:host ::ng-deep .h5,
+:host ::ng-deep .h6 {
+  margin-bottom: .5rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #33211D;
+}
+:host ::ng-deep h1,
+:host ::ng-deep h2,
+:host ::ng-deep h3,
+:host ::ng-deep h4,
+:host ::ng-deep h5,
+:host ::ng-deep h6 {
+  margin-top: 0;
+  margin-bottom: .5rem;
+}
+:host ::ng-deep *,
+:host ::ng-deep *::before,
+:host ::ng-deep *::after {
+  box-sizing: border-box;
+}
+/* Fondo color crema para la sección Menu */
+.menu-section {
+  background-color: #FFFBF2;
+}
+/* Título principal y subtítulo */
+.section-title {
+  position: relative;
+  padding: 115px 0 35px 0;
+  text-align: center;
+}
+.section-title h4 {
+  font-weight: bold;
+  color: #DA9F5B !important;
+  letter-spacing: 5px;
+}
+.section-title h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #33211D !important;
+}
+.display-4 {
+  font-weight: 700 !important;
+  color: #33211D !important;
+  font-size: 2.5rem;
+}
+.text-primary.text-uppercase {
+  color: #DA9F5B !important;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+.col-lg-6 {
+  flex: 0 0 50%;
+  padding: 1rem;
+}
+
+@media (max-width: 991.98px) {
+  .col-lg-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    width: 100%;
+    padding: 1rem;
+  }
+}
+
+.menu-price {
+  color: #DA9F5B;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.w-100 {
+  width: 100%;
+}
+.rounded-circle {
+  border-radius: 50%;
+}
+.mb-3 {
+  margin-bottom: 1rem;
+}
+.mb-5 {
+  margin-bottom: 3rem;
+}
+.pt-5 {
+  padding-top: 3rem !important;
+}
+.m-0 {
+  margin: 0 !important;
+}

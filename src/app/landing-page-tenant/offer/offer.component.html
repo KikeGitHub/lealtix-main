@@ -1,0 +1,18 @@
+<!-- Offer Start -->
+<div id="offer" class="offer container-fluid my-5 py-5 text-center position-relative overlay-top overlay-bottom">
+  <div class="container py-5">
+  <h1 class="offer-title">Regístrate para recibir promociones 🎉</h1>
+    <h2 class="text-white mb-3">¡Al registrarte obtienes un cupón de descuento exclusivo!</h2>
+    <h5 class="text-white font-weight-normal mb-4 pb-3">
+      ✨ “Regístrate y forma parte de nuestra comunidad exclusiva: solo quienes están dentro reciben promociones
+      especiales, sorpresas y descuentos que nadie más tendrá.”
+    </h5>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="offer-row-form mb-4">
+      <input type="text" formControlName="name" class="form-control p-4" placeholder="Tu Nombre">
+      <input type="email" formControlName="email" class="form-control p-4" placeholder="Tu Email">
+      <button class="btn btn-primary" type="submit">Registrarme</button>
+    </form>
+  </div>
+</div>
+
+<!-- Offer End -->
