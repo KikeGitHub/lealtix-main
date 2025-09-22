@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AboutComponent } from './about/about.component';
@@ -20,9 +20,19 @@ import { FooterComponent } from './footer/footer.component';
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css']
 })
-export class LandingPageTenantComponent {
+export class LandingPageTenantComponent implements OnInit, OnDestroy {
+  constructor(private renderer: Renderer2) {}
   // Para mostrar u ocultar el botón Back to Top
   showBackToTop = false;
+
+
+  ngOnInit() {
+    this.renderer.addClass(document.body, 'crema-bg');
+  }
+
+  ngOnDestroy() {
+    this.renderer.removeClass(document.body, 'crema-bg');
+  }
 
   // Detecta scroll
   @HostListener('window:scroll', [])

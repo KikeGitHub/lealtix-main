@@ -1,6 +1,6 @@
 <div class="container-fluid p-0 nav-bar center-content" style="background-image: url('../../../../assets/img/carousel-2.jpg');">
   <nav class="navbar navbar-expand-lg bg-none navbar-dark py-3">
-    <a href="index.html" class="navbar-brand px-lg-4 m-0">
+  <a href="#" class="navbar-brand px-lg-4 m-0" (click)="$event.preventDefault()">
       <h1 class="m-0 display-4 text-uppercase text-white">Cafe con Amor</h1>
     </a>
     <button type="button" class="navbar-toggler" (click)="toggleMenu()">
@@ -8,11 +8,11 @@
     </button>
     <div [class.collapse]="!isMenuOpen" class="navbar-collapse justify-content-between" id="navbarCollapse">
       <ul class="navbar-nav ml-auto p-4">
-        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-        <li class="nav-item"><a href="about.html" class="nav-link">Acerca de nosotros</a></li>
-        <li class="nav-item"><a href="menu.html" class="nav-link">Menu</a></li>
-        <li class="nav-item"><a href="reservation.html" class="nav-link">Registrate</a></li>
-        <li class="nav-item"><a href="contact.html" class="nav-link">Contacto</a></li>
+  <li class="nav-item"><a href="#navbar" class="nav-link" (click)="scrollToNavbar($event)">Home</a></li>
+  <li class="nav-item"><a href="#about" class="nav-link" (click)="scrollToAbout($event)">Acerca de nosotros</a></li>
+  <li class="nav-item"><a href="#menu" class="nav-link" (click)="scrollToMenu($event)">Menu</a></li>
+  <li class="nav-item"><a href="#offer" class="nav-link" (click)="scrollToOffer($event)">Registrate</a></li>
+  <li class="nav-item"><a href="#footer" class="nav-link" (click)="scrollToFooter($event)">Contacto</a></li>
       </ul>
     </div>
   </nav>
