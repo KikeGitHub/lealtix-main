@@ -2,96 +2,37 @@
 <div id="menu" class="container-fluid menu-section py-5">
   <div class="container">
     <div class="section-title text-center">
-  <h4 class="menu-title">Nuestro Menú</h4>
+      <h4 class="menu-title">Nuestro Menú</h4>
     </div>
-    <div class="row flex-column flex-lg-row">
-      <!-- Sección Bebidas -->
-      <div class="col-12 col-lg-6 mb-4">
-        <h1 class="mb-4 text-center text-lg-start">Bebidas</h1>
-        <div class="row align-items-center mb-4">
-          <div class="col-4 col-sm-3 text-center">
-            <div class="menu-img-wrapper">
-              <h5 class="menu-price-custom">$45</h5>
-              <img class="w-100 rounded-circle mb-2 mb-sm-0" style="max-width:90px;"
-                src="../../../assets/img/menu-1.jpg" alt="">
-            </div>
-          </div>
-          <div class="col-8 col-sm-9">
-            <h4>Capuchino</h4>
-            <p class="m-0">Café cremoso con espuma de leche, ideal para empezar el día.</p>
-          </div>
-        </div>
-        <div class="row align-items-center mb-4">
-          <div class="col-4 col-sm-3 text-center">
-            <div class="menu-img-wrapper">
-              <h5 class="menu-price-custom">$40</h5>
-              <img class="w-100 rounded-circle mb-2 mb-sm-0" style="max-width:90px;"
-                src="../../../assets/img/menu-1.jpg" alt="">
-            </div>
-          </div>
-          <div class="col-8 col-sm-9">
-            <h4>Chocolate caliente</h4>
-            <p class="m-0">Tradicional chocolate mexicano espumoso, preparado al momento.</p>
-          </div>
-        </div>
-        <div class="row align-items-center mb-4">
-          <div class="col-4 col-sm-3 text-center">
-            <div class="menu-img-wrapper">
-              <h5 class="menu-price-custom">$35</h5>
-              <img class="w-100 rounded-circle mb-2 mb-sm-0" style="max-width:90px;"
-                src="../../../assets/img/menu-1.jpg" alt="">
-            </div>
-          </div>
-          <div class="col-8 col-sm-9">
-            <h4>Jugo de Naranja</h4>
-            <p class="m-0">Jugo natural recién exprimido, lleno de energía y frescura.</p>
-          </div>
-        </div>
-      </div>
 
-      <!-- Sección Desayunos -->
-      <div class="col-12 col-lg-6 mb-4">
-        <h1 class="mb-4 text-center text-lg-start">Desayunos</h1>
-        <div class="row align-items-center mb-4">
-          <div class="col-4 col-sm-3 text-center">
-            <div class="menu-img-wrapper">
-              <h5 class="menu-price-custom">$95</h5>
-              <img class="w-100 rounded-circle mb-2 mb-sm-0" style="max-width:90px;"
-                src="../../../assets/img/menu-2.jpg" alt="">
+    <div class="row flex-column flex-lg-row flex-wrap">
+      <ng-container *ngFor="let categoria of menuCategorias; let i = index">
+        <div class="col-12 col-lg-6 mb-4">
+          <h1 class="mb-4 text-center text-lg-start">{{ categoria.nombre }}</h1>
+          <ng-container *ngFor="let producto of categoria.productos">
+            <div class="row align-items-center mb-4">
+              <div class="col-4 col-sm-3 text-center">
+                <div class="menu-img-wrapper">
+                  <h5 class="menu-price-custom">{{ producto.precio }}</h5>
+                  <ng-container *ngIf="producto.img; else defaultIcon">
+                    <img class="w-100 rounded-circle mb-2 mb-sm-0" style="max-width:90px;"
+                      [src]="producto.img" alt="">
+                  </ng-container>
+                  <ng-template #defaultIcon>
+                    <i class="fas fa-mug-hot fa-3x text-gray-400"></i>
+                  </ng-template>
+                </div>
+              </div>
+              <div class="col-8 col-sm-9">
+                <h4>{{ producto.prod }}</h4>
+                <p class="m-0">{{ producto.descProd }}</p>
+              </div>
             </div>
-          </div>
-          <div class="col-8 col-sm-9">
-            <h4>Chilaquiles verdes</h4>
-            <p class="m-0">Totopos bañados en salsa verde, servidos con crema, queso y cebolla.</p>
-          </div>
+          </ng-container>
         </div>
-        <div class="row align-items-center mb-4">
-          <div class="col-4 col-sm-3 text-center">
-            <div class="menu-img-wrapper">
-              <h5 class="menu-price-custom">$110</h5>
-              <img class="w-100 rounded-circle mb-2 mb-sm-0" style="max-width:90px;"
-                src="../../../assets/img/menu-2.jpg" alt="">
-            </div>
-          </div>
-          <div class="col-8 col-sm-9">
-            <h4>Enchiladas rojas</h4>
-            <p class="m-0">Tortillas rellenas de pollo bañadas en salsa roja, acompañadas de arroz.</p>
-          </div>
-        </div>
-        <div class="row align-items-center mb-4">
-          <div class="col-4 col-sm-3 text-center">
-            <div class="menu-img-wrapper">
-              <h5 class="menu-price-custom">$85</h5>
-              <img class="w-100 rounded-circle mb-2 mb-sm-0" style="max-width:90px;"
-                src="../../../assets/img/menu-2.jpg" alt="">
-            </div>
-          </div>
-          <div class="col-8 col-sm-9">
-            <h4>Huevos al gusto</h4>
-            <p class="m-0">Acompañados con frijoles refritos y pan artesanal.</p>
-          </div>
-        </div>
-      </div>
+        <!-- Si hay más de dos categorías, muestra las siguientes abajo -->
+        <div *ngIf="i % 2 === 1 && i + 1 < menuCategorias.length" class="w-100"></div>
+      </ng-container>
     </div>
 
   </div>
