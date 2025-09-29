@@ -1,8 +1,6 @@
 import { Component, signal } from '@angular/core';
-import { LandingPageComponent } from './landing-page/landing-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RegistroComponent } from './registro/registro.component';
 import { RouterModule } from '@angular/router';
 
 

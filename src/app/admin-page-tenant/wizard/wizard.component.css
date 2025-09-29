@@ -1,0 +1,147 @@
+/* Forzar estilos modernos en el popup del datepicker usando ::ng-deep */
+::ng-deep .mat-datepicker-content, ::ng-deep .mat-calendar {
+  background: linear-gradient(135deg, #e3f0fa 0%, #f5faff 100%) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 6px 24px 0 rgba(74,144,226,0.10) !important;
+}
+::ng-deep .mat-calendar-header {
+  background: #e3f0fa !important;
+  border-top-left-radius: 18px !important;
+  border-top-right-radius: 18px !important;
+}
+/* Modern background for Angular Material Datepicker popup */
+.mat-datepicker-content, .mat-calendar {
+  background: linear-gradient(135deg, #e3f0fa 0%, #f5faff 100%);
+  border-radius: 18px !important;
+  box-shadow: 0 6px 24px 0 rgba(74,144,226,0.10);
+}
+/* Optional: style calendar header for more modern look */
+.mat-calendar-header {
+  background: #e3f0fa;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+}
+:host ::ng-deep .mat-vertical-content {
+  margin-left: 10px;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  padding: 1.5rem 1.5rem 1.2rem 1.5rem !important;
+  border: 1px solid lightgrey;
+}
+:host ::ng-deep .mat-step.custom-step-bg .mat-step-content, :host ::ng-deep .mat-step.custom-step-bg .mat-vertical-content-container {
+  background: #fff !important;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  margin: 32px 0;
+  padding: 2rem 2rem 1.5rem 2rem;
+}
+
+:host ::ng-deep .mat-vertical-content {
+  padding: 0 !important;
+}
+
+.step-actions button[mat-button],
+.step-actions button[mat-raised-button] {
+  background: #1976d2;
+  color: #fff;
+  border-radius: 2rem;
+  font-weight: 500;
+  min-width: 120px;
+  margin: 0 0.5rem;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+  transition: background 0.2s;
+}
+.step-actions button[mat-button]:hover,
+.step-actions button[mat-raised-button]:hover {
+  background: #1565c0;
+}
+
+.step-actions .mat-icon {
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+:host ::ng-deep .mat-step-header .mat-step-icon {
+  background: #1976d2 !important;
+  color: #fff !important;
+}
+:host ::ng-deep .mat-step-header .mat-step-label {
+  font-weight: 600;
+  color: #222;
+}
+.mat-step.custom-step-bg {
+  margin-bottom: 2rem;
+}
+:host ::ng-deep .mat-vertical-content {
+  padding: 15px 24px 24px 24px !important;
+}
+.mat-step.custom-step-bg .mat-step-content, .mat-step.custom-step-bg .mat-vertical-content-container {
+  background: #fff !important;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  padding: 1.5rem 1rem;
+}
+/* User Card */
+.user-card {
+  margin-bottom: 32px;
+  padding: 24px;
+}
+.user-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.user-fields mat-form-field {
+  flex: 1 1 220px;
+}
+
+/* Stepper */
+.wizard-stepper {
+  margin-bottom: 32px;
+}
+.step-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.step-fields mat-form-field, .step-fields textarea {
+  flex: 1 1 220px;
+}
+.logo-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+.logo-preview {
+  max-width: 120px;
+  max-height: 120px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+.vision-points {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.info-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.step-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+.confirm-msg {
+  margin-top: 32px;
+  text-align: center;
+}
