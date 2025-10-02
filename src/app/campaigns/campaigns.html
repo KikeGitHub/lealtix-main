@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Lealtix - Gestiona tus campañas de promociones" />
+    <meta name="author" content="Lealtix" />
+    <title>Lealtix | Campañas</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container px-5">
+        <a class="navbar-brand fw-bold" href="/">Lealtix</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link active" href="/campaigns">Campañas</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-primary py-5 text-white">
+      <div class="container px-5">
+        <div class="row align-items-center">
+          <div class="col-lg-8">
+            <h1 class="display-4 fw-bolder mb-3">Gestión de Campañas de Promociones</h1>
+            <p class="lead mb-4">
+              Crea, administra y analiza tus campañas de marketing para atraer y retener clientes
+            </p>
+          </div>
+          <div class="col-lg-4 text-center">
+            <button class="btn btn-light btn-lg px-4">
+              <i class="bi bi-plus-circle me-2"></i>Nueva Campaña
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Campaigns Dashboard -->
+    <section class="py-5">
+      <div class="container px-5">
+        <!-- Statistics Cards -->
+        <div class="row gx-4 mb-5">
+          <div class="col-md-3 mb-4">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body text-center">
+                <i class="bi bi-megaphone display-4 text-primary mb-3"></i>
+                <h3 class="fw-bold">12</h3>
+                <p class="text-muted mb-0">Campañas Activas</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body text-center">
+                <i class="bi bi-people display-4 text-success mb-3"></i>
+                <h3 class="fw-bold">3,847</h3>
+                <p class="text-muted mb-0">Clientes Alcanzados</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body text-center">
+                <i class="bi bi-graph-up display-4 text-warning mb-3"></i>
+                <h3 class="fw-bold">28%</h3>
+                <p class="text-muted mb-0">Tasa de Conversión</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body text-center">
+                <i class="bi bi-currency-dollar display-4 text-info mb-3"></i>
+                <h3 class="fw-bold">$45,230</h3>
+                <p class="text-muted mb-0">Ingresos Generados</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campaign Types -->
+        <div class="text-center mb-5">
+          <h2 class="fw-bolder mb-3">Tipos de Campañas</h2>
+          <p class="lead text-muted">Elige el tipo de campaña que mejor se adapte a tus objetivos</p>
+        </div>
+
+        <div class="row gx-5 mb-5">
+          <!-- Welcome Campaign -->
+          <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-body p-4">
+                <div class="text-center mb-3">
+                  <i class="bi bi-hand-thumbs-up display-3 text-primary"></i>
+                </div>
+                <h4 class="fw-bold text-center mb-3">Bienvenida</h4>
+                <p class="text-muted text-center mb-4">
+                  Dale la bienvenida a nuevos clientes con ofertas especiales
+                </p>
+                <ul class="list-unstyled">
+                  <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Descuento de primer compra</li>
+                  <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Puntos de lealtad bonus</li>
+                  <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Envío automático</li>
+                </ul>
+                <div class="d-grid mt-4">
+                  <button class="btn btn-outline-primary">Crear Campaña</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Retention Campaign -->
+          <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-body p-4">
+                <div class="text-center mb-3">
+                  <i class="bi bi-arrow-repeat display-3 text-success"></i>
+                </div>
+                <h4 class="fw-bold text-center mb-3">Retención</h4>
+                <p class="text-muted text-center mb-4">
+                  Recupera clientes inactivos con promociones personalizadas
+                </p>
+                <ul class="list-unstyled">
+                  <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Ofertas personalizadas</li>
+                  <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Recordatorios automáticos</li>
+                  <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Análisis de comportamiento</li>
+                </ul>
+                <div class="d-grid mt-4">
+                  <button class="btn btn-outline-success">Crear Campaña</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Loyalty Campaign -->
+          <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-body p-4">
+                <div class="text-center mb-3">
+                  <i class="bi bi-trophy display-3 text-warning"></i>
+                </div>
+                <h4 class="fw-bold text-center mb-3">Lealtad</h4>
+                <p class="text-muted text-center mb-4">
+                  Recompensa a tus mejores clientes y aumenta su fidelidad
+                </p>
+                <ul class="list-unstyled">
+                  <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Programas de puntos</li>
+                  <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Descuentos VIP</li>
+                  <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Recompensas exclusivas</li>
+                </ul>
+                <div class="d-grid mt-4">
+                  <button class="btn btn-outline-warning">Crear Campaña</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Campaigns List -->
+        <div class="mb-5">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bolder mb-0">Campañas Activas</h2>
+            <div class="btn-group" role="group">
+              <button class="btn btn-sm btn-outline-secondary active">Todas</button>
+              <button class="btn btn-sm btn-outline-secondary">Activas</button>
+              <button class="btn btn-sm btn-outline-secondary">Pausadas</button>
+              <button class="btn btn-sm btn-outline-secondary">Finalizadas</button>
+            </div>
+          </div>
+
+          <!-- Campaign Cards -->
+          <div class="row">
+            <!-- Campaign 1 -->
+            <div class="col-lg-6 mb-4">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                      <h5 class="fw-bold mb-1">Descuento Verano 2025</h5>
+                      <span class="badge bg-success">Activa</span>
+                    </div>
+                    <div class="dropdown">
+                      <button class="btn btn-sm btn-light" data-bs-toggle="dropdown">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Editar</a></li>
+                        <li><a class="dropdown-item" href="#">Pausar</a></li>
+                        <li><a class="dropdown-item" href="#">Ver Análisis</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <p class="text-muted mb-3">20% de descuento en toda la tienda</p>
+                  <div class="row text-center">
+                    <div class="col-4">
+                      <small class="text-muted d-block">Alcance</small>
+                      <strong>1,234</strong>
+                    </div>
+                    <div class="col-4">
+                      <small class="text-muted d-block">Conversión</small>
+                      <strong>32%</strong>
+                    </div>
+                    <div class="col-4">
+                      <small class="text-muted d-block">Ingresos</small>
+                      <strong>$12,450</strong>
+                    </div>
+                  </div>
+                  <div class="progress mt-3" style="height: 5px;">
+                    <div class="progress-bar bg-success" style="width: 65%"></div>
+                  </div>
+                  <small class="text-muted mt-2 d-block">Finaliza en 15 días</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Campaign 2 -->
+            <div class="col-lg-6 mb-4">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                      <h5 class="fw-bold mb-1">Cliente VIP</h5>
+                      <span class="badge bg-success">Activa</span>
+                    </div>
+                    <div class="dropdown">
+                      <button class="btn btn-sm btn-light" data-bs-toggle="dropdown">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Editar</a></li>
+                        <li><a class="dropdown-item" href="#">Pausar</a></li>
+                        <li><a class="dropdown-item" href="#">Ver Análisis</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <p class="text-muted mb-3">Programa de lealtad para clientes frecuentes</p>
+                  <div class="row text-center">
+                    <div class="col-4">
+                      <small class="text-muted d-block">Alcance</small>
+                      <strong>487</strong>
+                    </div>
+                    <div class="col-4">
+                      <small class="text-muted d-block">Conversión</small>
+                      <strong>45%</strong>
+                    </div>
+                    <div class="col-4">
+                      <small class="text-muted d-block">Ingresos</small>
+                      <strong>$18,900</strong>
+                    </div>
+                  </div>
+                  <div class="progress mt-3" style="height: 5px;">
+                    <div class="progress-bar bg-warning" style="width: 85%"></div>
+                  </div>
+                  <small class="text-muted mt-2 d-block">Finaliza en 45 días</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Campaign 3 -->
+            <div class="col-lg-6 mb-4">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                      <h5 class="fw-bold mb-1">Recupera Clientes</h5>
+                      <span class="badge bg-info">En progreso</span>
+                    </div>
+                    <div class="dropdown">
+                      <button class="btn btn-sm btn-light" data-bs-toggle="dropdown">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Editar</a></li>
+                        <li><a class="dropdown-item" href="#">Pausar</a></li>
+                        <li><a class="dropdown-item" href="#">Ver Análisis</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <p class="text-muted mb-3">15% descuento para clientes inactivos</p>
+                  <div class="row text-center">
+                    <div class="col-4">
+                      <small class="text-muted d-block">Alcance</small>
+                      <strong>892</strong>
+                    </div>
+                    <div class="col-4">
+                      <small class="text-muted d-block">Conversión</small>
+                      <strong>18%</strong>
+                    </div>
+                    <div class="col-4">
+                      <small class="text-muted d-block">Ingresos</small>
+                      <strong>$7,850</strong>
+                    </div>
+                  </div>
+                  <div class="progress mt-3" style="height: 5px;">
+                    <div class="progress-bar bg-info" style="width: 35%"></div>
+                  </div>
+                  <small class="text-muted mt-2 d-block">Finaliza en 30 días</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Campaign 4 -->
+            <div class="col-lg-6 mb-4">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                      <h5 class="fw-bold mb-1">Bienvenida Nuevos</h5>
+                      <span class="badge bg-success">Activa</span>
+                    </div>
+                    <div class="dropdown">
+                      <button class="btn btn-sm btn-light" data-bs-toggle="dropdown">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Editar</a></li>
+                        <li><a class="dropdown-item" href="#">Pausar</a></li>
+                        <li><a class="dropdown-item" href="#">Ver Análisis</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <p class="text-muted mb-3">10% descuento para nuevos registros</p>
+                  <div class="row text-center">
+                    <div class="col-4">
+                      <small class="text-muted d-block">Alcance</small>
+                      <strong>1,234</strong>
+                    </div>
+                    <div class="col-4">
+                      <small class="text-muted d-block">Conversión</small>
+                      <strong>42%</strong>
+                    </div>
+                    <div class="col-4">
+                      <small class="text-muted d-block">Ingresos</small>
+                      <strong>$6,030</strong>
+                    </div>
+                  </div>
+                  <div class="progress mt-3" style="height: 5px;">
+                    <div class="progress-bar bg-success" style="width: 92%"></div>
+                  </div>
+                  <small class="text-muted mt-2 d-block">Campaña continua</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Analytics Section -->
+        <div class="mb-5">
+          <h2 class="fw-bolder mb-4">Análisis de Rendimiento</h2>
+          <div class="row">
+            <div class="col-lg-8 mb-4">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h5 class="fw-bold mb-4">Rendimiento de Campañas - Últimos 30 días</h5>
+                  <div class="text-center py-5">
+                    <i class="bi bi-graph-up display-1 text-primary"></i>
+                    <p class="text-muted mt-3">Gráfico de rendimiento de campañas</p>
+                    <small class="text-muted">Aquí se mostrará un gráfico detallado del rendimiento</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h5 class="fw-bold mb-4">Top Campañas</h5>
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="fw-bold">Cliente VIP</span>
+                      <span class="badge bg-success">45%</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                      <div class="progress-bar bg-success" style="width: 90%"></div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="fw-bold">Bienvenida</span>
+                      <span class="badge bg-primary">42%</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                      <div class="progress-bar bg-primary" style="width: 84%"></div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <span class="fw-bold">Descuento Verano</span>
+                      <span class="badge bg-info">32%</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                      <div class="progress-bar bg-info" style="width: 64%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark text-white">
+      <div class="container px-5">
+        <div class="row">
+          <div class="col-lg-4 mb-4 mb-lg-0">
+            <h5 class="fw-bold mb-3">Lealtix</h5>
+            <p class="text-muted">
+              La plataforma completa para gestionar tus campañas de marketing y fidelización de clientes.
+            </p>
+          </div>
+          <div class="col-lg-4 mb-4 mb-lg-0">
+            <h5 class="fw-bold mb-3">Enlaces</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2"><a class="text-muted text-decoration-none" href="/">Inicio</a></li>
+              <li class="mb-2"><a class="text-muted text-decoration-none" href="/campaigns">Campañas</a></li>
+              <li class="mb-2"><a class="text-muted text-decoration-none" href="/#precios">Precios</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-4">
+            <h5 class="fw-bold mb-3">Contacto</h5>
+            <p class="text-muted">
+              <i class="bi bi-envelope me-2"></i>contacto@lealtix.com<br />
+              <i class="bi bi-phone me-2"></i>+52 (55) 1234-5678
+            </p>
+          </div>
+        </div>
+        <hr class="my-4 bg-light" />
+        <p class="text-center text-muted mb-0">&copy; 2025 Lealtix. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+  </body>
+</html>
