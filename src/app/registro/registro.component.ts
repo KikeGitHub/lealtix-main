@@ -1,5 +1,10 @@
 
 import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PagoComponent } from '../pago/pago.component';
@@ -12,11 +17,22 @@ import { RegisterService } from '../services/register.service';
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatIconModule,
+    MatNativeDateModule
+  ],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'es-MX' }
+  ],
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
 })
 export class RegistroComponent {
+  showPassword = false;
   registroForm: FormGroup;
   submitted = false;
   pagoValido = false;
@@ -40,19 +56,14 @@ export class RegistroComponent {
   ) {
     this.registroForm = this.fb.group({
       tenant: this.fb.group({
-        nombre: ['', Validators.required],
-        paterno: ['', Validators.required],
-        materno: [''],
+        fullName: ['', Validators.required],
         fechaNacimiento: ['', Validators.required],
-        telefono: [''],
+        telefono: ['', [
+          Validators.pattern('^[0-9]{10}$'),
+          Validators.required
+        ]],
         email: ['', [Validators.required, Validators.email]],
-        contrasena: ['', Validators.required]
-      }),
-      negocio: this.fb.group({
-        nombreNegocio: ['', Validators.required],
-        direccion: [''],
-        telefono: [''],
-        tipoNegocio: ['', Validators.required]
+        password: ['', Validators.required]
       })
     });
 
@@ -73,21 +84,13 @@ export class RegistroComponent {
               const tenantGroup = this.registroForm.get('tenant') as FormGroup;
               tenantGroup.patchValue({
                 email: resp.object.registroDto.email,
-                nombre: resp.object.registroDto.nombre || '',
-                paterno: resp.object.registroDto.paterno || '',
-                materno: resp.object.registroDto.materno || '',
+                fullName: resp.object.registroDto.fullName,
                 fechaNacimiento: resp.object.registroDto.fechaNacimiento
                   ? new Date(resp.object.registroDto.fechaNacimiento).toISOString().substring(0, 10)
                   : '',
                 telefono: resp.object.registroDto.telefono || ''
               });
-              const negocioGroup = this.registroForm.get('negocio') as FormGroup;
-              negocioGroup.patchValue({
-                nombreNegocio: resp.object.registroDto.nombreNegocio || '',
-                direccion: resp.object.registroDto.direccion || '',
-                telefono: resp.object.registroDto.telefono || '',
-                tipoNegocio: resp.object.registroDto.tipoNegocio || ''
-              });
+
               tenantGroup.get('email')?.disable();
               this.loading = false;
           } else {
@@ -110,12 +113,6 @@ export class RegistroComponent {
   }
   get tenant() {
     return (this.registroForm.get('tenant') as FormGroup).controls;
-  }
-  get negocio() {
-    return (this.registroForm.get('negocio') as FormGroup).controls;
-  }
-  get pago() {
-    return (this.registroForm.get('pago') as FormGroup).controls;
   }
 
 
@@ -141,20 +138,12 @@ export class RegistroComponent {
       return;
     }
     const registroData: RegisterModel = {
-      nombre: this.tenant['nombre'].value,
-      paterno: this.tenant['paterno'].value,
-      materno: this.tenant['materno'].value,
-      fechaNacimiento: this.tenant['fechaNacimiento'].value,
-      telefono: this.tenant['telefono'].value,
-      email: this.tenant['email'].value,
-      password: this.tenant['contrasena'].value,
-      nombreNegocio: this.negocio['nombreNegocio'].value,
-      direccion: this.negocio['direccion'].value,
-      telefonoNegocio: this.negocio['telefono'].value,
-      tipoNegocio: this.negocio['tipoNegocio'].value,
-      plan: 'basic',
-      status: 'active',
-      token: this.route.snapshot.queryParams['token']
+  fullName: this.tenant['fullName'].value,
+  fechaNacimiento: this.tenant['fechaNacimiento'].value,
+  telefono: this.tenant['telefono'].value,
+  email: this.tenant['email'].value,
+  password: this.tenant['password'].value,
+  token: this.route.snapshot.queryParams['token']
     };
     this.registerService.register(registroData).subscribe({
       next: (resp) => {

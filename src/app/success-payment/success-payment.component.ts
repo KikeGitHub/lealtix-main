@@ -56,6 +56,6 @@ export class SuccessPaymentComponent implements OnInit {
   }
 
   goToConfig() {
-    // Redirige a configuración de cuenta
+    this.router.navigate(['/admin/wizard']);
   }
 }

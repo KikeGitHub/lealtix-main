@@ -51,7 +51,7 @@ export class PagoComponent implements OnInit {
 
     try {
       // Crear sesión de checkout desde backend
-      this.tenantId = this.data.tenantId;
+      this.tenantId = this.data.tenantId.id;
       const session = await this.paymentService.createCheckoutSession(this.plan.priceId, this.tenantId).toPromise();
 
       // Verificar que la sesión se haya creado correctamente

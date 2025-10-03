@@ -3,16 +3,15 @@
   <div class="row mx-0 pt-5 px-sm-3 px-lg-5 mt-4">
     <div class="col-lg-3 col-md-6 mb-5">
       <h4 class="text-white text-uppercase mb-4" style="letter-spacing: 3px;">Ubicación</h4>
-      <p><i class="fa fa-map-marker-alt mr-2"></i>Empedrado, Paseo Arboleda, San Mateo Otzacatipan Toluca Estado de
-        Mexico</p>
-      <p><i class="fa fa-phone-alt mr-2"></i>55 76655444</p>
-      <p class="m-0"><i class="fa fa-envelope mr-2"></i>caffe@example.com</p>
+      <p><i class="fa fa-map-marker-alt mr-2"></i>{{ dir }}</p>
+      <p><i class="fa fa-phone-alt mr-2"></i>{{ tel }}</p>
+      <p class="m-0"><i class="fa fa-envelope mr-2"></i>{{ bussinesEmail }}</p>
     </div>
     <div class="col-lg-5 col-md-6 mb-5">
       <h4 class="text-white text-uppercase mb-4" style="letter-spacing: 3px;">Siguenos</h4>
       <p>Nos puedes encontrar en nuestras redes sociales:</p>
       <div class="d-flex justify-content-center mt-3">
-        <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" href="#">
+        <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" [href]="twiter">
           <span class="icon-twitter">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -20,7 +19,15 @@
             </svg>
           </span>
         </a>
-        <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" href="#">
+
+          <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" [href]="tiktok">
+            <span class="icon-tiktok">
+                <svg viewBox="0 0 32 32" width="1.5em" height="1.5em" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20.948 7.052c.352 2.036 2.01 3.584 4.052 3.936v3.012c-1.012.092-2.02-.064-2.948-.456v7.456c0 4.02-3.26 7.288-7.28 7.288-4.02 0-7.288-3.268-7.288-7.288 0-4.02 3.268-7.288 7.288-7.288.204 0 .404.012.604.028v3.072a4.22 4.22 0 0 0-.604-.048c-2.324 0-4.212 1.888-4.212 4.212 0 2.324 1.888 4.212 4.212 4.212 2.324 0 4.212-1.888 4.212-4.212V2.948h3.36v4.104z"/>
+              </svg>
+            </span>
+          </a>
+        <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" [href]="facebook">
           <span class="icon-facebook">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -28,7 +35,7 @@
             </svg>
           </span>
         </a>
-        <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" href="#">
+        <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" [href]="linkedin">
           <span class="icon-linkedin">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -36,7 +43,7 @@
             </svg>
           </span>
         </a>
-        <a class="btn btn-lg btn-outline-light btn-lg-square" href="#">
+        <a class="btn btn-lg btn-outline-light btn-lg-square" [href]="instagram">
           <span class="icon-instagram">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -46,13 +53,12 @@
         </a>
       </div>
     </div>
-    <div class="col-lg-2 col-md-6 mb-5">
+    <div class="col-lg-3 col-md-6 mb-5">
       <h4 class="text-white text-uppercase mb-4" style="letter-spacing: 3px;">Nuestros Horarios</h4>
       <div>
-        <h6 class="text-white text-uppercase">Lunes - viernes</h6>
-        <p>8.00 AM - 8.00 PM</p>
-        <h6 class="text-white text-uppercase">Sabados - Domingos</h6>
-        <p>2.00 PM - 8.00 PM</p>
+        <ng-container>
+          <p style="white-space: pre-line;">{{ schelules }}</p>
+        </ng-container>
       </div>
     </div>
   </div>

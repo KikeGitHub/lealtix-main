@@ -1,0 +1,309 @@
+<!-- Header -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container px-5">
+    <a class="navbar-brand fw-bold" href="#">
+      <img src="assets/img/lealtix_logo_transp.png" alt="Lealtix Logo" width="40" height="40" class="me-2" />
+      Lealtix
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Beneficios</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Precios</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Body -->
+<section class="py-3 bg-light min-vh-100" style="padding-top: 1.5rem !important; padding-bottom: 1.5rem !important;">
+  <div class="container px-3 my-2">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="card shadow-lg">
+          <div class="card-header bg-primary text-white text-center">
+            <h2 class="fw-bold mb-0">Datos del Negocio</h2>
+          </div>
+          <div class="card-body p-4">
+            <mat-vertical-stepper #stepper style="background-color: white;">
+              <!-- Paso 1: Usuario -->
+
+              <mat-step label="Usuario" class="custom-step-bg">
+                <form [formGroup]="userForm">
+                  <div class="row">
+                    <div class="col-12 col-md-6 mb-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="name" maxlength="50" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*" />
+                        <mat-error *ngIf="userForm.get('name')?.touched && userForm.get('name')?.invalid">
+                          <span *ngIf="userForm.get('name')?.errors?.['required']">El nombre es obligatorio.</span>
+                          <span *ngIf="userForm.get('name')?.errors?.['pattern']">Solo letras y espacios.</span>
+                          <span *ngIf="userForm.get('name')?.errors?.['maxlength']">Máximo 50 caracteres.</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Fecha de nacimiento</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="birthdate" />
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                          <mat-icon matDatepickerToggleIcon style="color: #4a90e2;">event</mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="userForm.get('birthdate')?.touched && userForm.get('birthdate')?.invalid">
+                          <span *ngIf="userForm.get('birthdate')?.errors?.['required']">La fecha es obligatoria.</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Teléfono</mat-label>
+                        <input matInput formControlName="phone" type="tel" maxlength="10" inputmode="numeric" />
+                        <mat-error *ngIf="userForm.get('phone')?.touched && userForm.get('phone')?.invalid">
+                          <span *ngIf="userForm.get('phone')?.errors?.['required']">El teléfono es obligatorio.</span>
+                          <span *ngIf="userForm.get('phone')?.errors?.['pattern']">Solo números.</span>
+                          <span *ngIf="userForm.get('phone')?.errors?.['maxlength']">Máximo 10 dígitos.</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" />
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+                          maxlength="30" />
+                        <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+                          <mat-icon style="color: #4a90e2;">{{hidePassword ? 'visibility_off' :
+                            'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="userForm.get('password')?.touched && userForm.get('password')?.invalid">
+                          <span *ngIf="userForm.get('password')?.errors?.['required']">La contraseña es
+                            obligatoria.</span>
+                          <span *ngIf="userForm.get('password')?.errors?.['pattern']">Caracteres inválidos.</span>
+                          <span *ngIf="userForm.get('password')?.errors?.['maxlength']">Máximo 30 caracteres.</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="step-actions text-end">
+                    <button mat-button color="primary" (click)="onUserStepNext(stepper)">
+                      Siguiente <mat-icon>arrow_forward</mat-icon>
+                    </button>
+                  </div>
+                </form>
+              </mat-step>
+
+              <!-- Paso 2: Negocio -->
+
+              <mat-step label="Negocio" class="custom-step-bg">
+                <form [formGroup]="businessForm">
+                  <div class="row">
+                    <div class="col-12 col-md-6 mb-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Nombre del negocio</mat-label>
+                        <input matInput formControlName="businessName" maxlength="50" autocomplete="off" />
+                        <mat-error *ngIf="businessForm.get('businessName')?.hasError('required')">El nombre es
+                          requerido</mat-error>
+                        <mat-error *ngIf="businessForm.get('businessName')?.hasError('pattern')">Solo letras y números,
+                          máximo 50 caracteres</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Dirección</mat-label>
+                        <textarea matInput formControlName="businessAddress" maxlength="150" rows="2"></textarea>
+                        <mat-error *ngIf="businessForm.get('businessAddress')?.hasError('required')">La dirección es
+                          requerida</mat-error>
+                        <mat-error *ngIf="businessForm.get('businessAddress')?.hasError('pattern')">Solo letras, números
+                          y los símbolos # - .</mat-error>
+                        <mat-hint align="end">{{businessForm.get('businessAddress')?.value?.length || 0}} /
+                          150</mat-hint>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Teléfono</mat-label>
+                        <input matInput formControlName="businessPhone" maxlength="10" autocomplete="off" />
+                        <mat-error *ngIf="businessForm.get('businessPhone')?.hasError('required')">El teléfono es
+                          requerido</mat-error>
+                        <mat-error *ngIf="businessForm.get('businessPhone')?.hasError('pattern')">Solo números, máximo
+                          10 dígitos</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Tipo de negocio</mat-label>
+                        <mat-select formControlName="businessType">
+                          <mat-option *ngFor="let tipo of tiposNegocio" [value]="tipo.value">{{tipo.label}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="businessForm.get('businessType')?.hasError('required')">Selecciona un tipo de
+                          negocio</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Slogan</mat-label>
+                        <input matInput formControlName="slogan" maxlength="80" autocomplete="off" />
+                        <mat-hint align="end">{{businessForm.get('slogan')?.value?.length || 0}} / 80</mat-hint>
+                        <mat-error *ngIf="businessForm.get('slogan')?.hasError('pattern')">Solo letras y números, máximo
+                          80 caracteres</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Logo</mat-label>
+                        <input type="file" hidden (change)="onLogoSelected($event)" #fileInput />
+
+                        <input matInput [value]="fileName" placeholder="Selecciona un archivo" readonly />
+                        <ng-container *ngIf="logoPreview">
+                          <img [src]="logoPreview" alt="Logo preview"
+                            style="max-width: 100px; max-height: 100px; margin-top: 8px; display: block;" />
+                        </ng-container>
+
+                        <button matSuffix mat-icon-button (click)="fileInput.click()">
+                          <mat-icon>attach_file</mat-icon>
+                        </button>
+                      </mat-form-field>
+                    </div>
+
+                    <!-- Horario -->
+                    <div class="col-12 col-md-6 mb-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Horario</mat-label>
+                        <textarea matInput formControlName="horario" maxlength="100" rows="2"
+                          placeholder="Ejemplo: Lun-Vie 9am-6pm  | Sab-Dom 10am-4pm"></textarea>
+                        <mat-hint align="end">{{businessForm.get('horario')?.value?.length || 0}} / 100</mat-hint>
+                        <mat-error *ngIf="businessForm.get('horario')?.hasError('maxlength')">Máximo 100 caracteres</mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="step-actions d-flex justify-content-between mt-3">
+                    <button mat-button matStepperPrevious color="primary">
+                      <mat-icon>arrow_back</mat-icon> Anterior
+                    </button>
+                    <button mat-button color="primary" (click)="onBusinessStepNext(stepper)">
+                      Siguiente <mat-icon>arrow_forward</mat-icon>
+                    </button>
+                  </div>
+                </form>
+              </mat-step>
+
+              <!-- Paso 3: Acerca de Nosotros -->
+
+              <mat-step label="Acerca de Nosotros" class="custom-step-bg">
+                <form [formGroup]="aboutForm">
+                  <div class="step-fields row">
+                    <div class="col-12 mb-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Historia</mat-label>
+                        <textarea matInput formControlName="history"></textarea>
+                        <mat-hint>Cuéntanos un poco de tu historia para que tus clientes te conozcan mejor</mat-hint>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Visión</mat-label>
+                        <textarea matInput formControlName="vision"></textarea>
+                        <mat-hint>Describe hacia dónde va tu negocio, qué esperas lograr en el futuro</mat-hint>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="step-actions d-flex justify-content-between mt-3">
+                    <button mat-button matStepperPrevious color="primary">
+                      <mat-icon>arrow_back</mat-icon> Anterior
+                    </button>
+                    <button mat-button color="primary" (click)="onAboutStepNext(stepper)">
+                      Siguiente <mat-icon>arrow_forward</mat-icon>
+                    </button>
+                  </div>
+                </form>
+              </mat-step>
+
+              <!-- Paso 4: Redes Sociales -->
+              <mat-step label="Redes Sociales" class="custom-step-bg">
+                <form [formGroup]="socialForm">
+                  <ng-template matStepLabel>Redes Sociales</ng-template>
+                  <div class="step-fields">
+                    <!-- Switch personalizado
+                    <div class="form-check form-switch mb-4 d-flex align-items-center">
+                      <input class="form-check-input" type="checkbox" id="socialSwitch" [(ngModel)]="enableSocial"
+                        [ngModelOptions]="{standalone: true}"
+                        style="width: 2.5rem; height: 1.3rem; background-color: #e3e6f0; border-color: #1976d2;">
+                      <label class="form-check-label ms-2 fw-bold" for="socialSwitch" style="color: #1976d2;">Activar
+                        redes sociales</label>
+                    </div>
+                    -->
+                    <div class="row">
+                      <div class="col-12 mb-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>Facebook</mat-label>
+                          <input matInput formControlName="facebook" />
+                        </mat-form-field>
+                      </div>
+                      <div class="col-12 mb-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>Instagram</mat-label>
+                          <input matInput formControlName="instagram" />
+                        </mat-form-field>
+                      </div>
+                      <div class="col-12 mb-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>TikTok</mat-label>
+                          <input matInput formControlName="tiktok" />
+                        </mat-form-field>
+                      </div>
+                      <div class="col-12 mb-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>Twitter</mat-label>
+                          <input matInput formControlName="twitter" />
+                        </mat-form-field>
+                      </div>
+                      <div class="col-12 mb-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>LinkedIn</mat-label>
+                          <input matInput formControlName="linkedin" />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="step-actions d-flex justify-content-between">
+                    <button mat-button matStepperPrevious color="primary">
+                      <mat-icon>arrow_back</mat-icon> Anterior
+                    </button>
+                    <button mat-raised-button color="primary" (click)="onRedesSocialesStepNext(stepper)">
+                      Finalizar <mat-icon>check_circle</mat-icon>
+                    </button>
+                  </div>
+                </form>
+              </mat-step>
+            </mat-vertical-stepper>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-5 bg-dark mt-auto">
+  <div class="container px-5 text-center text-white">
+    <h5 class="fw-bold">Lealtix</h5>
+    <ul class="list-inline">
+      <li class="list-inline-item"><a class="text-white" href="/">Inicio</a></li>
+      <li class="list-inline-item"><a class="text-white" href="#">Beneficios</a></li>
+      <li class="list-inline-item"><a class="text-white" href="#">Precios</a></li>
+      <li class="list-inline-item"><a class="text-white" href="#">Contacto</a></li>
+    </ul>
+    <p class="mt-3 mb-0">© 2025 Lealtix. Todos los derechos reservados.</p>
+  </div>
+</footer>
