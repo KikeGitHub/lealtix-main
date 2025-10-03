@@ -25,6 +25,18 @@
   height: 100%;
   fill: #fff;
 }
+
+/* Cambia el color del icono al pasar el cursor por el botón */
+.btn-outline-light:hover .icon-instagram svg,
+.btn-outline-light:focus .icon-instagram svg,
+.btn-outline-light:hover .icon-linkedin svg,
+.btn-outline-light:focus .icon-linkedin svg,
+.btn-outline-light:hover .icon-facebook svg,
+.btn-outline-light:focus .icon-facebook svg,
+.btn-outline-light:hover .icon-twitter svg,
+.btn-outline-light:focus .icon-twitter svg {
+  fill: #222;
+}
 /* Estilos inspirados en offer.component.css para un footer visualmente consistente */
 .footer {
   background: linear-gradient(rgba(51, 33, 29, 0.9), rgba(51, 33, 29, 0.9)), url('../../../../public/assets/img/bg.jpg');

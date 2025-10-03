@@ -1,9 +1,26 @@
 
-  <app-nav-bar></app-nav-bar>
-  <app-about> </app-about>
+  <app-nav-bar
+    [logoUrl]="navBarData.logoUrl"
+    [bussinessName]="navBarData.bussinessName"
+    [since]="navBarData.since"
+  ></app-nav-bar>
+  <app-about
+    [since]="aboutData.since"
+    [story]="aboutData.story"
+    [vision]="aboutData.vision"
+  ></app-about>
   <app-offer></app-offer>
   <app-menu></app-menu>
-  <app-footer></app-footer>
+  <app-footer
+    [dir]="footerData.dir"
+    [tel]="footerData.tel"
+    [bussinesEmail]="footerData.bussinesEmail"
+    [twiter]="footerData.twiter"
+    [facebook]="footerData.facebook"
+    [linkedin]="footerData.linkedin"
+    [instagram]="footerData.instagram"
+    [schelules]="footerData.schelules"
+  ></app-footer>
 
   <!-- Back to Top -->
   <button

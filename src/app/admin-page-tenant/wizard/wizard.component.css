@@ -9,6 +9,11 @@
   border-top-left-radius: 18px !important;
   border-top-right-radius: 18px !important;
 }
+::ng-deep .mat-step-label {
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    color: #1976d2 !important;
+  }
 /* Modern background for Angular Material Datepicker popup */
 .mat-datepicker-content, .mat-calendar {
   background: linear-gradient(135deg, #e3f0fa 0%, #f5faff 100%);

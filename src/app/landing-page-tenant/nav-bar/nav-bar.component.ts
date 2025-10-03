@@ -10,9 +10,10 @@ import { CommonModule } from '@angular/common';
 })
 export class NavBarComponent {
 
-  imgLogo: string = '../../../../assets/img/lealtix_logo_transp.png';
-  bussinessName: string = 'Cafe con Amor';
-  since: string = 'Desde 1990';
+  // NavBar data
+  @Input() logoUrl: string = '';
+  @Input() bussinessName: string = '';
+  @Input() since: string = '';
 
   isMenuOpen = false;
 

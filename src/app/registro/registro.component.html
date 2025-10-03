@@ -3,6 +3,17 @@
 <html lang="es">
   <head>
     <meta charset="utf-8" />
+    <style>
+      .custom-datepicker-panel .mat-datepicker-content {
+        background: rgba(33, 150, 243, 0.15) !important;
+        backdrop-filter: blur(2px);
+        border-radius: 16px !important;
+        box-shadow: 0 8px 32px 0 rgba(33, 150, 243, 0.25);
+      }
+      .custom-datepicker-panel .mat-calendar {
+        background: transparent !important;
+      }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Lealtix - Registro de usuario" />
     <meta name="author" content="Lealtix" />
@@ -50,93 +61,68 @@
                 <form [formGroup]="registroForm" (ngSubmit)="onSubmit()" novalidate>
                   <!-- Datos del tenant -->
                   <div class="card mb-4">
-                    <div class="card-header">Datos del tenant</div>
                     <div class="card-body">
                       <div formGroupName="tenant">
                         <div class="row">
-                          <div class="col-md-4 mb-3">
-                            <label>Nombre *</label>
-                            <input type="text" class="form-control" formControlName="nombre" [ngClass]="{'is-invalid': submitted && tenant['nombre'].errors}">
-                            <div *ngIf="submitted && tenant['nombre'].errors" class="invalid-feedback">Nombre requerido</div>
+                          <div class="col-md-6 mb-3">
+                            <div *ngIf="submitted && tenant['fullName'].errors" class="invalid-feedback">Nombre requerido</div>
+                              <label for="fullName" class="form-label fw-bold mb-1">Nombre completo*</label>
+                              <input id="fullName" matInput type="text" class="form-control border-primary rounded-3" formControlName="fullName" [ngClass]="{'is-invalid': submitted && tenant['fullName'].errors}">
+                              <div *ngIf="submitted && tenant['fullName'].errors" class="invalid-feedback">
+                                <span *ngIf="tenant['fullName'].errors['required']">Nombre requerido.</span>
+                              </div>
                           </div>
-                          <div class="col-md-4 mb-3">
-                            <label>Apellido paterno *</label>
-                            <input type="text" class="form-control" formControlName="paterno" [ngClass]="{'is-invalid': submitted && tenant['paterno'].errors}">
-                            <div *ngIf="submitted && tenant['paterno'].errors" class="invalid-feedback">Apellido paterno requerido</div>
-                          </div>
-                          <div class="col-md-4 mb-3">
-                            <label>Apellido materno</label>
-                            <input type="text" class="form-control" formControlName="materno">
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-4 mb-3">
-                            <label>Fecha de nacimiento *</label>
-                            <input type="date" class="form-control" formControlName="fechaNacimiento" [ngClass]="{'is-invalid': submitted && tenant['fechaNacimiento'].errors}">
-                            <div *ngIf="submitted && tenant['fechaNacimiento'].errors" class="invalid-feedback">Fecha requerida</div>
-                          </div>
-                          <div class="col-md-4 mb-3">
-                            <label>Teléfono</label>
-                            <input type="text" class="form-control" formControlName="telefono">
-                          </div>
-                          <div class="col-md-4 mb-3">
-                            <label>Email *</label>
-                            <input type="email" class="form-control" formControlName="email" [ngClass]="{'is-invalid': submitted && tenant['email'].errors}">
-                            <div *ngIf="submitted && tenant['email'].errors" class="invalid-feedback">
-                              <span *ngIf="tenant['email'].errors['required']">Email requerido</span>
-                              <span *ngIf="tenant['email'].errors['email']">Email inválido</span>
+                          <div class="col-md-6 mb-3">
+                            <label for="fechaNacimiento" class="form-label fw-bold mb-1">Fecha de nacimiento *</label>
+                            <div style="position: relative;">
+                              <input id="fechaNacimiento" matInput [matDatepicker]="picker" type="text" class="form-control border-primary rounded-3" formControlName="fechaNacimiento" [ngClass]="{'is-invalid': submitted && tenant['fechaNacimiento'].errors}">
+                              <mat-datepicker-toggle matSuffix [for]="picker" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); z-index: 2;">
+                                <mat-icon matDatepickerToggleIcon style="color: #4a90e2; font-size: 24px; vertical-align: middle;">event</mat-icon>
+                              </mat-datepicker-toggle>
+                              <mat-datepicker #picker panelClass="custom-datepicker-panel"></mat-datepicker>
+                            </div>
+                            <div *ngIf="submitted && tenant['fechaNacimiento'].errors" class="invalid-feedback">
+                              <span *ngIf="tenant['fechaNacimiento'].errors['required']">Fecha de nacimiento requerida.</span>
                             </div>
                           </div>
                         </div>
                         <div class="row">
-                          <div class="col-md-4 mb-3">
-                            <label>Contraseña *</label>
-                            <input type="password" class="form-control" formControlName="contrasena" [ngClass]="{'is-invalid': submitted && tenant['contrasena'].errors}">
-                            <div *ngIf="submitted && tenant['contrasena'].errors" class="invalid-feedback">Contraseña requerida</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Datos del negocio -->
-                  <div class="card mb-4">
-                    <div class="card-header">Datos del negocio</div>
-                    <div class="card-body">
-                      <div formGroupName="negocio">
-                        <div class="row">
                           <div class="col-md-6 mb-3">
-                            <label>Nombre del negocio *</label>
-                            <input type="text" class="form-control" formControlName="nombreNegocio" [ngClass]="{'is-invalid': submitted && negocio['nombreNegocio'].errors}">
-                            <div *ngIf="submitted && negocio['nombreNegocio'].errors" class="invalid-feedback">Nombre requerido</div>
+                            <label for="telefono" class="form-label fw-bold mb-1">Teléfono</label>
+                            <input id="telefono" matInput type="tel" maxlength="10" inputmode="numeric" class="form-control border-primary rounded-3" formControlName="telefono" [ngClass]="{'is-invalid': submitted && tenant['telefono'].errors}">
+                              <div *ngIf="submitted && tenant['telefono'].errors" class="invalid-feedback">
+                                <span *ngIf="tenant['telefono'].errors['required']">Teléfono requerido.</span>
+                                <span *ngIf="tenant['telefono'].errors['pattern']">Debe contener exactamente 10 dígitos numéricos.</span>
+                              </div>
                           </div>
                           <div class="col-md-6 mb-3">
-                            <label>Dirección negocio</label>
-                            <input type="text" class="form-control" formControlName="direccion">
+                            <label for="email" class="form-label fw-bold mb-1">Email *</label>
+                            <input id="email" matInput type="email" class="form-control border-primary rounded-3" formControlName="email" [ngClass]="{'is-invalid': submitted && tenant['email'].errors}">
+                              <div *ngIf="submitted && tenant['email'].errors" class="invalid-feedback">
+                                <span *ngIf="tenant['email'].errors['required']">Email requerido.</span>
+                                <span *ngIf="tenant['email'].errors['email']">Formato de email inválido.</span>
+                              </div>
                           </div>
                         </div>
                         <div class="row">
                           <div class="col-md-6 mb-3">
-                            <label>Teléfono negocio</label>
-                            <input type="text" class="form-control" formControlName="telefono">
-                          </div>
-                          <div class="col-md-6 mb-3">
-                            <label>Tipo de negocio *</label>
-                            <select class="form-control" formControlName="tipoNegocio" [ngClass]="{'is-invalid': submitted && negocio['tipoNegocio'].errors}">
-                              <option value="">Seleccione...</option>
-                              <option *ngFor="let tipo of tiposNegocio" [value]="tipo.value">{{tipo.label}}</option>
-                            </select>
-                            <div *ngIf="submitted && negocio['tipoNegocio'].errors" class="invalid-feedback">Tipo requerido</div>
+                            <label for="password" class="form-label fw-bold mb-1">Password *</label>
+                              <div style="position: relative;" [ngClass]="{'is-invalid': submitted && tenant['password'].errors}">
+                                <input id="password" matInput [type]="showPassword ? 'text' : 'password'" maxlength="15" class="form-control border-primary rounded-3" formControlName="password">
+                                <button mat-icon-button type="button" (click)="showPassword = !showPassword" style="position: absolute; right: 10px; top: 8px; z-index: 2; background: transparent; border: none;">
+                                  <mat-icon style="color: #4a90e2;">{{showPassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+                                </button>
+                                <div *ngIf="submitted && tenant['password'].errors" class="invalid-feedback" style="display:block;">
+                                  <span *ngIf="tenant['password'].errors['required']">Password requerido.</span>
+                                </div>
+                              </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="text-end">
+                  </div><div class="text-end">
                     <button type="submit" class="btn btn-primary btn-lg">Continuar al pago</button>
                   </div>
-
                 </form>
               </div>
             </div>

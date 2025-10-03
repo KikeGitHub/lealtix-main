@@ -35,8 +35,8 @@
 
               <mat-step label="Usuario" class="custom-step-bg">
                 <form [formGroup]="userForm">
-                  <div class="step-fields row">
-                    <div class="col-md-4 mb-3">
+                  <div class="row">
+                    <div class="col-12 col-md-6 mb-3">
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Nombre</mat-label>
                         <input matInput formControlName="name" maxlength="50" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*" />
@@ -47,7 +47,7 @@
                         </mat-error>
                       </mat-form-field>
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-12 col-md-6 mb-3">
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Fecha de nacimiento</mat-label>
                         <input matInput [matDatepicker]="picker" formControlName="birthdate" />
@@ -60,7 +60,7 @@
                         </mat-error>
                       </mat-form-field>
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-12 col-md-6 mb-3">
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Teléfono</mat-label>
                         <input matInput formControlName="phone" type="tel" maxlength="10" inputmode="numeric" />
@@ -71,21 +71,24 @@
                         </mat-error>
                       </mat-form-field>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-12 col-md-6 mb-3">
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Email</mat-label>
                         <input matInput formControlName="email" />
                       </mat-form-field>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-12 col-md-6 mb-3">
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Contraseña</mat-label>
-                        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" maxlength="30" />
+                        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+                          maxlength="30" />
                         <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
-                          <mat-icon style="color: #4a90e2;">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                          <mat-icon style="color: #4a90e2;">{{hidePassword ? 'visibility_off' :
+                            'visibility'}}</mat-icon>
                         </button>
                         <mat-error *ngIf="userForm.get('password')?.touched && userForm.get('password')?.invalid">
-                          <span *ngIf="userForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</span>
+                          <span *ngIf="userForm.get('password')?.errors?.['required']">La contraseña es
+                            obligatoria.</span>
                           <span *ngIf="userForm.get('password')?.errors?.['pattern']">Caracteres inválidos.</span>
                           <span *ngIf="userForm.get('password')?.errors?.['maxlength']">Máximo 30 caracteres.</span>
                         </mat-error>
@@ -108,45 +111,87 @@
                     <div class="col-12 col-md-6 mb-3">
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Nombre del negocio</mat-label>
-                        <input matInput formControlName="businessName" />
+                        <input matInput formControlName="businessName" maxlength="50" autocomplete="off" />
+                        <mat-error *ngIf="businessForm.get('businessName')?.hasError('required')">El nombre es
+                          requerido</mat-error>
+                        <mat-error *ngIf="businessForm.get('businessName')?.hasError('pattern')">Solo letras y números,
+                          máximo 50 caracteres</mat-error>
                       </mat-form-field>
                     </div>
                     <div class="col-12 col-md-6 mb-3">
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Dirección</mat-label>
-                        <input matInput formControlName="businessAddress" />
+                        <textarea matInput formControlName="businessAddress" maxlength="150" rows="2"></textarea>
+                        <mat-error *ngIf="businessForm.get('businessAddress')?.hasError('required')">La dirección es
+                          requerida</mat-error>
+                        <mat-error *ngIf="businessForm.get('businessAddress')?.hasError('pattern')">Solo letras, números
+                          y los símbolos # - .</mat-error>
+                        <mat-hint align="end">{{businessForm.get('businessAddress')?.value?.length || 0}} /
+                          150</mat-hint>
                       </mat-form-field>
                     </div>
                     <div class="col-12 col-md-6 mb-3">
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Teléfono</mat-label>
-                        <input matInput formControlName="businessPhone" />
+                        <input matInput formControlName="businessPhone" maxlength="10" autocomplete="off" />
+                        <mat-error *ngIf="businessForm.get('businessPhone')?.hasError('required')">El teléfono es
+                          requerido</mat-error>
+                        <mat-error *ngIf="businessForm.get('businessPhone')?.hasError('pattern')">Solo números, máximo
+                          10 dígitos</mat-error>
                       </mat-form-field>
                     </div>
                     <div class="col-12 col-md-6 mb-3">
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Tipo de negocio</mat-label>
-                        <input matInput formControlName="businessType" />
+                        <mat-select formControlName="businessType">
+                          <mat-option *ngFor="let tipo of tiposNegocio" [value]="tipo.value">{{tipo.label}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="businessForm.get('businessType')?.hasError('required')">Selecciona un tipo de
+                          negocio</mat-error>
                       </mat-form-field>
                     </div>
                     <div class="col-12 col-md-6 mb-3">
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Slogan</mat-label>
-                        <input matInput formControlName="slogan" />
+                        <input matInput formControlName="slogan" maxlength="80" autocomplete="off" />
+                        <mat-hint align="end">{{businessForm.get('slogan')?.value?.length || 0}} / 80</mat-hint>
+                        <mat-error *ngIf="businessForm.get('slogan')?.hasError('pattern')">Solo letras y números, máximo
+                          80 caracteres</mat-error>
                       </mat-form-field>
                     </div>
-                    <div class="col-12 col-md-6 mb-3 d-flex flex-column justify-content-end">
-                      <label style="font-size: 14px; font-weight: 500;">Logo</label>
-                      <input type="file" (change)="onLogoSelected($event)" accept="image/*" />
-                      <img *ngIf="logoPreview" [src]="logoPreview" alt="Logo preview"
-                        style="max-width: 100px; margin-top: 10px;" />
+                    <div class="col-12 col-md-6 mb-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Logo</mat-label>
+                        <input type="file" hidden (change)="onLogoSelected($event)" #fileInput />
+
+                        <input matInput [value]="fileName" placeholder="Selecciona un archivo" readonly />
+                        <ng-container *ngIf="logoPreview">
+                          <img [src]="logoPreview" alt="Logo preview"
+                            style="max-width: 100px; max-height: 100px; margin-top: 8px; display: block;" />
+                        </ng-container>
+
+                        <button matSuffix mat-icon-button (click)="fileInput.click()">
+                          <mat-icon>attach_file</mat-icon>
+                        </button>
+                      </mat-form-field>
+                    </div>
+
+                    <!-- Horario -->
+                    <div class="col-12 col-md-6 mb-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Horario</mat-label>
+                        <textarea matInput formControlName="horario" maxlength="100" rows="2"
+                          placeholder="Ejemplo: Lun-Vie 9am-6pm  | Sab-Dom 10am-4pm"></textarea>
+                        <mat-hint align="end">{{businessForm.get('horario')?.value?.length || 0}} / 100</mat-hint>
+                        <mat-error *ngIf="businessForm.get('horario')?.hasError('maxlength')">Máximo 100 caracteres</mat-error>
+                      </mat-form-field>
                     </div>
                   </div>
                   <div class="step-actions d-flex justify-content-between mt-3">
                     <button mat-button matStepperPrevious color="primary">
                       <mat-icon>arrow_back</mat-icon> Anterior
                     </button>
-                    <button mat-button matStepperNext color="primary">
+                    <button mat-button color="primary" (click)="onBusinessStepNext(stepper)">
                       Siguiente <mat-icon>arrow_forward</mat-icon>
                     </button>
                   </div>
@@ -158,112 +203,46 @@
               <mat-step label="Acerca de Nosotros" class="custom-step-bg">
                 <form [formGroup]="aboutForm">
                   <div class="step-fields row">
-                    <div class="col-md-6 mb-3">
+                    <div class="col-12 mb-3">
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Historia</mat-label>
                         <textarea matInput formControlName="history"></textarea>
                         <mat-hint>Cuéntanos un poco de tu historia para que tus clientes te conozcan mejor</mat-hint>
                       </mat-form-field>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-12 mb-3">
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Visión</mat-label>
                         <textarea matInput formControlName="vision"></textarea>
                         <mat-hint>Describe hacia dónde va tu negocio, qué esperas lograr en el futuro</mat-hint>
                       </mat-form-field>
                     </div>
-                    <div class="col-12 mb-3">
-                      <div class="vision-points">
-                        <label>Puntos de visión</label>
-                        <mat-chip-grid #chipGrid aria-label="Puntos de visión">
-                          <mat-chip *ngFor="let point of visionPoints.controls; let i = index"
-                            [removable]="visionPoints.length > 1" (removed)="removeVisionPoint(i)">
-                            <input [formControl]="asFormControl(point)"
-                              [placeholder]="visionSuggestions[i] || 'Punto de visión'">
-                            <button matChipRemove>
-                              <mat-icon>cancel</mat-icon>
-                            </button>
-                          </mat-chip>
-                          <input #chipInput [matChipInputFor]="chipGrid" style="display:none" />
-                        </mat-chip-grid>
-                        <button mat-mini-fab color="primary" (click)="addVisionPointFromInput($event)"
-                          [disabled]="visionPoints.length >= 3" type="button">
-                          <mat-icon>add</mat-icon>
-                        </button>
-                      </div>
-                    </div>
                   </div>
-                  <div class="step-actions d-flex justify-content-between">
-                    <button mat-button matStepperPrevious>Anterior</button>
-                    <button mat-button matStepperNext color="primary">Siguiente</button>
-                  </div>
-                </form>
-              </mat-step>
-
-              <!-- Paso 4: Horarios -->
-              <mat-step label="Horarios" class="custom-step-bg">
-                <form [formGroup]="schedulesForm">
-                  <ng-template matStepLabel>Horarios</ng-template>
-                  <div class="step-fields">
-                    <table mat-table [dataSource]="schedules.controls" class="mat-elevation-z8">
-                      <ng-container matColumnDef="day">
-                        <th mat-header-cell *matHeaderCellDef>Día</th>
-                        <td mat-cell *matCellDef="let row; let i = index">
-                          <mat-form-field>
-                            <input matInput [formControl]="row.get('day')" placeholder="Día" />
-                          </mat-form-field>
-                        </td>
-                      </ng-container>
-                      <ng-container matColumnDef="open">
-                        <th mat-header-cell *matHeaderCellDef>Abrir</th>
-                        <td mat-cell *matCellDef="let row; let i = index">
-                          <mat-form-field>
-                            <input matInput [formControl]="row.get('open')" placeholder="Hora de apertura" />
-                          </mat-form-field>
-                        </td>
-                      </ng-container>
-                      <ng-container matColumnDef="close">
-                        <th mat-header-cell *matHeaderCellDef>Cerrar</th>
-                        <td mat-cell *matCellDef="let row; let i = index">
-                          <mat-form-field>
-                            <input matInput [formControl]="row.get('close')" placeholder="Hora de cierre" />
-                          </mat-form-field>
-                        </td>
-                      </ng-container>
-                      <ng-container matColumnDef="actions">
-                        <th mat-header-cell *matHeaderCellDef>Acciones</th>
-                        <td mat-cell *matCellDef="let row; let i = index">
-                          <button mat-icon-button color="warn" (click)="removeSchedule(i)"
-                            [disabled]="schedules.length <= 1">
-                            <mat-icon>delete</mat-icon>
-                          </button>
-                        </td>
-                      </ng-container>
-                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
-                    <button mat-mini-fab color="primary" (click)="addSchedule()" type="button">
-                      <mat-icon>add</mat-icon>
+                  <div class="step-actions d-flex justify-content-between mt-3">
+                    <button mat-button matStepperPrevious color="primary">
+                      <mat-icon>arrow_back</mat-icon> Anterior
+                    </button>
+                    <button mat-button color="primary" (click)="onAboutStepNext(stepper)">
+                      Siguiente <mat-icon>arrow_forward</mat-icon>
                     </button>
                   </div>
-                  <div class="step-actions d-flex justify-content-between">
-                    <button mat-button matStepperPrevious>Anterior</button>
-                    <button mat-button matStepperNext color="primary">Siguiente</button>
-                  </div>
                 </form>
               </mat-step>
 
-              <!-- Paso 5: Redes Sociales -->
+              <!-- Paso 4: Redes Sociales -->
               <mat-step label="Redes Sociales" class="custom-step-bg">
                 <form [formGroup]="socialForm">
                   <ng-template matStepLabel>Redes Sociales</ng-template>
                   <div class="step-fields">
-                    <!-- Switch personalizado -->
+                    <!-- Switch personalizado
                     <div class="form-check form-switch mb-4 d-flex align-items-center">
-                        <input class="form-check-input" type="checkbox" id="socialSwitch" [(ngModel)]="enableSocial" [ngModelOptions]="{standalone: true}"
+                      <input class="form-check-input" type="checkbox" id="socialSwitch" [(ngModel)]="enableSocial"
+                        [ngModelOptions]="{standalone: true}"
                         style="width: 2.5rem; height: 1.3rem; background-color: #e3e6f0; border-color: #1976d2;">
-                      <label class="form-check-label ms-2 fw-bold" for="socialSwitch" style="color: #1976d2;">Activar redes sociales</label>
+                      <label class="form-check-label ms-2 fw-bold" for="socialSwitch" style="color: #1976d2;">Activar
+                        redes sociales</label>
                     </div>
+                    -->
                     <div class="row">
                       <div class="col-12 mb-3">
                         <mat-form-field appearance="outline" class="w-100">
@@ -301,7 +280,7 @@
                     <button mat-button matStepperPrevious color="primary">
                       <mat-icon>arrow_back</mat-icon> Anterior
                     </button>
-                    <button mat-raised-button color="primary" (click)="onSubmit()">
+                    <button mat-raised-button color="primary" (click)="onRedesSocialesStepNext(stepper)">
                       Finalizar <mat-icon>check_circle</mat-icon>
                     </button>
                   </div>
