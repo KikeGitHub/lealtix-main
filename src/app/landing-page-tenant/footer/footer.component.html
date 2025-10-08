@@ -1,0 +1,72 @@
+<!-- Footer Start -->
+<div id="footer" class="footer container-fluid my-5 py-5 text-center position-relative overlay-top overlay-bottom">
+  <div class="row mx-0 pt-5 px-sm-3 px-lg-5 mt-4">
+    <div class="col-lg-3 col-md-6 mb-5">
+      <h4 class="text-white text-uppercase mb-4" style="letter-spacing: 3px;">Ubicación</h4>
+      <p><i class="fa fa-map-marker-alt mr-2"></i>{{ dir }}</p>
+      <p><i class="fa fa-phone-alt mr-2"></i>{{ tel }}</p>
+      <p class="m-0"><i class="fa fa-envelope mr-2"></i>{{ bussinesEmail }}</p>
+    </div>
+    <div class="col-lg-5 col-md-6 mb-5">
+      <h4 class="text-white text-uppercase mb-4" style="letter-spacing: 3px;">Siguenos</h4>
+      <p>Nos puedes encontrar en nuestras redes sociales:</p>
+      <div class="d-flex justify-content-center mt-3">
+        <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" [href]="twiter">
+          <span class="icon-twitter">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M22.46 5.94c-.77.34-1.6.57-2.47.67a4.3 4.3 0 0 0 1.88-2.37 8.59 8.59 0 0 1-2.72 1.04 4.28 4.28 0 0 0-7.29 3.9A12.13 12.13 0 0 1 3.1 4.89a4.28 4.28 0 0 0 1.32 5.71c-.7-.02-1.36-.21-1.94-.53v.05a4.28 4.28 0 0 0 3.43 4.19c-.33.09-.68.14-1.04.14-.25 0-.49-.02-.73-.07a4.29 4.29 0 0 0 4 2.97A8.6 8.6 0 0 1 2 19.54a12.13 12.13 0 0 0 6.56 1.92c7.88 0 12.2-6.53 12.2-12.2 0-.19 0-.37-.01-.56a8.7 8.7 0 0 0 2.14-2.22z" />
+            </svg>
+          </span>
+        </a>
+
+          <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" [href]="tiktok">
+            <span class="icon-tiktok">
+                <svg viewBox="0 0 32 32" width="1.5em" height="1.5em" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20.948 7.052c.352 2.036 2.01 3.584 4.052 3.936v3.012c-1.012.092-2.02-.064-2.948-.456v7.456c0 4.02-3.26 7.288-7.28 7.288-4.02 0-7.288-3.268-7.288-7.288 0-4.02 3.268-7.288 7.288-7.288.204 0 .404.012.604.028v3.072a4.22 4.22 0 0 0-.604-.048c-2.324 0-4.212 1.888-4.212 4.212 0 2.324 1.888 4.212 4.212 4.212 2.324 0 4.212-1.888 4.212-4.212V2.948h3.36v4.104z"/>
+              </svg>
+            </span>
+          </a>
+        <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" [href]="facebook">
+          <span class="icon-facebook">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M22.675 0h-21.35C.6 0 0 .6 0 1.326v21.348C0 23.4.6 24 1.326 24H12.82v-9.294H9.692V11.01h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.92.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.696h-3.12V24h6.116C23.4 24 24 23.4 24 22.674V1.326C24 .6 23.4 0 22.675 0" />
+            </svg>
+          </span>
+        </a>
+        <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" [href]="linkedin">
+          <span class="icon-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11.75 20h-3v-10h3v10zm-1.5-11.25c-.97 0-1.75-.78-1.75-1.75s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.75-1.75 1.75zm14.25 11.25h-3v-5.5c0-1.32-.03-3-1.83-3-1.83 0-2.11 1.43-2.11 2.91v5.59h-3v-10h2.88v1.36h.04c.4-.75 1.38-1.54 2.84-1.54 3.04 0 3.6 2 3.6 4.59v5.59z" />
+            </svg>
+          </span>
+        </a>
+        <a class="btn btn-lg btn-outline-light btn-lg-square" [href]="instagram">
+          <span class="icon-instagram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.974 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.974-1.246-2.242-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.974-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.775.131 4.602.414 3.635 1.381 2.668 2.348 2.385 3.521 2.326 4.798.013 8.332 0 8.741 0 12c0 3.259.013 3.668.072 4.948.059 1.277.342 2.45 1.309 3.417.967.967 2.14 1.25 3.417 1.309C8.332 23.987 8.741 24 12 24c3.259 0 3.668-.013 4.948-.072 1.277-.059 2.45-.342 3.417-1.309.967-.967 1.25-2.14 1.309-3.417.059-1.28.072-1.689.072-4.948 0-3.259-.013-3.668-.072-4.948-.059-1.277-.342-2.45-1.309-3.417-.967-.967-2.14-1.25-3.417-1.309C15.668.013 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-5">
+      <h4 class="text-white text-uppercase mb-4" style="letter-spacing: 3px;">Nuestros Horarios</h4>
+      <div>
+        <ng-container>
+          <p style="white-space: pre-line;">{{ schelules }}</p>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid text-center text-white border-top mt-4 py-4 px-sm-3 px-md-5"
+    style="border-color: rgba(256, 256, 256, .1) !important;">
+    <p class="mb-2 text-white">Copyright &copy;
+      <a class="font-weight-bold" href="#">Lealtix</a>. All Rights Reserved.
+    </p>
+  </div>
+</div>
+<!-- Footer End -->

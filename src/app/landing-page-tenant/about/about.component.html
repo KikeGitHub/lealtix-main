@@ -1,0 +1,27 @@
+<!-- About Start -->
+<div class="container-fluid about-section py-5">
+  <div class="container">
+    <div class="section-title text-center">
+      <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Quienes Somos</h4>
+      <h1 class="display-4">{{ since }}</h1>
+    </div>
+    <div class="row align-items-center flex-column flex-lg-row">
+      <div class="col-12 col-lg-4 py-3">
+        <h1 class="mb-3">Nuestra Historia</h1>
+        <p class="text-justify" [innerHTML]="story"></p>
+      </div>
+      <div class="col-12 col-lg-4 py-3 d-flex justify-content-center">
+        <div class="position-relative w-100">
+          <img class="img-fluid rounded about-img-transparent" src="../../../assets/img/about.png"
+            style="object-fit: cover; width: 100%; height: auto;">
+        </div>
+      </div>
+      <div class="col-12 col-lg-4 py-3">
+        <h1 class="mb-3">Nuestra Visión</h1>
+        <p class="text-justify">{{ vision }}</p>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- About End -->

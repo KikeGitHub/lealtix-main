@@ -1,0 +1,130 @@
+/* Estilos personalizados para el botón primario del formulario Offer */
+:host ::ng-deep .btn-primary {
+  color: #212529 !important;
+  background-color: #DA9F5B !important;
+  border-color: #DA9F5B !important;
+}
+/* Formulario alineado en un solo row */
+.offer-row-form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.offer-row-form input[type="text"],
+.offer-row-form input[type="email"] {
+  min-width: 200px;
+  flex: 1 1 0;
+}
+.offer-row-form button {
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+/* Estilos personalizados para el formulario de Offer */
+.offer-form {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center !important;
+  margin-top: 0;
+  box-sizing: border-box;
+}
+.offer-form *, .offer-form *::before, .offer-form *::after {
+  box-sizing: border-box;
+}
+/* Estilos personalizados para Offer */
+.offer-title {
+  color: #DA9F5B !important;
+  font-size: 3.5rem;
+  font-weight: 700 !important;
+  line-height: 1.2;
+  margin-top: 1rem !important;
+  text-align: center;
+}
+/* Fondo con gradiente y imagen para la sección offer */
+.offer {
+  background: linear-gradient(rgba(51, 33, 29, 0.9), rgba(51, 33, 29, 0.9)), url('../../../../public/assets/img/bg.jpg');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.overlay-top {
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+}
+.overlay-bottom {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+.display-4 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+.text-primary {
+  color: #007bff !important;
+}
+.text-white {
+  color: #fff !important;
+}
+.mt-3 {
+  margin-top: 1rem;
+}
+.mb-3 {
+  margin-bottom: 1rem;
+}
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+.pb-3 {
+  padding-bottom: 1rem;
+}
+.font-weight-bold {
+  font-weight: 700;
+}
+.font-weight-normal {
+  font-weight: 400;
+}
+.form-inline {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.input-group {
+  display: flex;
+  align-items: center;
+}
+.input-group-append {
+  display: flex;
+  align-items: center;
+}
+.form-control {
+  border-radius: 30px;
+  border: none;
+  font-size: 1rem;
+}
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  border-radius: 30px;
+  color: #fff;
+  font-size: 1.1rem;
+  transition: background 0.3s;
+}
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+.px-4 {
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+}
+.my-5 {
+  margin-top: 3rem !important;
+  margin-bottom: 3rem !important;
+}
+.py-5 {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}

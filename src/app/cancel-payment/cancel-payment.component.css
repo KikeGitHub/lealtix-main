@@ -1,0 +1,11 @@
+/* Estilos para cancel-payment.component */
+.card-header.bg-warning {
+  background-color: #ffe082 !important;
+  color: #333 !important;
+}
+.card.border-warning {
+  border-color: #ffe082 !important;
+}
+.text-warning {
+  color: #ffa000 !important;
+}
