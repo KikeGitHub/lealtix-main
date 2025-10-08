@@ -54,8 +54,4 @@ export class SuccessPaymentComponent implements OnInit {
     // Redirige a landing-page/demo
     this.router.navigate(['/landing-page/demo']);
   }
-
-  goToConfig() {
-    this.router.navigate(['/admin/wizard']);
-  }
 }
