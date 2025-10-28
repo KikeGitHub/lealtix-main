@@ -51,7 +51,8 @@ export class SuccessPaymentComponent implements OnInit {
   }
 
   goToDashboard() {
-    // Redirige a landing-page/demo
-    this.router.navigate(['/landing-page/demo']);
+  // Redirige a la página de autenticación externa (host local en el puerto 4201)
+  // Usamos window.location.href para forzar una navegación completa a una URL externa
+  window.location.href = 'http://localhost:4201/auth/login';
   }
 }
