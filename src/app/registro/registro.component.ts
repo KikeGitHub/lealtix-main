@@ -1,5 +1,10 @@
 
 import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PagoComponent } from '../pago/pago.component';
@@ -15,15 +20,14 @@ import { RegisterService } from '../services/register.service';
   imports: [
     ReactiveFormsModule,
     CommonModule,
-    InputTextModule,
-    CalendarModule,
-    PasswordModule,
-    ButtonModule,
-    CardModule,
-    MessagesModule,
-    MenubarModule
+    MatInputModule,
+    MatDatepickerModule,
+    MatIconModule,
+    MatNativeDateModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'es-MX' }
+  ],
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
 })
@@ -41,13 +45,6 @@ export class RegistroComponent {
   ];
   errorMsg: string | null = null;
   loading = true;
-  today: Date = new Date();
-  menuItems: any[] = [
-    { label: 'Inicio', routerLink: '/' },
-    { label: 'Beneficios', routerLink: '/#beneficios' },
-    { label: 'Precios', routerLink: '/#precios' },
-    { label: 'Contacto', routerLink: '/#contacto' }
-  ];
 
   constructor(
     private fb: FormBuilder,
@@ -88,9 +85,9 @@ export class RegistroComponent {
               tenantGroup.patchValue({
                 email: resp.object.registroDto.email,
                 fullName: resp.object.registroDto.fullName,
-                  fechaNacimiento: resp.object.registroDto.fechaNacimiento
-                    ? new Date(resp.object.registroDto.fechaNacimiento)
-                    : '',
+                fechaNacimiento: resp.object.registroDto.fechaNacimiento
+                  ? new Date(resp.object.registroDto.fechaNacimiento).toISOString().substring(0, 10)
+                  : '',
                 telefono: resp.object.registroDto.telefono || ''
               });
 
