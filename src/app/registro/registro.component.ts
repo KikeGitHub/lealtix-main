@@ -1,33 +1,42 @@
 
-import { CommonModule } from '@angular/common';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { PagoComponent } from '../pago/pago.component';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+
+// PrimeNG imports
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { RippleModule } from 'primeng/ripple';
+import { CardModule } from 'primeng/card';
+import { DatePickerModule } from 'primeng/datepicker';
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
+import { PagoComponent } from '../pago/pago.component';
 import { TokenValidationService } from '../services/token-validation.service';
 import { RegisterModel } from '../models/RegisterModel';
 import { RegisterService } from '../services/register.service';
-import { InputTextModule } from 'primeng/inputtext';
-import { CalendarModule } from 'primeng/calendar';
-import { PasswordModule } from 'primeng/password';
-import { ButtonModule } from 'primeng/button';
-import { InputMaskModule } from 'primeng/inputmask';
-import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'app-registro',
   standalone: true,
+  encapsulation: ViewEncapsulation.None,
   imports: [
     ReactiveFormsModule,
     CommonModule,
     InputTextModule,
-    CalendarModule,
-    PasswordModule,
     ButtonModule,
     InputMaskModule,
-    RippleModule
+    InputNumberModule,
+    RippleModule,
+    CardModule,
+    DatePickerModule,
+    MessageModule,
+    ToastModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es-MX' }
@@ -37,11 +46,14 @@ import { RippleModule } from 'primeng/ripple';
 })
 export class RegistroComponent {
   showPassword = false;
+  isSubmitting = false;
   registroForm: FormGroup;
   submitted = false;
   pagoValido = false;
   showPagoModal = false;
   pagoResult: any = null;
+  today = new Date();
+  yearRange = `1950:${new Date().getFullYear()}`;
   tiposNegocio = [
     { value: 'Cafeteria', label: 'Cafetería' },
     { value: 'Boutique', label: 'Boutique' },
@@ -72,7 +84,7 @@ export class RegistroComponent {
     });
 
     // Validar query params y token
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params: any) => {
       const register = params['register'];
       const token = params['token'];
       if (register !== 'true' || !token) {
@@ -117,6 +129,12 @@ export class RegistroComponent {
   }
   get tenant() {
     return (this.registroForm.get('tenant') as FormGroup).controls;
+  }
+
+  onCancel() {}
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
 
