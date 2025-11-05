@@ -19,7 +19,7 @@
 .text-3xl {
   font-size: 2rem !important;
   line-height: 2.5rem !important;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
@@ -48,13 +48,13 @@
 }
 
 .section-icon {
-  color: #667eea !important;
+  color: #0d6efd !important;
   font-size: 1.25rem !important;
 }
 
 .section-divider {
   height: 2px !important;
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
+  background: linear-gradient(90deg, #0d6efd 0%, #0a58ca 100%) !important;
   border-radius: 1px !important;
   margin-top: 0.75rem !important;
 }
@@ -86,8 +86,8 @@
 }
 
 .input-field:focus {
-  border-color: #667eea !important;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+  border-color: #0d6efd !important;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1) !important;
   outline: none !important;
 }
 
@@ -125,7 +125,7 @@
 }
 
 .action-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%) !important;
   border: none !important;
   border-radius: 8px !important;
   padding: 0.75rem 1.5rem !important;
@@ -267,8 +267,8 @@
 }
 
 ::ng-deep .p-inputnumber .p-inputtext:focus {
-  border-color: #667eea !important;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+  border-color: #0d6efd !important;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1) !important;
 }
 
 /* Estilos básicos para el campo de contraseña personalizado */
@@ -291,8 +291,8 @@
 }
 
 .password-input:focus {
-  border-color: #667eea !important;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+  border-color: #0d6efd !important;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1) !important;
 }
 
 .password-toggle {
@@ -313,8 +313,8 @@
 }
 
 .password-toggle:hover {
-  color: #667eea;
-  background-color: rgba(102, 126, 234, 0.1);
+  color: #0d6efd;
+  background-color: rgba(13, 110, 253, 0.1);
 }
 
 ::ng-deep .p-button {
