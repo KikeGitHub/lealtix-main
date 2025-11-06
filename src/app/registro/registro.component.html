@@ -20,210 +20,283 @@
   </div>
 </nav>
 
-<!-- Registro Formulario PrimeNG-->
-<section class="surface-ground min-h-screen py-8">
-  <div class="flex justify-content-center px-4">
-    <div class="surface-card p-6 shadow-2 border-round w-full" style="max-width: 600px;">
+<!-- Loading Screen -->
+<div *ngIf="loading" class="loading-screen">
+  <div class="loading-content">
+    <p-progressSpinner strokeWidth="3" fill="transparent" animationDuration="1s"></p-progressSpinner>
+    <h3 class="loading-title">Validando invitación...</h3>
+    <p class="loading-subtitle">Por favor espera un momento</p>
+  </div>
+</div>
+
+<!-- Registro con Stepper -->
+<section class="registration-section" *ngIf="!loading">
+  <div class="registration-container">
+    <div class="registration-card">
 
       <!-- Header del formulario -->
-      <div class="text-center mb-6">
-        <div class="text-900 text-3xl font-bold mb-3">Registro de Usuario</div>
-        <p class="text-600 font-medium line-height-3 m-0">
-          Completa los siguientes datos para crear tu cuenta
-        </p>
+      <div class="registration-header">
+        <div class="brand-section">
+          <div>
+            <h2 class="brand-title">Bienvenido a Lealtix</h2>
+            <p class="brand-subtitle">Completa tu registro para comenzar</p>
+          </div>
+        </div>
       </div>
+      <app-confetti></app-confetti>
 
-      <!-- Formulario -->
-      <form [formGroup]="registroForm" (ngSubmit)="onSubmit()" novalidate>
-        <div formGroupName="tenant" class="flex flex-column gap-6">
-
-          <!-- Sección: Información Personal -->
-          <div class="form-section">
-            <div class="section-header mb-4">
-              <h4 class="section-title">
-                <i class="pi pi-user section-icon"></i>
-                Información Personal
-              </h4>
-              <div class="section-divider"></div>
-            </div>
-
-            <div class="flex flex-column gap-4">
-              <!-- Nombre Completo -->
-              <div class="field">
-                <label for="fullName" class="field-label">
-                  Nombre completo <span class="required-asterisk">*</span>
-                </label>
-                <input
-                  id="fullName"
-                  pInputText
-                  formControlName="fullName"
-                  class="w-full input-field"
-                  [class.p-invalid]="submitted && tenant['fullName'].errors"
-                  placeholder="Ingresa tu nombre completo"
-                />
-                <small
-                  *ngIf="submitted && tenant['fullName'].errors"
-                  class="error-message">
-                  <i class="pi pi-exclamation-circle"></i> El nombre es requerido
-                </small>
-              </div>
-
-              <!-- Fecha de Nacimiento -->
-              <div class="field">
-                <label for="fechaNacimiento" class="field-label">
-                  Fecha de nacimiento <span class="required-asterisk">*</span>
-                </label>
-                <input
-                  id="fechaNacimiento"
-                  pInputText
-                  type="date"
-                  formControlName="fechaNacimiento"
-                  class="w-full input-field"
-                  [class.p-invalid]="submitted && tenant['fechaNacimiento'].errors"
-                />
-                <small
-                  *ngIf="submitted && tenant['fechaNacimiento'].errors"
-                  class="error-message">
-                  <i class="pi pi-exclamation-circle"></i> La fecha de nacimiento es requerida
-                </small>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sección: Información de Contacto -->
-          <div class="form-section">
-            <div class="section-header mb-4">
-              <h4 class="section-title">
-                <i class="pi pi-phone section-icon"></i>
-                Información de Contacto
-              </h4>
-              <div class="section-divider"></div>
-            </div>
-
-            <div class="flex flex-column gap-4">
-              <!-- Teléfono -->
-              <div class="field">
-                <label for="telefono" class="field-label">
-                  Número de teléfono
-                </label>
-                <p-inputNumber
-                  id="telefono"
-                  formControlName="telefono"
-                  class="w-full"
-                  placeholder="10 dígitos"
-                  [useGrouping]="false"
-                  [maxlength]="10"
-                  [min]="1000000000"
-                  [max]="9999999999"
-                  mode="decimal"
-                ></p-inputNumber>
-                <small class="field-help">
-                  <i class="pi pi-info-circle"></i> Formato: 5512345678
-                </small>
-              </div>
-
-              <!-- Email -->
-              <div class="field">
-                <label for="email" class="field-label">
-                  Correo electrónico <span class="required-asterisk">*</span>
-                </label>
-                <input
-                  pInputText
-                  id="email"
-                  type="email"
-                  formControlName="email"
-                  class="w-full input-field"
-                  [class.p-invalid]="submitted && tenant['email'].errors"
-                  placeholder="ejemplo@correo.com"
-                />
-                <small
-                  *ngIf="submitted && tenant['email'].errors"
-                  class="error-message">
-                  <i class="pi pi-exclamation-circle"></i> Ingresa un email válido
-                </small>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sección: Información de Seguridad -->
-          <div class="form-section">
-            <div class="section-header mb-4">
-              <h4 class="section-title">
-                <i class="pi pi-lock section-icon"></i>
-                Información de Seguridad
-              </h4>
-              <div class="section-divider"></div>
-            </div>
-
-            <div class="flex flex-column gap-4">
-              <!-- Contraseña -->
-              <div class="field">
-                <label for="password" class="field-label">
-                  Contraseña <span class="required-asterisk">*</span>
-                </label>
-                <div class="password-container">
-                  <input
-                    id="password"
-                    [type]="showPassword ? 'text' : 'password'"
-                    pInputText
-                    formControlName="password"
-                    class="password-input"
-                    [class.p-invalid]="submitted && tenant['password'].errors"
-                    placeholder="Crea una contraseña segura"
-                  />
-                  <span
-                    class="password-toggle"
-                    (click)="togglePasswordVisibility()"
-                  >
-                    <i [class]="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
-                  </span>
-                </div>
-                <small
-                  *ngIf="submitted && tenant['password'].errors"
-                  class="error-message">
-                  <i class="pi pi-exclamation-circle"></i> La contraseña es requerida
-                </small>
-              </div>
+      <!-- Stepper -->
+      <div class="stepper-container">
+        <!-- Navigation (custom styled steps with rounded gold numbers) -->
+        <div class="custom-steps" role="tablist" aria-label="Registro Steps">
+          <div *ngFor="let item of stepItems; let i = index" class="custom-step" [class.active]="i === activeStep" [class.completed]="i < activeStep" (click)="activeStep = i">
+            <div class="custom-step-number">{{ i < activeStep ? '✓' : (i + 1) }}</div>
+            <div class="custom-step-info">
+              <div class="custom-step-title">{{ item.label }}</div>
+              <div class="custom-step-desc">{{ item.label | lowercase }}</div>
             </div>
           </div>
         </div>
 
-        <!-- Botones de acción -->
-        <div class="form-actions mt-6">
-          <div class="flex justify-content-between align-items-center gap-3">
-            <p-button
-              label="Cancelar"
-              icon="pi pi-times"
-              class="p-button-outlined p-button-secondary flex-1"
-              type="button"
-              (onClick)="onCancel()"
-            ></p-button>
+        <!-- Panels controlled by activeStep -->
+        <!-- Step 1: Información Personal -->
+        <div *ngIf="activeStep === 0" class="step-content">
+          <div class="step-header">
+            <h3 class="step-title">
+              <i class="pi pi-user step-icon"></i>
+              Información Personal
+            </h3>
+            <p class="step-description">Completa tus datos básicos para continuar</p>
+          </div>
 
+          <form [formGroup]="registroForm" class="step-form">
+            <div formGroupName="tenant">
+              <div class="form-grid">
+                <!-- Nombre Completo -->
+                <div class="form-field">
+                  <label for="fullName" class="field-label">
+                    Nombre completo <span class="required">*</span>
+                  </label>
+                  <input
+                    id="fullName"
+                    pInputText
+                    formControlName="fullName"
+                    class="w-full"
+                    [class.p-invalid]="isFieldInvalid('fullName')"
+                    placeholder="Ingresa tu nombre completo"
+                  />
+                  <small *ngIf="isFieldInvalid('fullName')" class="p-error">
+                    <i class="pi pi-exclamation-circle"></i> El nombre es requerido
+                  </small>
+                </div>
+
+                <!-- Fecha de Nacimiento -->
+                <div class="form-field">
+                  <label for="fechaNacimiento" class="field-label">
+                    Fecha de nacimiento <span class="required">*</span>
+                  </label>
+                  <input
+                    id="fechaNacimiento"
+                    pInputText
+                    type="date"
+                    formControlName="fechaNacimiento"
+                    class="w-full"
+                    [class.p-invalid]="isFieldInvalid('fechaNacimiento')"
+                  />
+                  <small *ngIf="isFieldInvalid('fechaNacimiento')" class="p-error">
+                    <i class="pi pi-exclamation-circle"></i> La fecha de nacimiento es requerida
+                  </small>
+                </div>
+
+                      <!-- Email -->
+                      <div class="form-field full-col">
+                  <label for="email" class="field-label">
+                    Correo electrónico <span class="required">*</span>
+                  </label>
+                  <input
+                    pInputText
+                    id="email"
+                    type="email"
+                    formControlName="email"
+                    class="w-full"
+                    [class.p-invalid]="isFieldInvalid('email')"
+                    placeholder="ejemplo@correo.com"
+                  />
+                  <small *ngIf="isFieldInvalid('email')" class="p-error">
+                    <i class="pi pi-exclamation-circle"></i> Ingresa un email válido
+                  </small>
+                </div>
+
+                <!-- Teléfono -->
+                <div class="form-field">
+                  <label for="telefono" class="field-label">
+                    Número de teléfono
+                  </label>
+                  <p-inputNumber
+                    id="telefono"
+                    formControlName="telefono"
+                    class="w-full"
+                    placeholder="10 dígitos"
+                    [useGrouping]="false"
+                    [maxlength]="10"
+                    [min]="1000000000"
+                    [max]="9999999999"
+                    mode="decimal"
+                  ></p-inputNumber>
+                  <small class="field-help">
+                    <i class="pi pi-info-circle"></i> Formato: 5512345678
+                  </small>
+                </div>
+
+                      <!-- Contraseña -->
+                      <div class="form-field">
+                  <label for="password" class="field-label">
+                    Contraseña <span class="required">*</span>
+                  </label>
+                  <div class="password-field">
+                    <input
+                      id="password"
+                      [type]="showPassword ? 'text' : 'password'"
+                      pInputText
+                      formControlName="password"
+                      class="password-input"
+                      [class.p-invalid]="isFieldInvalid('password')"
+                      placeholder="Crea una contraseña segura"
+                    />
+                    <button
+                      type="button"
+                      class="password-toggle"
+                      (click)="togglePasswordVisibility()"
+                    >
+                      <i [class]="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+                    </button>
+                  </div>
+                  <small *ngIf="isFieldInvalid('password')" class="p-error">
+                    <i class="pi pi-exclamation-circle"></i> La contraseña es requerida
+                  </small>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div class="step-actions">
+            <!-- Use PrimeNG styleClass so the rendered button element receives these classes -->
             <p-button
-              label="Continuar al Pago"
+              label="Continuar"
               icon="pi pi-arrow-right"
               iconPos="right"
-              class="p-button-primary action-button flex-2"
-              type="submit"
-              [loading]="isSubmitting"
+              styleClass="primary-button full-width"
+              (onClick)="nextStep()"
+              [loading]="isValidating"
             ></p-button>
           </div>
         </div>
-      </form>
+
+        <!-- Step 2: Método de Pago -->
+        <div *ngIf="activeStep === 1" class="step-content">
+          <div class="step-header">
+            <h3 class="step-title">
+              <i class="pi pi-credit-card step-icon"></i>
+              Método de Pago
+            </h3>
+            <p class="step-description">Configura tu método de pago para completar el registro</p>
+          </div>
+
+          <!-- Payment Element Container -->
+          <div class="payment-section">
+            <div class="payment-element-container" style="position:relative">
+              <div id="payment-element">
+              </div>
+              <div *ngIf="paymentElementLoading" class="payment-loading-overlay">
+                <div class="overlay-content">
+                  <p-progressSpinner strokeWidth="3" fill="transparent" animationDuration="1s"></p-progressSpinner>
+                  <p>Cargando método de pago seguro...</p>
+                </div>
+              </div>
+
+              <div *ngIf="paymentError" class="payment-error" style="margin-top:1rem">
+                <i class="pi pi-exclamation-triangle"></i>
+                {{ paymentError }}
+              </div>
+            </div>
+          </div>
+
+          <div class="step-actions">
+            <p-button
+              label="Anterior"
+              icon="pi pi-arrow-left"
+              iconPos="left"
+              class="secondary-button"
+              (onClick)="previousStep()"
+            ></p-button>
+
+            <p-button
+              label="Procesar Pago"
+              icon="pi pi-check"
+              iconPos="right"
+              class="primary-button"
+              (onClick)="processPayment()"
+              [loading]="isProcessingPayment"
+              [disabled]="!stripeInitialized"
+            ></p-button>
+          </div>
+        </div>
+
+  <!-- Step 3: Confirmación -->
+  <div *ngIf="activeStep === 2" class="step-content">
+          <div class="confirmation-content">
+            <div class="success-icon">
+              <i class="pi pi-check-circle"></i>
+            </div>
+            <h3 class="confirmation-title">¡Registro Completado!</h3>
+            <p class="confirmation-message">
+              Tu cuenta ha sido creada exitosamente y tu pago ha sido procesado.
+              Ya puedes comenzar a usar Lealtix.
+            </p>
+
+            <div class="confirmation-details">
+              <div class="detail-item">
+                <i class="pi pi-user"></i>
+                <span>{{ tenant['fullName'].value }}</span>
+              </div>
+              <div class="detail-item">
+                <i class="pi pi-envelope"></i>
+                <span>{{ tenant['email'].value }}</span>
+              </div>
+            </div>
+
+            <div class="confirmation-actions">
+              <p-button
+                label="Ir al Dashboard"
+                icon="pi pi-external-link"
+                iconPos="right"
+                class="success-button"
+                (onClick)="goToDashboard()"
+              ></p-button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- Success message is now rendered inline in Step 3 (no modal) -->
+
 <!-- Footer -->
-<footer class="py-5 bg-dark mt-auto">
-  <div class="container px-5 text-center text-white">
-    <h5 class="fw-bold">Lealtix</h5>
-    <ul class="list-inline">
-      <li class="list-inline-item"><a class="text-white" href="/">Inicio</a></li>
-      <li class="list-inline-item"><a class="text-white" href="#">Beneficios</a></li>
-      <li class="list-inline-item"><a class="text-white" href="#">Precios</a></li>
-      <li class="list-inline-item"><a class="text-white" href="#">Contacto</a></li>
-    </ul>
-    <p class="mt-3 mb-0">© 2025 Lealtix. Todos los derechos reservados.</p>
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <h5>Lealtix</h5>
+    </div>
+    <div class="footer-links">
+      <a href="/">Inicio</a>
+      <a href="#">Beneficios</a>
+      <a href="#">Precios</a>
+      <a href="#">Contacto</a>
+    </div>
+    <div class="footer-copyright">
+      <p>© 2025 Lealtix. Todos los derechos reservados.</p>
+    </div>
   </div>
 </footer>

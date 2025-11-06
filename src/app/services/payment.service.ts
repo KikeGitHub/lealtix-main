@@ -14,18 +14,25 @@ export class PaymentService {
   private apiCheckout = `${environment.apiUrl}/stripe/create-checkout-session`;
   private apiSuccess = `${environment.apiUrl}/stripe/checkout-session/{sessionId}`;
   private apiCancel = `${environment.apiUrl}/stripe/checkout-cancel/{sessionId}`;
+  private apiStripeIntent = `${environment.apiUrl}/tenant-payment/create-payment-intent`;
 
   constructor(private http: HttpClient) {}
 
   createPaymentIntent(data: PaymentIntentRequest, status: string): Observable<any> {
-    debugger;
-
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'accept': '*/*'
     });
     const params = new HttpParams().set('status', status);
     return this.http.post<any>(this.apiUrl, data, { headers, params });
+  }
+
+  createStripePaymentIntent(data: PaymentIntentRequest): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'accept': '*/*'
+    });
+    return this.http.post<any>(this.apiStripeIntent, data, { headers });
   }
 
   createCheckoutSession(priceId: string, tenantId?: string) {
@@ -40,4 +47,5 @@ export class PaymentService {
   getPaymentCancel(sessionId: string): Observable<any> {
     return this.http.get<any>(this.apiCancel.replace('{sessionId}', sessionId));
   }
+
 }
