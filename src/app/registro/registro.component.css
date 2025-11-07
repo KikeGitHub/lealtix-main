@@ -126,6 +126,12 @@
 .custom-step:hover {
   transform: translateY(-3px);
 }
+/* When payment is confirmed, steps are blocked from interaction */
+.custom-step.blocked {
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: default;
+}
 .custom-step-number {
   width: 56px;
   height: 56px;

@@ -1,4 +1,3 @@
-
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,20 +16,14 @@ import { StepperModule } from 'primeng/stepper';
 import { StepsModule } from 'primeng/steps';
 import { DialogModule } from 'primeng/dialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-
-
-// Stripe imports
 import { loadStripe, Stripe, StripeElements, StripePaymentElement } from '@stripe/stripe-js';
-
-// Services and Models
 import { TokenValidationService } from '../services/token-validation.service';
 import { RegisterModel } from '../models/RegisterModel';
 import { RegisterService } from '../services/register.service';
 import { PaymentService } from '../services/payment.service';
-import { PaymentIntentRequest } from '../models/payment-intent-request';
 import { environment } from '../../environments/environment';
 import { ConfettiService } from '../confetti/confetti.service';
-import { ConfettiComponent } from "../confetti/confetti.component";
+import { ConfettiComponent } from '../confetti/confetti.component';
 
 @Component({
   selector: 'app-registro',
@@ -51,10 +44,10 @@ import { ConfettiComponent } from "../confetti/confetti.component";
     StepsModule,
     DialogModule,
     ProgressSpinnerModule,
-    ConfettiComponent
-],
+    ConfettiComponent,
+  ],
   templateUrl: './registro.component.html',
-  styleUrls: ['./registro.component.css']
+  styleUrls: ['./registro.component.css'],
 })
 export class RegistroComponent implements OnInit, OnDestroy {
   // Form properties
@@ -65,12 +58,12 @@ export class RegistroComponent implements OnInit, OnDestroy {
   errorMsg: string | null = null;
 
   // Stepper properties
-  activeStep = 0;
+  activeStep: number = 0;
   isValidating = false;
   stepItems: any[] = [
     { label: 'Información Personal' },
     { label: 'Método de Pago' },
-    { label: 'Confirmación' }
+    { label: 'Confirmación' },
   ];
 
   // Payment properties
@@ -82,10 +75,9 @@ export class RegistroComponent implements OnInit, OnDestroy {
   paymentElementLoading = false;
   isProcessingPayment = false;
   paymentError: string | null = null;
-  tenantId: string | null = null;
-
-  // Modal properties (unused now that confirmation is inline)
-  // showSuccessModal = false; (kept commented intentionally)
+  userId: string | null = null;
+  // Flag set when payment is finally confirmed (succeeded)
+  paymentConfirmed: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -94,7 +86,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
     private tokenValidationService: TokenValidationService,
     private registerService: RegisterService,
     private paymentService: PaymentService,
-    private confettiService: ConfettiService,
+    private confettiService: ConfettiService
   ) {
     this.registroForm = this.fb.group({
       tenant: this.fb.group({
@@ -102,8 +94,8 @@ export class RegistroComponent implements OnInit, OnDestroy {
         fechaNacimiento: ['', Validators.required],
         telefono: [''],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', Validators.required]
-      })
+        password: ['', Validators.required],
+      }),
     });
   }
 
@@ -144,7 +136,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
               fechaNacimiento: resp.object.registroDto.fechaNacimiento
                 ? new Date(resp.object.registroDto.fechaNacimiento).toISOString().substring(0, 10)
                 : '',
-              telefono: resp.object.registroDto.telefono || ''
+              telefono: resp.object.registroDto.telefono || '',
             });
 
             tenantGroup.get('email')?.disable();
@@ -156,10 +148,11 @@ export class RegistroComponent implements OnInit, OnDestroy {
           }
         },
         error: (err) => {
+          debugger;
           this.errorMsg = err?.error?.message || 'Invitación inválida o expirada.';
           this.loading = false;
           this.router.navigate(['/error'], { queryParams: { msg: this.errorMsg } });
-        }
+        },
       });
     });
   }
@@ -181,9 +174,21 @@ export class RegistroComponent implements OnInit, OnDestroy {
   }
 
   previousStep() {
+    // Prevent going back once payment is confirmed
+    if (this.paymentConfirmed) {
+      return;
+    }
     if (this.activeStep > 0) {
       this.activeStep--;
     }
+  }
+
+  onStepClick(index: number) {
+    // Block navigation to steps 0 and 1 once payment is confirmed
+    if (this.paymentConfirmed && index < 2) {
+      return;
+    }
+    this.activeStep = index;
   }
 
   validatePersonalInfo() {
@@ -204,13 +209,13 @@ export class RegistroComponent implements OnInit, OnDestroy {
       telefono: this.tenant['telefono'].value,
       email: this.tenant['email'].value,
       password: this.tenant['password'].value,
-      token: this.route.snapshot.queryParams['token']
+      token: this.route.snapshot.queryParams['token'],
     };
 
     this.registerService.register(registroData).subscribe({
       next: (resp) => {
         if (resp && resp.object) {
-          this.tenantId = resp.object;
+          this.userId = resp.object.id;
           this.activeStep = 1;
           this.initializeStripe();
         } else {
@@ -221,7 +226,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
       error: (err) => {
         this.errorMsg = 'Error al registrar usuario. Inténtalo de nuevo más tarde.';
         this.isValidating = false;
-      }
+      },
     });
   }
 
@@ -237,7 +242,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
 
       // Create payment intent
       await this.createStripePaymentIntent();
-
     } catch (error) {
       this.paymentError = 'Error al inicializar el sistema de pago. Inténtalo de nuevo.';
       console.error('Stripe initialization error:', error);
@@ -245,92 +249,124 @@ export class RegistroComponent implements OnInit, OnDestroy {
   }
 
   async createPaymentIntent() {
-    if (!this.tenantId) {
+    if (!this.userId) {
       this.paymentError = 'Error: ID de usuario no encontrado.';
       return;
     }
 
     const paymentData = {
-      tenantId: this.tenantId,
+      userId: this.userId,
       amount: 29900, // $299.00 MXN (amount in cents)
-      currency: 'mxn'
+      currency: 'mxn',
     };
 
     // Cast to any to avoid strict model mismatch with PaymentIntentRequest
-    this.paymentService.createPaymentIntent(paymentData as any, 'requires_payment_method').subscribe({
-      next: async (response) => {
-        if (response && response.clientSecret) {
-          const candidate: any = response.clientSecret;
-          if (typeof candidate === 'string' && candidate.startsWith('sk_')) {
-            console.error('[registro] server returned secret key (sk_) instead of client_secret');
-            this.paymentError = 'Error de configuración: el servidor está devolviendo la clave secreta de Stripe.';
-            return;
+    this.paymentService
+      .createPaymentIntent(paymentData as any, 'requires_payment_method')
+      .subscribe({
+        next: async (response) => {
+          if (response && response.clientSecret) {
+            const candidate: any = response.clientSecret;
+            if (typeof candidate === 'string' && candidate.startsWith('sk_')) {
+              console.error('[registro] server returned secret key (sk_) instead of client_secret');
+              this.paymentError =
+                'Error de configuración: el servidor está devolviendo la clave secreta de Stripe.';
+              return;
+            }
+            if (typeof candidate === 'string' && !candidate.includes('_secret_')) {
+              console.error('[registro] received value is not a client_secret:', candidate);
+              this.paymentError = 'El servidor no devolvió un client_secret válido.';
+              return;
+            }
+            this.clientSecret = candidate;
+            await this.setupPaymentElement();
+          } else {
+            this.paymentError = 'Error al crear la intención de pago.';
           }
-          if (typeof candidate === 'string' && !candidate.includes('_secret_')) {
-            console.error('[registro] received value is not a client_secret:', candidate);
-            this.paymentError = 'El servidor no devolvió un client_secret válido.';
-            return;
-          }
-          this.clientSecret = candidate;
-          await this.setupPaymentElement();
-        } else {
-          this.paymentError = 'Error al crear la intención de pago.';
-        }
-      },
-      error: (err) => {
-        this.paymentError = 'Error al configurar el pago. Inténtalo de nuevo.';
-        console.error('Payment intent error:', err);
-      }
-    });
+        },
+        error: (err) => {
+          this.paymentError = 'Error al configurar el pago. Inténtalo de nuevo.';
+          console.error('Payment intent error:', err);
+        },
+      });
   }
 
   async createStripePaymentIntent() {
-  const paymentData = {
-    email: this.tenant['email'].value,
-    amount: 29900,
-    currency: 'mxn',
-    plan: 'Plan Básico'
-  };
+    // small debugger left intentionally commented for dev-time troubleshooting
+    // debugger;
+    const paymentData = {
+      email: this.tenant['email'].value,
+      amount: 29900,
+      currency: 'mxn',
+      plan: 'Plan Básico',
+      userId: this.userId,
+    };
 
-  this.paymentService.createStripePaymentIntent(paymentData).subscribe({
-    next: async (response) => {
-      if (response && response.clientSecret) {
-        const candidate: any = response.clientSecret;
-        if (typeof candidate === 'string' && candidate.startsWith('sk_')) {
-          console.error('[registro] server returned secret key (sk_) instead of client_secret');
-          this.paymentError = 'Error de configuración: el servidor está devolviendo la clave secreta de Stripe.';
-          return;
-        }
-        if (typeof candidate === 'string' && !candidate.includes('_secret_')) {
-          console.error('[registro] received value is not a client_secret:', candidate);
-          this.paymentError = 'El servidor no devolvió un client_secret válido.';
-          return;
-        }
-        this.clientSecret = candidate;
-        console.debug('[registro] received clientSecret:', this.clientSecret);
-        this.paymentElementLoading = true;
-        await this.setupPaymentElement();
-      } else {
-        this.paymentError = 'No se obtuvo clientSecret.';
-      }
-    },
-    error: (err) => {
-      console.error('Error creando PaymentIntent:', err);
-      this.paymentError = 'Error al crear el PaymentIntent.';
-    }
-  });
-}
+    // Show loading overlay while we request the client_secret and initialize the element
+    this.paymentElementLoading = true;
 
+    this.paymentService.createStripePaymentIntent(paymentData).subscribe({
+      next: async (response) => {
+        try {
+          if (response && response.clientSecret) {
+            const candidate: any = response.clientSecret;
+            if (typeof candidate === 'string' && candidate.startsWith('sk_')) {
+              console.error('[registro] server returned secret key (sk_) instead of client_secret');
+              this.paymentError = 'Error de configuración: el servidor está devolviendo la clave secreta de Stripe.';
+              this.paymentElementLoading = false;
+              return;
+            }
+            if (typeof candidate === 'string' && !candidate.includes('_secret_')) {
+              console.error('[registro] received value is not a client_secret:', candidate);
+              this.paymentError = 'El servidor no devolvió un client_secret válido.';
+              this.paymentElementLoading = false;
+              return;
+            }
+            this.clientSecret = candidate;
+            console.debug('[registro] received clientSecret:', this.clientSecret);
+            // Keep the overlay visible until setupPaymentElement clears it
+            await this.setupPaymentElement();
+          } else {
+            this.paymentError = 'No se obtuvo clientSecret.';
+            this.paymentElementLoading = false;
+          }
+        } catch (err) {
+          console.error('createStripePaymentIntent next-handler error:', err);
+          this.paymentError = 'Error al preparar el formulario de pago.';
+          this.paymentElementLoading = false;
+        }
+      },
+      error: (err) => {
+        console.error('Error creando PaymentIntent:', err);
+        this.paymentError = 'Error al crear el PaymentIntent.';
+        this.paymentElementLoading = false;
+      },
+    });
+  }
 
   async setupPaymentElement() {
     if (!this.stripe || !this.clientSecret) {
-      console.warn('[registro] setupPaymentElement aborted: stripe or clientSecret missing', { stripe: !!this.stripe, clientSecret: !!this.clientSecret });
+      console.warn('[registro] setupPaymentElement aborted: stripe or clientSecret missing', {
+        stripe: !!this.stripe,
+        clientSecret: !!this.clientSecret,
+      });
       this.paymentElementLoading = false;
       return;
     }
 
     try {
       console.debug('[registro] setupPaymentElement() starting...');
+
+      // If a previous element exists, unmount/destroy it before creating a new one.
+      try {
+        if (this.paymentElement) {
+          try { this.paymentElement.unmount(); } catch (uErr) { console.warn('[registro] error unmounting previous paymentElement:', uErr); }
+          try { (this.paymentElement as any).destroy?.(); } catch (dErr) { console.warn('[registro] error destroying previous paymentElement:', dErr); }
+          this.paymentElement = null;
+        }
+      } catch (errUnmount) {
+        console.warn('[registro] failed to cleanup previous payment element:', errUnmount);
+      }
 
       // small tick to ensure template rendered and #payment-element exists
       await new Promise((r) => setTimeout(r, 0));
@@ -346,9 +382,9 @@ export class RegistroComponent implements OnInit, OnDestroy {
             colorDanger: '#df1b41',
             fontFamily: 'system-ui, sans-serif',
             spacingUnit: '4px',
-            borderRadius: '8px'
-          }
-        }
+            borderRadius: '8px',
+          },
+        },
       });
 
       this.paymentElement = this.elements.create('payment');
@@ -359,8 +395,15 @@ export class RegistroComponent implements OnInit, OnDestroy {
         try {
           const container = document.getElementById('payment-element');
           console.debug('[registro] payment-element container after mount:', container);
-          if (container && container.children && container.children.length > 0 && !this.stripeInitialized) {
-            console.debug('[registro] payment-element appears to be mounted (children found). Marking as initialized.');
+          if (
+            container &&
+            container.children &&
+            container.children.length > 0 &&
+            !this.stripeInitialized
+          ) {
+            console.debug(
+              '[registro] payment-element appears to be mounted (children found). Marking as initialized.'
+            );
             this.stripeInitialized = true;
             this.paymentElementLoading = false;
             clearTimeout((<any>window).__lealtixPaymentReadyTimeout);
@@ -397,7 +440,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
       });
 
       console.debug('[registro] setupPaymentElement() mounted, waiting for ready...');
-
     } catch (error) {
       this.paymentError = 'Error al cargar el formulario de pago.';
       this.paymentElementLoading = false;
@@ -415,23 +457,39 @@ export class RegistroComponent implements OnInit, OnDestroy {
     this.paymentError = null;
 
     try {
-      const { error } = await this.stripe.confirmPayment({
+      const result = await this.stripe.confirmPayment({
         elements: this.elements,
         confirmParams: {
           return_url: `${window.location.origin}/registro-completado`,
         },
-        redirect: 'if_required'
+        redirect: 'if_required',
       });
 
-      if (error) {
-        this.paymentError = error.message || 'Error al procesar el pago.';
-        this.isProcessingPayment = false;
-      } else {
-        debugger;
-        this.confettiService.trigger({ action: 'burst' });
-        this.activeStep = 2;
+      if (result.error) {
+        this.paymentError = result.error.message || 'Error al procesar el pago.';
         this.isProcessingPayment = false;
       }
+
+      const pi = (result as any).paymentIntent;
+      if (pi) {
+        // Comprueba el estado explícitamente
+        if (pi.status === 'succeeded') {
+          // mark confirmed before UI celebration and navigation locking
+          this.paymentConfirmed = true;
+          this.confettiService.trigger({ action: 'burst' });
+          this.activeStep = 2;
+        } else if (pi.status === 'processing' || pi.status === 'requires_capture') {
+          this.activeStep = 2; // o un estado "pendiente"
+          this.paymentError = 'El pago está en proceso. Te notificaremos cuando esté confirmado.';
+        } else {
+          this.paymentError = `Estado de pago: ${pi.status}`;
+        }
+      } else {
+        this.paymentError = null;
+        this.activeStep = 2;
+      }
+
+      this.isProcessingPayment = false;
     } catch (error) {
       this.paymentError = 'Error inesperado al procesar el pago.';
       this.isProcessingPayment = false;
