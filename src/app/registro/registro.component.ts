@@ -485,6 +485,9 @@ export class RegistroComponent implements OnInit, OnDestroy {
           this.paymentError = `Estado de pago: ${pi.status}`;
         }
       } else {
+        // No paymentIntent returned but also no error: treat as success for UX purposes
+        this.paymentConfirmed = true;
+        this.confettiService.trigger({ action: 'burst' });
         this.paymentError = null;
         this.activeStep = 2;
       }
@@ -497,9 +500,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Navigation methods
   goToDashboard() {
-    // Inline confirmation used; simply navigate
-    this.router.navigate(['/login']);
+    this.router.navigate(['http://localhost:4201/auth/login']);
   }
 }
