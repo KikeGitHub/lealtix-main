@@ -75,6 +75,18 @@ export class RegistroComponent implements OnInit, OnDestroy {
   paymentElementLoading = false;
   isProcessingPayment = false;
   paymentError: string | null = null;
+  // Flag to indicate a failed payment that can be retried
+  paymentFailed: boolean = false;
+  // Flag used while retrying to avoid double clicks
+  retryInProgress: boolean = false;
+  // Structured payment error details (technical) for support/debug
+  paymentErrorDetails:
+    | { code?: string; decline_code?: string; stripeMessage?: string; paymentIntentId?: string }
+    | null = null;
+  // Toggle to show/hide technical details in the UI
+  showErrorDetails: boolean = false;
+  // Track which clientSecret the currently mounted element was created with
+  mountedClientSecret: string | null = null;
   userId: string | null = null;
   // Flag set when payment is finally confirmed (succeeded)
   paymentConfirmed: boolean = false;
@@ -248,48 +260,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
     }
   }
 
-  async createPaymentIntent() {
-    if (!this.userId) {
-      this.paymentError = 'Error: ID de usuario no encontrado.';
-      return;
-    }
 
-    const paymentData = {
-      userId: this.userId,
-      amount: 29900, // $299.00 MXN (amount in cents)
-      currency: 'mxn',
-    };
-
-    // Cast to any to avoid strict model mismatch with PaymentIntentRequest
-    this.paymentService
-      .createPaymentIntent(paymentData as any, 'requires_payment_method')
-      .subscribe({
-        next: async (response) => {
-          if (response && response.clientSecret) {
-            const candidate: any = response.clientSecret;
-            if (typeof candidate === 'string' && candidate.startsWith('sk_')) {
-              console.error('[registro] server returned secret key (sk_) instead of client_secret');
-              this.paymentError =
-                'Error de configuración: el servidor está devolviendo la clave secreta de Stripe.';
-              return;
-            }
-            if (typeof candidate === 'string' && !candidate.includes('_secret_')) {
-              console.error('[registro] received value is not a client_secret:', candidate);
-              this.paymentError = 'El servidor no devolvió un client_secret válido.';
-              return;
-            }
-            this.clientSecret = candidate;
-            await this.setupPaymentElement();
-          } else {
-            this.paymentError = 'Error al crear la intención de pago.';
-          }
-        },
-        error: (err) => {
-          this.paymentError = 'Error al configurar el pago. Inténtalo de nuevo.';
-          console.error('Payment intent error:', err);
-        },
-      });
-  }
 
   async createStripePaymentIntent() {
     // small debugger left intentionally commented for dev-time troubleshooting
@@ -302,8 +273,13 @@ export class RegistroComponent implements OnInit, OnDestroy {
       userId: this.userId,
     };
 
-    // Show loading overlay while we request the client_secret and initialize the element
-    this.paymentElementLoading = true;
+  // Reset retry/failure and error detail state when creating a fresh PaymentIntent
+  this.paymentFailed = false;
+  this.retryInProgress = false;
+  this.paymentErrorDetails = null;
+  this.showErrorDetails = false;
+  // Show loading overlay while we request the client_secret and initialize the element
+  this.paymentElementLoading = true;
 
     this.paymentService.createStripePaymentIntent(paymentData).subscribe({
       next: async (response) => {
@@ -357,12 +333,13 @@ export class RegistroComponent implements OnInit, OnDestroy {
     try {
       console.debug('[registro] setupPaymentElement() starting...');
 
-      // If a previous element exists, unmount/destroy it before creating a new one.
+      // If a previous element exists, only unmount/destroy it when the clientSecret changed
       try {
-        if (this.paymentElement) {
+        if (this.paymentElement && this.mountedClientSecret && this.mountedClientSecret !== this.clientSecret) {
           try { this.paymentElement.unmount(); } catch (uErr) { console.warn('[registro] error unmounting previous paymentElement:', uErr); }
           try { (this.paymentElement as any).destroy?.(); } catch (dErr) { console.warn('[registro] error destroying previous paymentElement:', dErr); }
           this.paymentElement = null;
+          this.mountedClientSecret = null;
         }
       } catch (errUnmount) {
         console.warn('[registro] failed to cleanup previous payment element:', errUnmount);
@@ -387,8 +364,15 @@ export class RegistroComponent implements OnInit, OnDestroy {
         },
       });
 
-      this.paymentElement = this.elements.create('payment');
-      this.paymentElement.mount('#payment-element');
+      // If we already have a mounted element for the same clientSecret, skip creating a new one.
+      if (!this.paymentElement) {
+        this.paymentElement = this.elements.create('payment');
+        this.paymentElement.mount('#payment-element');
+        this.mountedClientSecret = this.clientSecret;
+      } else {
+        // element already exists and was not recreated; ensure mountedClientSecret is set
+        this.mountedClientSecret = this.mountedClientSecret || this.clientSecret;
+      }
 
       // Fallback check: sometimes 'ready' may not fire (network/HTTP issues). Inspect DOM after short delay
       setTimeout(() => {
@@ -433,9 +417,13 @@ export class RegistroComponent implements OnInit, OnDestroy {
         // event typing from stripe may not expose `error` in our TS defs; use any to be safe
         const e: any = event;
         if (e && e.error) {
+          // show immediate validation errors
           this.paymentError = e.error.message;
         } else {
-          this.paymentError = null;
+          // only clear transient validation errors when we are NOT in a payment-failed state
+          if (!this.paymentFailed) {
+            this.paymentError = null;
+          }
         }
       });
 
@@ -466,11 +454,28 @@ export class RegistroComponent implements OnInit, OnDestroy {
       });
 
       if (result.error) {
-        this.paymentError = result.error.message || 'Error al procesar el pago.';
+        // Payment failed synchronously (card declined, validation, etc.)
+        const err: any = (result as any).error || {};
+        // Fill technical details for support (code, decline_code, message)
+        this.paymentErrorDetails = {
+          code: err.code,
+          decline_code: err.decline_code,
+          stripeMessage: err.message,
+          paymentIntentId: undefined,
+        };
+
+        // Friendly message to show to the user, based on the code / decline_code
+        this.paymentError = this.getFriendlyMessage(err.code, err.decline_code, err.message);
+
+        this.paymentFailed = true;
         this.isProcessingPayment = false;
+        console.warn('Stripe confirmPayment returned error', err);
+        // Stop further processing when Stripe returned an error.
+        return;
       }
 
       const pi = (result as any).paymentIntent;
+      debugger;
       if (pi) {
         // Comprueba el estado explícitamente
         if (pi.status === 'succeeded') {
@@ -482,7 +487,16 @@ export class RegistroComponent implements OnInit, OnDestroy {
           this.activeStep = 2; // o un estado "pendiente"
           this.paymentError = 'El pago está en proceso. Te notificaremos cuando esté confirmado.';
         } else {
-          this.paymentError = `Estado de pago: ${pi.status}`;
+          // For statuses like 'requires_payment_method' the card was rejected — allow retry
+          this.paymentFailed = true;
+          const lastErr: any = pi.last_payment_error || {};
+          this.paymentErrorDetails = {
+            code: lastErr.code,
+            decline_code: lastErr.decline_code,
+            stripeMessage: lastErr.message,
+            paymentIntentId: pi.id,
+          };
+          this.paymentError = this.getFriendlyMessage(lastErr.code, lastErr.decline_code, lastErr.message) || `Estado de pago: ${pi.status}`;
         }
       } else {
         // No paymentIntent returned but also no error: treat as success for UX purposes
@@ -494,9 +508,82 @@ export class RegistroComponent implements OnInit, OnDestroy {
 
       this.isProcessingPayment = false;
     } catch (error) {
-      this.paymentError = 'Error inesperado al procesar el pago.';
+      const errAny: any = error || {};
+      this.paymentErrorDetails = {
+        code: errAny.code,
+        decline_code: errAny.decline_code,
+        stripeMessage: errAny.message || String(errAny),
+        paymentIntentId: undefined,
+      };
+      this.paymentError = this.getFriendlyMessage(errAny.code, errAny.decline_code, errAny.message) || 'Error inesperado al procesar el pago.';
+      this.paymentFailed = true;
       this.isProcessingPayment = false;
       console.error('Payment processing error:', error);
+    }
+  }
+
+  /**
+   * Map stripe error codes and decline codes to friendly, actionable messages for end users.
+   * Keep this list small and focused; fall back to the provider message when available.
+   */
+  getFriendlyMessage(code?: string, declineCode?: string, stripeMessage?: string): string {
+    // Prefer decline_code because it's more specific for issuer declines
+    if (declineCode) {
+      switch (declineCode) {
+        case 'insufficient_funds':
+          return 'Fondos insuficientes. Intenta con otra tarjeta o contacta a tu banco.';
+        case 'lost_card':
+          return 'La tarjeta fue reportada como perdida. Usa otra tarjeta.';
+        case 'stolen_card':
+          return 'La tarjeta fue reportada como robada. Usa otra tarjeta.';
+        case 'incorrect_number':
+          return 'El número de tarjeta parece incorrecto. Verifica los datos e intenta de nuevo.';
+        default:
+          // fall back to stripeMessage when available
+          return stripeMessage || 'El pago fue rechazado por el emisor. Intenta con otra tarjeta.';
+      }
+    }
+
+    if (code) {
+      switch (code) {
+        case 'card_declined':
+          return 'Tu banco rechazó la tarjeta. Intenta con otra tarjeta o contacta a tu banco.';
+        case 'incorrect_cvc':
+          return 'El código CVC es incorrecto. Verifica y vuelve a intentarlo.';
+        case 'expired_card':
+          return 'La tarjeta está vencida. Usa otra tarjeta.';
+        case 'processing_error':
+          return 'Ocurrió un error procesando el pago. Intenta de nuevo en unos minutos.';
+        case 'authentication_required':
+          return 'Tu banco requiere autenticación adicional. Sigue las instrucciones para completar el pago.';
+        default:
+          return stripeMessage || 'Hubo un problema con el pago. Intenta con otra tarjeta.';
+      }
+    }
+
+    // Last fallback
+    return stripeMessage || 'No se pudo procesar el pago. Intenta de nuevo.';
+  }
+
+  /**
+   * Retry the payment flow by requesting a new PaymentIntent and remounting the PaymentElement.
+   * This follows Stripe best-practices: on a payment failure that requires a new payment method
+   * create a fresh PaymentIntent and collect payment details again instead of reusing the old one.
+   */
+  async retryPayment() {
+    if (this.retryInProgress) return;
+    this.retryInProgress = true;
+    this.paymentError = null;
+    // Keep the mounted element when possible to avoid a full reset of the component.
+    // Request a new client secret and let setupPaymentElement decide whether the element
+    // needs recreation (we only recreate if clientSecret actually changed).
+    try {
+      await this.createStripePaymentIntent();
+    } catch (err) {
+      console.error('Retry createStripePaymentIntent failed:', err);
+      this.paymentError = 'No se pudo reintentar el pago. Inténtalo de nuevo más tarde.';
+    } finally {
+      this.retryInProgress = false;
     }
   }
 

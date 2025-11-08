@@ -216,8 +216,28 @@
 
               <div *ngIf="paymentError" class="payment-error" style="margin-top:1rem">
                 <i class="pi pi-exclamation-triangle"></i>
-                {{ paymentError }}
-              </div>
+                <span class="friendly-message">{{ paymentError }}</span>
+
+                <button
+                  type="button"
+                  class="details-toggle p-button p-component p-button-text"
+                  *ngIf="paymentErrorDetails"
+                  (click)="showErrorDetails = !showErrorDetails"
+                  style="margin-left:0.75rem"
+                >
+                  <span class="p-button-label">{{ showErrorDetails ? 'Ocultar detalles' : 'Ver detalles' }}</span>
+                </button>
+
+                <div *ngIf="showErrorDetails && paymentErrorDetails" class="error-details" style="margin-top:0.75rem; font-size:0.9rem; color:#6b7280">
+                  <div *ngIf="paymentErrorDetails.stripeMessage"><strong>Mensaje:</strong> {{ paymentErrorDetails.stripeMessage }}</div>
+                  <div *ngIf="paymentErrorDetails.code"><strong>Código:</strong> {{ paymentErrorDetails.code }}</div>
+                  <div *ngIf="paymentErrorDetails.decline_code"><strong>Decline code:</strong> {{ paymentErrorDetails.decline_code }}</div>
+                  <div *ngIf="paymentErrorDetails.paymentIntentId"><strong>PaymentIntent:</strong> {{ paymentErrorDetails.paymentIntentId }}</div>
+                </div>
+                </div>
+                <div *ngIf="paymentFailed" style="margin-top:0.5rem; font-size:0.85rem; color:#374151">
+                  <small>Nota: al reintentar el pago el formulario de tarjeta puede reiniciarse si es necesario. Si quieres probar con otra tarjeta, rellena los datos y presiona "Reintentar pago".</small>
+                </div>
             </div>
           </div>
 
@@ -232,13 +252,13 @@
             ></p-button>
 
             <p-button
-              label="Procesar Pago"
-              icon="pi pi-check"
+              [label]="paymentFailed ? 'Reintentar pago' : 'Procesar Pago'"
+              [icon]="paymentFailed ? 'pi pi-refresh' : 'pi pi-check'"
               iconPos="right"
               class="primary-button"
-              (onClick)="processPayment()"
-              [loading]="isProcessingPayment"
-              [disabled]="!stripeInitialized"
+              (onClick)="paymentFailed ? retryPayment() : processPayment()"
+              [loading]="isProcessingPayment || retryInProgress"
+              [disabled]="paymentElementLoading || isProcessingPayment || retryInProgress || (!stripeInitialized && !paymentFailed)"
             ></p-button>
           </div>
         </div>
