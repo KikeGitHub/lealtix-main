@@ -1,4 +1,320 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* PrimeNG Base Styles - For version 20+ */
+/* These provide basic styling for PrimeNG components */
+.p-component {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+/* Basic PrimeNG button styling */
+.p-button {
+  margin: 0;
+  display: inline-flex;
+  cursor: pointer;
+  user-select: none;
+  align-items: center;
+  vertical-align: bottom;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  color: #ffffff;
+  background: #007ad9;
+  border: 1px solid #007ad9;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.p-button:enabled:hover {
+  background: #0067b7;
+  border-color: #0067b7;
+}
+
+.p-button:enabled:active {
+  background: #005a9f;
+  border-color: #005a9f;
+}
+
+.p-button:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem #a6d5fa;
+}
+
+.p-button .p-button-icon {
+  margin-right: 0.5rem;
+}
+
+.p-button-lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+}
+
+/* Secondary button */
+.p-button-secondary {
+  background: #6c757d;
+  border-color: #6c757d;
+}
+
+.p-button-secondary:enabled:hover {
+  background: #5c636a;
+  border-color: #565e64;
+}
+
+.p-button-text {
+  background: transparent;
+  color: #007ad9;
+  border-color: transparent;
+}
+
+.p-button-text:enabled:hover {
+  background: rgba(0, 122, 217, 0.04);
+  color: #007ad9;
+  border-color: transparent;
+}
+
+/* Basic input styling */
+.p-inputtext {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1rem;
+  color: #495057;
+  background: #ffffff;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ced4da;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.p-inputtext:enabled:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem #a6d5fa;
+  border-color: #007ad9;
+}
+
+.p-inputtext.p-invalid {
+  border-color: #e24c4c;
+}
+
+/* Password component */
+.p-password {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+}
+
+.p-password .p-inputtext {
+  width: 100%;
+  padding-right: 2.5rem;
+}
+
+.p-password-show-hide {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #6c757d;
+}
+
+/* Input mask */
+.p-inputmask {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1rem;
+  color: #495057;
+  background: #ffffff;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ced4da;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.p-inputmask:enabled:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem #a6d5fa;
+  border-color: #007ad9;
+}
+
+/* DatePicker */
+.p-datepicker {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+}
+
+.p-datepicker .p-inputtext {
+  width: 100%;
+  padding-right: 2.5rem;
+}
+
+.p-datepicker-trigger {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #6c757d;
+}
+
+/* Error styling */
+.p-error {
+  color: #e24c4c;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Surface ground styles */
+.surface-ground {
+  background-color: #f8f9fa;
+}
+
+.surface-card {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+}
+
+/* PrimeNG Grid System */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -0.5rem;
+  margin-left: -0.5rem;
+  margin-top: -0.5rem;
+}
+
+.col {
+  padding: 0.5rem;
+}
+
+.col-12 {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .md\:col-6 {
+    flex: 0 0 auto;
+    width: 50%;
+  }
+}
+
+/* PrimeNG Flexbox utilities */
+.flex {
+  display: flex;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+/* PrimeNG Typography */
+.text-900 {
+  color: #212529;
+}
+
+.text-600 {
+  color: #6c757d;
+}
+
+.text-red-500 {
+  color: #e24c4c;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+/* PrimeNG Spacing */
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
+
+.mt-5 {
+  margin-top: 1.25rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* PrimeNG Layout utilities */
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.block {
+  display: block;
+}
+
+.shadow-2 {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.border-round {
+  border-radius: 6px;
+}
+
+@media (min-width: 992px) {
+  .lg\:w-6 {
+    width: 50%;
+  }
+}
+
+.line-height-3 {
+  line-height: 1.5;
+}
+
 body.crema-bg {
   background-color: #FFFBF2 !important;
 }
@@ -388,7 +704,7 @@ button,
 [type=reset],
 [type=submit] {
   -webkit-appearance: button;
-}
+  }
 button:not(:disabled),
 [type=button]:not(:disabled),
 [type=reset]:not(:disabled),

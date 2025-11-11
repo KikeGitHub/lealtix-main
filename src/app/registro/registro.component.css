@@ -1,5 +1,704 @@
-/* registro.component.css */
-/* Estilos mínimos, Bootstrap se encarga del layout y validaciones visuales */
-.card {
+/* =========================
+   Lealtix Registration Styles
+   Brand Colors: Navy Blue (#1e3a8a) & Turquoise (#06b6d4)
+   ========================= */
+
+/* Loading Screen */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #06b6d4 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loading-content {
+  text-align: center;
+  color: white;
+}
+
+.loading-title {
+  margin: 1rem 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.loading-subtitle {
+  margin: 0;
+  opacity: 0.8;
+  font-size: 1rem;
+}
+
+/* Registration Section */
+.registration-section {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 2rem 0;
+}
+
+.registration-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.registration-card {
+  width: 100%;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Header */
+.registration-header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+  padding: 2rem;
+  color: white;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: white;
+  padding: 8px;
+}
+
+.brand-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.brand-subtitle {
+  margin: 0.5rem 0 0 0;
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+
+/* Stepper Container */
+.stepper-container {
+  padding: 2rem;
+}
+
+/* Professional description style inside panels */
+.step-description {
+  margin: 0.25rem 0 1.25rem 0;
+  color: #475569;
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 780px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.95;
+}
+
+/* Custom Steps Navigation (used instead of p-steps to ensure styling) */
+.custom-steps {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0 1.5rem 0;
+}
+.custom-step {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: transform 0.18s ease;
+}
+.custom-step:hover {
+  transform: translateY(-3px);
+}
+/* When payment is confirmed, steps are blocked from interaction */
+.custom-step.blocked {
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: default;
+}
+.custom-step-number {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
+  color: #fff;
+  background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+  box-shadow: 0 10px 30px rgba(249, 115, 22, 0.18);
+  border: 3px solid rgba(255,255,255,0.12);
+}
+.custom-step-info {
+  display: flex;
+  flex-direction: column;
+}
+.custom-step-title {
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 0.96rem;
+}
+.custom-step-desc {
+  font-size: 0.78rem;
+  color: #64748b;
+  text-transform: capitalize;
+}
+.custom-step.active .custom-step-number {
+  border: 4px solid rgba(6,182,212,0.18);
+  box-shadow: 0 12px 32px rgba(6,182,212,0.14);
+  transform: scale(1.06);
+}
+.custom-step.completed .custom-step-number {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+}
+
+@media (max-width: 640px) {
+  .custom-steps {
+    gap: 0.5rem;
+    padding: 0.5rem 0 1rem 0;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .custom-step {
+    justify-content: flex-start;
+    gap: 1rem;
+    padding: 0.5rem 0;
+  }
+}
+
+/* Legacy stepper label/circle styles removed — using custom-step styles instead */
+
+/* Step Content */
+.step-content {
+  padding: 2rem 0;
+}
+
+.step-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.step-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0 0 0.75rem 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+.step-icon {
+  font-size: 1.5rem;
+  color: #06b6d4;
+}
+
+.step-description {
+  margin: 0;
+  color: #6b7280;
+  font-size: 1.1rem;
+}
+
+/* Form Styling */
+.step-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Fields that should span full width on larger screens */
+  .form-field.full-col {
+    grid-column: 1 / -1;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field-label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+.required {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+/* Input Styling */
+::ng-deep .p-inputtext {
+  border: 2px solid #cbd5e1; /* visible soft border */
+  border-radius: 12px;
+  padding: 0.875rem;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  background: #ffffff; /* white to contrast */
+}
+
+::ng-deep .p-inputtext:focus {
+  border-color: #06b6d4;
+  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.08);
+  background: #ffffff;
+}
+
+/* Ensure native inputs with pInputText attribute receive the styles */
+input[pInputText], textarea[pInputText] {
+  border: 2px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 0.75rem;
+  background: #ffffff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[pInputText]:focus, textarea[pInputText]:focus {
+  outline: none;
+  border-color: #06b6d4;
+  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.08);
+}
+
+::ng-deep .p-inputtext.p-invalid {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Password Field */
+.password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input {
+  flex: 1;
+  padding-right: 3rem !important;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 0.875rem;
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.password-toggle:hover {
+  color: #1e3a8a;
+  background: rgba(30, 58, 138, 0.1);
+}
+
+/* InputNumber Styling */
+::ng-deep .p-inputnumber .p-inputtext {
+  width: 100%;
+  border-radius: 12px;
+}
+
+/* Error Messages */
+.p-error {
+  color: #ef4444;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 500;
+}
+
+.field-help {
+  color: #6b7280;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Payment Section */
+.payment-section {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.payment-loading {
+  text-align: center;
+  padding: 3rem 0;
+  color: #6b7280;
+}
+
+.payment-loading p {
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+.payment-element-container {
+  background: #fafafa;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+
+/* Overlay shown while payment element initializes */
+.payment-loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 10px;
+  z-index: 20;
+}
+.payment-loading-overlay .overlay-content {
+  text-align: center;
+  color: #6b7280;
+}
+
+.payment-error {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Step Actions */
+.step-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+@media (min-width: 640px) {
+  .step-actions {
+    justify-content: space-between;
+  }
+}
+
+/* Center a single button inside .step-actions (keeps layout when only one button is present) */
+.step-actions > *:only-child {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Button Styling */
+.primary-button {
+  background: linear-gradient(135deg, #1e3a8a 0%, #06b6d4 100%) !important;
+  border: none !important;
+  padding: 0.875rem 2rem !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 14px 0 rgba(30, 58, 138, 0.25) !important;
+}
+
+.primary-button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px 0 rgba(30, 58, 138, 0.35) !important;
+}
+
+.secondary-button {
+  background: transparent !important;
+  color: #6b7280 !important;
+  border: 2px solid #e5e7eb !important;
+  padding: 0.875rem 2rem !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  transition: all 0.2s ease !important;
+}
+
+.secondary-button:hover {
+  background: #f9fafb !important;
+  border-color: #d1d5db !important;
+  color: #374151 !important;
+}
+
+/* Make a PrimeNG p-button occupy full available width so the whole area is clickable.
+   Use on the component as: styleClass="primary-button full-width" */
+.primary-button.full-width,
+.secondary-button.full-width,
+.success-button.full-width {
+  width: 100% !important;
+  display: inline-flex !important;
+  justify-content: center !important;
+}
+
+/* Ensure the internal PrimeNG button element also stretches if PrimeNG wraps markup */
+::ng-deep .primary-button.full-width.p-button,
+::ng-deep .secondary-button.full-width.p-button,
+::ng-deep .success-button.full-width.p-button {
+  width: 100% !important;
+}
+
+.success-button {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+  border: none !important;
+  padding: 0.875rem 2rem !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 14px 0 rgba(5, 150, 105, 0.25) !important;
+}
+
+.success-button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px 0 rgba(5, 150, 105, 0.35) !important;
+}
+
+/* Confirmation Step */
+.confirmation-content {
+  text-align: center;
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem;
+  box-sizing: border-box;
+}
+
+.success-icon {
+  font-size: 4rem;
+  color: #10b981;
   margin-bottom: 1.5rem;
 }
+
+.confirmation-title {
+  margin: 0 0 1rem 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+.confirmation-message {
+  margin: 0 0 2rem 0;
+  color: #6b7280;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.confirmation-details {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  color: #374151;
+}
+
+.detail-item:last-child {
+  margin-bottom: 0;
+}
+
+.detail-item i {
+  color: #06b6d4;
+  font-size: 1.1rem;
+}
+
+.confirmation-actions {
+  padding-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ensure the dashboard button fits inside the card and is centered */
+::ng-deep .confirmation-actions .p-button {
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+  display: inline-flex;
+  justify-content: center;
+}
+
+/* Success modal styles removed — modal was replaced by inline confirmation. */
+
+/* Confirmation inline panel: tighten spacing and center content */
+.confirmation-content {
+  text-align: center;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+.success-icon {
+  font-size: 3.5rem;
+  color: #10b981;
+  margin-bottom: 0.75rem;
+}
+
+.confirmation-title {
+  font-size: 1.5rem;
+}
+
+.confirmation-message {
+  font-size: 1rem;
+}
+
+/* Footer */
+.footer {
+  background: #1f2937;
+  color: white;
+  padding: 2rem 0;
+  margin-top: auto;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .footer-content {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+.footer-brand h5 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-links a {
+  color: #d1d5db;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #06b6d4;
+}
+
+.footer-copyright p {
+  margin: 0;
+  color: #9ca3af;
+  font-size: 0.875rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .registration-section {
+    padding: 1rem 0;
+  }
+
+  .registration-header {
+    padding: 1.5rem;
+  }
+
+  .brand-title {
+    font-size: 1.5rem;
+  }
+
+  .stepper-container {
+    padding: 1rem;
+  }
+
+  .step-content {
+    padding: 1rem 0;
+  }
+
+  .step-title {
+    font-size: 1.5rem;
+  }
+
+  .step-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Loading State for Buttons */
+::ng-deep .p-button-loading .p-button-icon {
+  animation: p-button-spin 1s linear infinite;
+}
+
+@keyframes p-button-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Progress Spinner Customization */
+::ng-deep .p-progress-spinner-circle {
+  stroke: #06b6d4;
+  stroke-width: 3;
+}
+
+/* PrimeNG stepper overrides removed — component uses a custom stepper markup now. */

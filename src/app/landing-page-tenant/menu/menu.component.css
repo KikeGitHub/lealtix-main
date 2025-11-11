@@ -17,6 +17,26 @@
   z-index: 2;
   pointer-events: none;
 }
+
+/* New class for image case: inherit centered styles but float top-right when image exists */
+.menu-price-img-custom {
+  /* start from base */
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  left: auto;
+  transform: none;
+  color: #33211D;
+  background: #DA9F5B;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 45px;
+  font-size: 1rem;
+  z-index: 2;
+}
 /* Estilo personalizado para el precio del menú */
 :host ::ng-deep .menu-price-custom {
   position: absolute;
@@ -35,21 +55,7 @@
   z-index: 2;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
-/* Estilos personalizados para los precios del menú */
-:host ::ng-deep .menu-price {
-  position: absolute;
-  margin: 0;
-  top: -5px;
-  right: 10px;
-  width: 45px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 45px;
-  color: #33211D;
-  background: #DA9F5B;
-}
+
 
 :host ::ng-deep h5,
 :host ::ng-deep h6,
@@ -145,46 +151,43 @@
   background-color: #FFFBF2;
 }
 /* Título principal y subtítulo */
-.section-title {
-  position: relative;
-  text-align: center;
-}
-.section-title h4 {
-  font-weight: bold;
-  color: #DA9F5B !important;
-  letter-spacing: 5px;
-}
-.section-title h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #33211D !important;
-}
-.display-4 {
-  font-weight: 700 !important;
-  color: #33211D !important;
-  font-size: 2.5rem;
-}
-.text-primary.text-uppercase {
-  color: #DA9F5B !important;
-}
-.row {
+.menu-img-wrapper { position: relative; }
+.menu-price--floating {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  left: auto;
+  transform: none;
+  color: #33211D;
+  background: #DA9F5B;
+  width: 45px;
+  height: 45px;
   display: flex;
-  flex-wrap: wrap;
-}
-.col-lg-6 {
-  flex: 0 0 50%;
-  padding: 1rem;
-}
-
-@media (max-width: 991.98px) {
-  .col-lg-6 {
-    flex: 0 0 100%;
-    max-width: 100%;
-    width: 100%;
-    padding: 1rem;
-  }
+  align-items: center;
+  justify-content: center;
+  border-radius: 45px;
+  font-size: 1rem;
+  z-index: 2;
 }
 
+/* menu-price-img-custom: same as menu-price-custom but positioned top-right for images */
+.menu-price-img-custom {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  left: auto;
+  transform: none;
+  color: #33211D;
+  background: #DA9F5B;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 45px;
+  font-size: 1rem;
+  z-index: 2;
+}
 .menu-price {
   color: #DA9F5B;
   font-size: 1.2rem;

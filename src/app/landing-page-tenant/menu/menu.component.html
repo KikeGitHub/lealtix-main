@@ -13,7 +13,7 @@
             <div class="row align-items-center mb-4">
               <div class="col-4 col-sm-3 text-center">
                 <div class="menu-img-wrapper">
-                  <h5 class="menu-price-custom">{{ producto.precio }}</h5>
+                  <h5 [ngClass]="producto.img ? 'menu-price-img-custom' : 'menu-price-custom'">{{ producto.precio }}</h5>
                   <ng-container *ngIf="producto.img; else defaultIcon">
                     <img class="w-100 rounded-circle mb-2 mb-sm-0" style="max-width:90px;"
                       [src]="producto.img" alt="">

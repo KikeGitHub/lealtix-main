@@ -10,7 +10,9 @@
     [vision]="aboutData.vision"
   ></app-about>
   <app-offer></app-offer>
-  <app-menu></app-menu>
+  <app-menu
+    [menuCategorias]="menuCategorias"
+    [defaultImg]="''"></app-menu>
   <app-footer
     [dir]="footerData.dir"
     [tel]="footerData.tel"
