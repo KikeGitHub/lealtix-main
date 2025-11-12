@@ -35,6 +35,12 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "outputHashing": "all",
               "budgets": [
                 {
@@ -77,7 +83,7 @@
               "sourceMap": true
             }
           },
-          "defaultConfiguration": "dev"
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular/build:dev-server",
@@ -95,7 +101,7 @@
               "buildTarget": "lealtix_main:build:local"
             }
           },
-          "defaultConfiguration": "dev"
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
