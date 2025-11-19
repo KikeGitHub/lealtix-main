@@ -87,13 +87,11 @@ export class LandingPageTenantComponent implements OnInit, OnDestroy {
   showBackToTop = false;
 
   ngOnInit() {
-    debugger;
     this.renderer.addClass(document.body, 'crema-bg');
     const slug = this.route.snapshot.queryParamMap.get('token');
     if (slug) {
       this.tenantLandingPageService.getDatosPorSlug(slug).subscribe( {
         next: (data: any) => {
-          debugger;
           this.tenantId = data.object?.tenant?.id
           this.navBarData = {
             logoUrl: data.object?.tenant?.logoUrl || '../../../../assets/img/lealtix_logo_transp.png',
@@ -133,7 +131,6 @@ export class LandingPageTenantComponent implements OnInit, OnDestroy {
   getProductsMenuByTenantId() {
     this.productsMenuService.getProductsByTenantId(this.tenantId).subscribe({
       next: (data: any) => {
-        // data expected: array of products with categoryId, categoryName, name, description, price, imageUrl
         console.log('Datos del menú de productos:', data);
         this.menuCategorias = this.mapProductsToMenuCategorias(data.object || []);
       },
@@ -144,8 +141,19 @@ export class LandingPageTenantComponent implements OnInit, OnDestroy {
   }
 
   private mapProductsToMenuCategorias(products: any[]) {
+    if (!Array.isArray(products)) return [];
+
     const categoriasMap: { [key: string]: any } = {};
+
     products.forEach(p => {
+      if (p && p.isActive === false) {
+        return;
+      }
+
+      if (p && p.categoryIsActive === false) {
+        return;
+      }
+
       const catName = p.categoryName || 'Sin categoría';
       if (!categoriasMap[catName]) {
         categoriasMap[catName] = {
@@ -153,6 +161,7 @@ export class LandingPageTenantComponent implements OnInit, OnDestroy {
           productos: [] as any[]
         };
       }
+
       categoriasMap[catName].productos.push({
         precio: p.price != null ? `$${p.price}` : '$0',
         img: this.getOptimizedImage(p.imageUrl) || '',
@@ -161,8 +170,10 @@ export class LandingPageTenantComponent implements OnInit, OnDestroy {
       });
     });
 
-    // Convertir map a array
-    return Object.keys(categoriasMap).map(k => categoriasMap[k]);
+    // Convertir map a array y filtrar categorías sin productos (por si todos los productos fueron omitidos)
+    return Object.keys(categoriasMap)
+      .map(k => categoriasMap[k])
+      .filter((cat: any) => Array.isArray(cat.productos) && cat.productos.length > 0);
   }
 
   ngOnDestroy() {
