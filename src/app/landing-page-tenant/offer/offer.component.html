@@ -1,18 +1,89 @@
 <!-- Offer Start -->
 <div id="offer" class="offer container-fluid my-5 py-5 text-center position-relative overlay-top overlay-bottom">
   <div class="container py-5">
-  <h1 class="offer-title">Regístrate para recibir promociones 🎉</h1>
+    <h1 class="offer-title">Regístrate para recibir promociones 🎉</h1>
     <h2 class="text-white mb-3">¡Al registrarte obtienes un cupón de descuento exclusivo!</h2>
     <h5 class="text-white font-weight-normal mb-4 pb-3">
       ✨ “Regístrate y forma parte de nuestra comunidad exclusiva: solo quienes están dentro reciben promociones
       especiales, sorpresas y descuentos que nadie más tendrá.”
     </h5>
-  <form [formGroup]="form" (ngSubmit)="submit()" class="offer-row-form mb-4">
-      <input type="text" formControlName="name" class="form-control p-4" placeholder="Tu Nombre">
-      <input type="email" formControlName="email" class="form-control p-4" placeholder="Tu Email">
-      <button class="btn btn-primary" type="submit">Registrarme</button>
+
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()" class="offer-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Nombre Completo</label>
+          <input type="text" id="name" formControlName="name" class="form-control p-4" placeholder="Tu Nombre">
+          <div *ngIf="customerForm.get('name')?.invalid && customerForm.get('name')?.touched" class="error-message">
+            <small *ngIf="customerForm.get('name')?.errors?.['required']">El nombre es requerido.</small>
+            <small *ngIf="customerForm.get('name')?.errors?.['minlength']">Debe tener al menos 2 caracteres.</small>
+            <small *ngIf="customerForm.get('name')?.errors?.['maxlength']">Máximo 140 caracteres.</small>
+            <small *ngIf="customerForm.get('name')?.errors?.['pattern']">Solo letras y espacios permitidos.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" formControlName="email" class="form-control p-4" placeholder="Tu Email">
+          <div *ngIf="customerForm.get('email')?.invalid && customerForm.get('email')?.touched" class="error-message">
+            <small *ngIf="customerForm.get('email')?.errors?.['required']">El email es requerido.</small>
+            <small *ngIf="customerForm.get('email')?.errors?.['email']">Email inválido.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="birthDate">Fecha de Nacimiento</label>
+          <input type="date" id="birthDate" formControlName="birthDate" class="form-control p-4">
+          <div *ngIf="customerForm.get('birthDate')?.invalid && customerForm.get('birthDate')?.touched" class="error-message">
+            <small *ngIf="customerForm.get('birthDate')?.errors?.['required']">La fecha de nacimiento es requerida.</small>
+            <small *ngIf="customerForm.get('birthDate')?.errors?.['invalidDate']">Fecha inválida.</small>
+            <small *ngIf="customerForm.get('birthDate')?.errors?.['minAge']">Debes tener más de 12 años.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Género</label>
+          <select id="gender" formControlName="gender" class="form-control p-4">
+            <option value="" disabled>Selecciona tu género</option>
+            <option value="Hombre">Hombre</option>
+            <option value="Mujer">Mujer</option>
+            <option value="Otro">Otro</option>
+          </select>
+          <div *ngIf="customerForm.get('gender')?.invalid && customerForm.get('gender')?.touched" class="error-message">
+            <small *ngIf="customerForm.get('gender')?.errors?.['required']">El género es requerido.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="phone">Teléfono (Opcional)</label>
+          <input type="tel" id="phone" formControlName="phone" class="form-control p-4" placeholder="Tu Teléfono">
+          <div *ngIf="customerForm.get('phone')?.invalid && customerForm.get('phone')?.touched" class="error-message">
+            <small *ngIf="customerForm.get('phone')?.errors?.['invalidPhone']">Teléfono inválido. Debe ser 10 dígitos numéricos.</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bloque legal: texto informativo sobre promociones y cancelación -->
+      <div class="legal-text">
+        <p>Acepto recibir promociones, descuentos y comunicaciones relacionadas con este negocio.</p>
+        <p>Puedes cancelar tu suscripción en cualquier momento.</p>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit" [disabled]="customerForm.invalid || isLoading">
+          <span *ngIf="!isLoading">Guardar</span>
+          <div *ngIf="isLoading" class="spinner"></div>
+        </button>
+      </div>
+
     </form>
+
+    <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+
   </div>
 </div>
-
 <!-- Offer End -->
