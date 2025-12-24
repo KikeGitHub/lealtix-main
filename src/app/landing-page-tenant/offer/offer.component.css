@@ -111,6 +111,30 @@ select.form-control {
   flex-direction: column;
 }
 
+/* Acomoda checkbox y label para evitar que se vean amontonados */
+.legal-text .form-check {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start !important;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+
+.legal-text .form-check .form-check-input {
+  margin: 0;
+  flex: 0 0 auto;
+  width: 1.15em;
+  height: 1.15em;
+}
+
+.legal-text .form-check .legal-main {
+  margin: 0; /* eliminar márgenes redundantes */
+  line-height: 1.25;
+  word-break: break-word;
+}
+
 .legal-text .legal-main {
   margin: 0 0 0.15rem 0;
   font-size: 0.95rem;

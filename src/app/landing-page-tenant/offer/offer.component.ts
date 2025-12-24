@@ -35,6 +35,7 @@ export class OfferComponent implements OnInit {
       gender: ['', [Validators.required]],
       birthDate: ['', [Validators.required, this.minAgeValidator(13)]],
       phone: ['', [this.optionalPhoneValidator]]
+      ,acceptedPromotions: [false]
     });
   }
 
@@ -91,6 +92,11 @@ export class OfferComponent implements OnInit {
       birthDate: formValue.birthDate
     };
 
+    // Añadir acceptedPromotions y acceptedAt (fecha de hoy) al payload
+    payload.acceptedPromotions = !!formValue.acceptedPromotions;
+    const todayDateOnly = new Date().toISOString().split('T')[0];
+    payload.acceptedAt = todayDateOnly;
+
     if (phoneClean) {
       payload.phone = phoneClean;
     }
@@ -110,8 +116,9 @@ export class OfferComponent implements OnInit {
         this.customerForm.reset();
       },
       error: (error) => {
+        debugger;
         this.isLoading = false;
-        this.errorMessage = 'Hubo un error en el registro. Por favor, inténtalo de nuevo.';
+        this.errorMessage = error.error.message || 'Hubo un error en el registro. Por favor, inténtalo de nuevo.';
         console.error('Error al crear el cliente:', error);
       }
     });

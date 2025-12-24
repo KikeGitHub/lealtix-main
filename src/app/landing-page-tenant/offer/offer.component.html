@@ -76,7 +76,10 @@
           </svg>
         </div>
         <div class="legal-copy">
-          <p class="legal-main">Al presionar 'Guardar', acepto recibir promociones, descuentos y comunicaciones relacionadas con este negocio.</p>
+          <div class="form-check d-flex align-items-center justify-content-center">
+            <input id="acceptPromotions" type="checkbox" class="form-check-input mr-2" aria-label="Aceptar promociones" formControlName="acceptedPromotions" />
+            <label for="acceptPromotions" class="form-check-label legal-main">Acepto recibir promociones, descuentos y comunicaciones comerciales de este negocio.</label>
+          </div>
           <p class="legal-sub">Puedes cancelar tu suscripción en cualquier momento.</p>
         </div>
       </div>
