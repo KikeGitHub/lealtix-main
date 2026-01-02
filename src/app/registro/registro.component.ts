@@ -588,6 +588,9 @@ export class RegistroComponent implements OnInit, OnDestroy {
   }
 
   goToDashboard() {
-    this.router.navigate(['http://localhost:4201/auth/login']);
+    // Use the configured dashboard URL from environments to redirect outside this Angular app.
+    const base = (environment && environment.dashboardUrl) ? String(environment.dashboardUrl) : window.location.origin;
+    const url = base.replace(/\/+$/, '') + '/auth/login';
+    window.location.href = url;
   }
 }

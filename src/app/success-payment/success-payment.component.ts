@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PaymentService } from '../services/payment.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-success-payment',
@@ -51,8 +52,9 @@ export class SuccessPaymentComponent implements OnInit {
   }
 
   goToDashboard() {
-  // Redirige a la página de autenticación externa (host local en el puerto 4201)
-  // Usamos window.location.href para forzar una navegación completa a una URL externa
-  window.location.href = 'http://localhost:4201/auth/login';
+    // Redirect using configured dashboardUrl so it varies per environment
+    const base = (environment && environment.dashboardUrl) ? String(environment.dashboardUrl) : window.location.origin;
+    const url = base.replace(/\/+$/, '') + '/auth/login';
+    window.location.href = url;
   }
 }
