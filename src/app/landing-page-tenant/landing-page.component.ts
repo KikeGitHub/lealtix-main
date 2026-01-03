@@ -8,7 +8,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TenantLandingPageService } from '../services/tenant-landing-page.service';
 import { ProductsMenuService } from '../services/products-menu.service';
-import { Title } from '@angular/platform-browser';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-landing-page',
@@ -83,14 +83,15 @@ export class LandingPageTenantComponent implements OnInit, OnDestroy {
               private router: Router,
               private tenantLandingPageService: TenantLandingPageService,
               private productsMenuService: ProductsMenuService,
-              private titleService: Title
+              private titleService: Title,
+              private meta: Meta
   ) {}
   // Para mostrar u ocultar el botón Back to Top
   showBackToTop = false;
 
   ngOnInit() {
     this.renderer.addClass(document.body, 'crema-bg');
-    const slug = this.route.snapshot.queryParamMap.get('token');
+    const slug = this.route.snapshot.paramMap.get('slug');
     if (slug) {
       this.tenantLandingPageService.getDatosPorSlug(slug).subscribe( {
         next: (data: any) => {
@@ -120,6 +121,9 @@ export class LandingPageTenantComponent implements OnInit, OnDestroy {
 
           // Actualizar el title y favicon de la página
           this.updatePageTitleAndFavicon();
+
+          // Actualizar meta tags SEO
+          this.updateSeoMetaTags(data.object, slug);
 
           // Cargar menú de productos para el tenant obtenido
           if (this.tenantId && this.tenantId > 0) {
@@ -245,6 +249,158 @@ export class LandingPageTenantComponent implements OnInit, OnDestroy {
   // Scroll hacia arriba
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /**
+   * Actualiza los meta tags SEO de forma dinámica
+   */
+  updateSeoMetaTags(data: any, slug: string) {
+    const tenant = data?.tenant;
+    const tenantConfig = data?.tenantConfig;
+    const businessName = tenant?.nombreNegocio || 'Lealtix';
+    const description = this.cleanHtmlAndTruncate(
+      tenantConfig?.history || tenant?.slogan || `Descubre ${businessName}, tu mejor opción para disfrutar.`,
+      155
+    );
+    const logoUrl = tenant?.logoUrl || '';
+    const currentUrl = `${window.location.origin}/landing-page/${slug}`;
+
+    // Meta básicos
+    this.meta.updateTag({ name: 'description', content: description });
+    this.meta.updateTag({ name: 'keywords', content: `${businessName}, ${tenant?.slogan || ''}, restaurante, cafetería, negocio local` });
+
+    // Open Graph
+    this.meta.updateTag({ property: 'og:type', content: 'website' });
+    this.meta.updateTag({ property: 'og:title', content: businessName });
+    this.meta.updateTag({ property: 'og:description', content: description });
+    this.meta.updateTag({ property: 'og:url', content: currentUrl });
+    this.meta.updateTag({ property: 'og:site_name', content: businessName });
+
+    if (logoUrl) {
+      const ogImage = this.getOptimizedImageForOG(logoUrl);
+      this.meta.updateTag({ property: 'og:image', content: ogImage });
+      this.meta.updateTag({ property: 'og:image:alt', content: `Logo de ${businessName}` });
+    }
+
+    // Twitter Card
+    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({ name: 'twitter:title', content: businessName });
+    this.meta.updateTag({ name: 'twitter:description', content: description });
+
+    if (logoUrl) {
+      const twitterImage = this.getOptimizedImageForOG(logoUrl);
+      this.meta.updateTag({ name: 'twitter:image', content: twitterImage });
+      this.meta.updateTag({ name: 'twitter:image:alt', content: `Logo de ${businessName}` });
+    }
+
+    // Canonical URL
+    this.updateCanonicalUrl(currentUrl);
+
+    // JSON-LD Structured Data
+    this.updateJsonLd(data, currentUrl);
+  }
+
+  /**
+   * Limpia HTML y trunca texto para meta description
+   */
+  cleanHtmlAndTruncate(text: string, maxLength: number): string {
+    if (!text) return '';
+    // Remover tags HTML
+    const cleaned = text.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+    if (cleaned.length <= maxLength) return cleaned;
+    return cleaned.substring(0, maxLength - 3) + '...';
+  }
+
+  /**
+   * Obtiene imagen optimizada para Open Graph (1200x630 recomendado)
+   */
+  getOptimizedImageForOG(url: string): string {
+    if (!url) return '';
+    if (!url.includes('cloudinary.com')) return url;
+    return url.replace('/upload/', '/upload/w_1200,h_630,c_fill,f_auto,q_auto/');
+  }
+
+  /**
+   * Actualiza o crea el link canonical
+   */
+  updateCanonicalUrl(url: string) {
+    let link: HTMLLinkElement | null = document.querySelector('link[rel="canonical"]');
+
+    if (!link) {
+      link = document.createElement('link');
+      link.setAttribute('rel', 'canonical');
+      document.head.appendChild(link);
+    }
+
+    link.setAttribute('href', url);
+  }
+
+  /**
+   * Actualiza o crea el script JSON-LD para structured data
+   */
+  updateJsonLd(data: any, currentUrl: string) {
+    const tenant = data?.tenant;
+    const tenantConfig = data?.tenantConfig;
+    const user = data?.user;
+
+    const jsonLd: any = {
+      '@context': 'https://schema.org',
+      '@type': 'LocalBusiness',
+      'name': tenant?.nombreNegocio || 'Lealtix',
+      'description': this.cleanHtmlAndTruncate(tenantConfig?.history || tenant?.slogan || '', 200),
+      'url': currentUrl,
+      'telephone': tenant?.telefono || '',
+      'email': user?.email || '',
+      'address': {
+        '@type': 'PostalAddress',
+        'streetAddress': tenant?.direccion || ''
+      },
+      'openingHours': tenant?.schedules || '',
+      'sameAs': this.getSocialLinks(tenantConfig)
+    };
+
+    if (tenant?.logoUrl) {
+      jsonLd['logo'] = tenant.logoUrl;
+      jsonLd['image'] = tenant.logoUrl;
+    }
+
+    // Remover script anterior si existe
+    const existingScript = document.querySelector('script[type="application/ld+json"]#tenant-jsonld');
+    if (existingScript) {
+      existingScript.remove();
+    }
+
+    // Crear nuevo script
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'tenant-jsonld';
+    script.text = JSON.stringify(jsonLd);
+    document.head.appendChild(script);
+  }
+
+  /**
+   * Obtiene array de links de redes sociales
+   */
+  getSocialLinks(tenantConfig: any): string[] {
+    const links: string[] = [];
+
+    if (tenantConfig?.facebook && tenantConfig.facebook !== '#') {
+      links.push(tenantConfig.facebook);
+    }
+    if (tenantConfig?.twitter && tenantConfig.twitter !== '#') {
+      links.push(tenantConfig.twitter);
+    }
+    if (tenantConfig?.instagram && tenantConfig.instagram !== '#') {
+      links.push(tenantConfig.instagram);
+    }
+    if (tenantConfig?.linkedin && tenantConfig.linkedin !== '#') {
+      links.push(tenantConfig.linkedin);
+    }
+    if (tenantConfig?.tiktok && tenantConfig.tiktok !== '#') {
+      links.push(tenantConfig.tiktok);
+    }
+
+    return links;
   }
 }
 
