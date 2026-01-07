@@ -5,6 +5,7 @@ import { ErrorComponent } from './error/error.component';
 import { SuccessPaymentComponent } from './success-payment/success-payment.component';
 import { CancelPaymentComponent } from './cancel-payment/cancel-payment.component';
 import { LandingPageTenantComponent } from './landing-page-tenant/landing-page.component';
+import { PrivacyComponent } from './privacy/privacy.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -13,5 +14,6 @@ export const routes: Routes = [
   { path: 'checkout/success', component: SuccessPaymentComponent },
   { path: 'checkout/cancel', component: CancelPaymentComponent },
   { path: 'landing-page/demo', component: LandingPageTenantComponent },
-  { path: 'landing-page', component: LandingPageTenantComponent }
+  { path: 'landing-page', component: LandingPageTenantComponent },
+  { path: 'privacy', component: PrivacyComponent }
 ];
