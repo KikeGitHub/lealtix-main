@@ -1,0 +1,128 @@
+<div class="privacy-container">
+  <div class="privacy-header">
+    <div class="container">
+      <h1>Aviso de Privacidad</h1>
+      <p class="subtitle">Lealtix - Plataforma de Lealtad para Negocios</p>
+    </div>
+  </div>
+
+  <div class="privacy-content container">
+    <section class="privacy-section">
+      <h2>Responsable del tratamiento de datos</h2>
+      <p>
+        <strong>Lealtix</strong> es responsable del tratamiento de los datos personales que se recaban a través de las páginas
+        de los negocios afiliados a la plataforma.
+      </p>
+      <p>
+        Para cualquier consulta relacionada con el presente aviso de privacidad, puedes contactarnos en:
+        <a [href]="'mailto:' + contactEmail">{{ contactEmail }}</a>
+      </p>
+    </section>
+
+    <section class="privacy-section">
+      <h2>Datos personales que recabamos</h2>
+      <p>Podemos recabar los siguientes datos personales:</p>
+      <ul>
+        <li><strong>Nombre completo</strong></li>
+        <li><strong>Número telefónico</strong></li>
+        <li><strong>Correo electrónico</strong></li>
+        <li><strong>Información de uso:</strong> datos relacionados con el uso de cupones, promociones y campañas de lealtad</li>
+      </ul>
+      <p>
+        Estos datos son proporcionados voluntariamente por el titular al registrarse en programas de lealtad de los negocios afiliados
+        a nuestra plataforma.
+      </p>
+    </section>
+
+    <section class="privacy-section">
+      <h2>Finalidad del uso de datos</h2>
+      <p>Los datos personales se utilizan únicamente para:</p>
+      <ul>
+        <li>Registrar clientes en programas de lealtad de los negocios afiliados</li>
+        <li>Enviar promociones, beneficios y comunicaciones relacionadas con los programas de lealtad</li>
+        <li>Procesar el canje de cupones y promociones</li>
+        <li>Medir el uso y desempeño de campañas, cupones y programas de lealtad</li>
+        <li>Mejorar la experiencia de usuario y optimizar nuestros servicios</li>
+      </ul>
+    </section>
+
+    <section class="privacy-section">
+      <h2>Uso y protección de datos</h2>
+      <p>
+        <strong>Lealtix no vende, renta ni comparte datos personales con terceros.</strong> La información es utilizada
+        exclusivamente por el negocio afiliado al que te registraste y por la plataforma Lealtix para los fines descritos.
+      </p>
+      <p>
+        Implementamos medidas de seguridad técnicas, administrativas y físicas para proteger tus datos personales contra
+        daño, pérdida, alteración, destrucción o el uso, acceso o tratamiento no autorizado.
+      </p>
+    </section>
+
+    <section class="privacy-section">
+      <h2>Derechos ARCO (Acceso, Rectificación, Cancelación y Oposición)</h2>
+      <p>
+        Como titular de datos personales, tienes derecho a:
+      </p>
+      <ul>
+        <li><strong>Acceder</strong> a tus datos personales que poseemos</li>
+        <li><strong>Rectificar</strong> tus datos si son incorrectos o están incompletos</li>
+        <li><strong>Cancelar</strong> tus datos cuando consideres que no están siendo utilizados conforme a este aviso</li>
+        <li><strong>Oponerte</strong> al tratamiento de tus datos para fines específicos</li>
+      </ul>
+      <p>
+        Para ejercer cualquiera de estos derechos, envía una solicitud al correo electrónico
+        <a [href]="'mailto:' + contactEmail">{{ contactEmail }}</a> indicando claramente el derecho que deseas ejercer
+        y proporcionando información que permita identificarte.
+      </p>
+      <p>
+        Daremos respuesta a tu solicitud en un plazo máximo de 20 días hábiles contados desde la fecha en que se recibió.
+      </p>
+    </section>
+
+    <section class="privacy-section">
+      <h2>Revocación del consentimiento</h2>
+      <p>
+        Puedes revocar tu consentimiento para el tratamiento de tus datos personales en cualquier momento, enviando
+        una solicitud a <a [href]="'mailto:' + contactEmail">{{ contactEmail }}</a>. La revocación no tendrá efectos
+        retroactivos sobre el tratamiento de datos realizados previamente con tu consentimiento.
+      </p>
+    </section>
+
+    <section class="privacy-section">
+      <h2>Cookies y tecnologías de seguimiento</h2>
+      <p>
+        Nuestro sitio web puede utilizar cookies y tecnologías similares para mejorar la experiencia del usuario
+        y recopilar información sobre cómo se utiliza la plataforma. Puedes configurar tu navegador para rechazar
+        cookies, aunque esto podría afectar algunas funcionalidades del sitio.
+      </p>
+    </section>
+
+    <section class="privacy-section">
+      <h2>Actualizaciones al aviso de privacidad</h2>
+      <p>
+        Este aviso de privacidad puede actualizarse periódicamente para reflejar cambios en nuestras prácticas de
+        tratamiento de datos, mejoras en el servicio o modificaciones en la legislación aplicable.
+      </p>
+      <p>
+        Te recomendamos revisar este aviso periódicamente. Cualquier cambio será notificado a través de nuestra
+        plataforma o por correo electrónico cuando sea aplicable.
+      </p>
+    </section>
+
+    <section class="privacy-section">
+      <h2>Legislación aplicable</h2>
+      <p>
+        Este aviso de privacidad se rige conforme a la <strong>Ley Federal de Protección de Datos Personales en Posesión
+        de los Particulares (LFPDPPP)</strong> y su reglamento, así como por las demás disposiciones aplicables en México.
+      </p>
+    </section>
+
+    <section class="privacy-section last-update">
+      <p><strong>Última actualización:</strong> {{ currentDate }}</p>
+    </section>
+
+    <div class="back-link">
+      <button (click)="goBack()" class="btn-back">← Volver a la página anterior</button>
+    </div>
+  </div>
+</div>
