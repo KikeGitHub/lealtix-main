@@ -403,6 +403,44 @@ input[pInputText]:focus, textarea[pInputText]:focus {
   gap: 0.5rem;
 }
 
+/* Privacy Notice */
+.privacy-notice {
+  background-color: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-left: 4px solid #06b6d4;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: #0c4a6e;
+  line-height: 1.5;
+}
+
+.privacy-notice i {
+  color: #06b6d4;
+  font-size: 1.25rem;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+.privacy-notice p {
+  margin: 0;
+}
+
+.privacy-notice a {
+  color: #0369a1;
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.privacy-notice a:hover {
+  color: #1e3a8a;
+}
+
 /* Step Actions */
 .step-actions {
   display: flex;
