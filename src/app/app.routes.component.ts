@@ -13,7 +13,6 @@ export const routes: Routes = [
   { path: 'error', component: ErrorComponent },
   { path: 'checkout/success', component: SuccessPaymentComponent },
   { path: 'checkout/cancel', component: CancelPaymentComponent },
-  { path: 'landing-page/demo', component: LandingPageTenantComponent },
-  { path: 'landing-page', component: LandingPageTenantComponent },
+  { path: 'landing-page/:slug', component: LandingPageTenantComponent },
   { path: 'privacy', component: PrivacyComponent }
 ];
