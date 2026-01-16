@@ -11,7 +11,7 @@
       <h4 class="text-white text-uppercase mb-4" style="letter-spacing: 3px;">Siguenos</h4>
       <p>Nos puedes encontrar en nuestras redes sociales:</p>
       <div class="d-flex justify-content-center mt-3">
-        <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" [href]="twiter">
+        <a *ngIf="twiter" class="btn btn-lg btn-outline-light btn-lg-square mr-2" [href]="twiter">
           <span class="icon-twitter">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -20,14 +20,14 @@
           </span>
         </a>
 
-          <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" [href]="tiktok">
+          <a *ngIf="tiktok" class="btn btn-lg btn-outline-light btn-lg-square mr-2" [href]="tiktok">
             <span class="icon-tiktok">
                 <svg viewBox="0 0 32 32" width="1.5em" height="1.5em" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path d="M20.948 7.052c.352 2.036 2.01 3.584 4.052 3.936v3.012c-1.012.092-2.02-.064-2.948-.456v7.456c0 4.02-3.26 7.288-7.28 7.288-4.02 0-7.288-3.268-7.288-7.288 0-4.02 3.268-7.288 7.288-7.288.204 0 .404.012.604.028v3.072a4.22 4.22 0 0 0-.604-.048c-2.324 0-4.212 1.888-4.212 4.212 0 2.324 1.888 4.212 4.212 4.212 2.324 0 4.212-1.888 4.212-4.212V2.948h3.36v4.104z"/>
               </svg>
             </span>
           </a>
-        <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" [href]="facebook">
+        <a *ngIf="facebook" class="btn btn-lg btn-outline-light btn-lg-square mr-2" [href]="facebook">
           <span class="icon-facebook">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -35,7 +35,7 @@
             </svg>
           </span>
         </a>
-        <a class="btn btn-lg btn-outline-light btn-lg-square mr-2" [href]="linkedin">
+        <a *ngIf="linkedin" class="btn btn-lg btn-outline-light btn-lg-square mr-2" [href]="linkedin">
           <span class="icon-linkedin">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -43,7 +43,7 @@
             </svg>
           </span>
         </a>
-        <a class="btn btn-lg btn-outline-light btn-lg-square" [href]="instagram">
+        <a *ngIf="instagram" class="btn btn-lg btn-outline-light btn-lg-square" [href]="instagram">
           <span class="icon-instagram">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path
