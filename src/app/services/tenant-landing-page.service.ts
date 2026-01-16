@@ -13,4 +13,8 @@ export class TenantLandingPageService {
   getDatosPorSlug(slug: string): Observable<any> {
     return this.http.get(`${this.apiUrl}${slug}`);
   }
+
+  getActivePromotions(businessId: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/campaigns/business/${businessId}`);
+  }
 }

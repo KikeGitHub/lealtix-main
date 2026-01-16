@@ -53,6 +53,14 @@ export class NavBarComponent {
     }
   }
 
+  scrollToPromociones(event: Event) {
+    event.preventDefault();
+    const promociones = document.querySelector('#promociones');
+    if (promociones) {
+      promociones.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
   scrollToFooter(event: Event) {
     event.preventDefault();
     const footer = document.querySelector('#footer');
