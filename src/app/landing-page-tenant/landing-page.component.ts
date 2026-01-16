@@ -60,6 +60,7 @@ export class LandingPageTenantComponent implements OnInit, OnDestroy {
   showBackToTop = false;
 
   ngOnInit() {
+    debugger;
     this.renderer.addClass(document.body, 'crema-bg');
     const slug = this.route.snapshot.paramMap.get('slug');
 
@@ -71,10 +72,11 @@ export class LandingPageTenantComponent implements OnInit, OnDestroy {
       this.tenantLandingPageService.getDatosPorSlug(slug).subscribe({
         next: (data: any) => {
           this.tenantId = data.object?.tenant?.id;
+          const tenantObj = data.object?.tenant || {};
           this.navBarData = {
-            logoUrl: data.object?.tenant?.logoUrl || '',
-            bussinessName: data.object?.tenant?.bussinessName || '',
-            since: data.object?.tenant?.slogan || ''
+            logoUrl: tenantObj.logoUrl || '',
+            bussinessName: tenantObj.bussinessName || tenantObj.nombreNegocio || tenantObj.nombre || '',
+            since: tenantObj.slogan || ''
           };
           this.aboutData = {
             since: data.object?.tenant?.slogan || '',
