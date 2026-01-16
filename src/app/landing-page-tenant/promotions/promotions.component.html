@@ -1,0 +1,42 @@
+<!-- Promociones Start -->
+<div id="promociones" class="container-fluid promotions-section my-5 py-5" *ngIf="promotions.length > 0">
+  <div class="container py-5">
+    <div class="section-title text-center mb-5">
+      <h4 class="promotions-title">PROMOCIONES ACTIVAS</h4>
+      <h1 class="display-3 text-white mt-3">¡Ofertas Especiales para Ti!</h1>
+      <p class="text-white-50 mt-3">Aprovecha nuestras promociones exclusivas</p>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6 mb-5" *ngFor="let promo of promotions">
+        <div class="promo-card h-100">
+          <div class="row align-items-center h-100">
+            <div class="col-sm-5 text-center">
+              <div class="promo-image-wrapper">
+                <img
+                  [src]="promo.imageUrl || (promo.template && promo.template.defaultImageUrl) || 'assets/img/service-1.jpg'"
+                  [alt]="promo.title"
+                  class="img-fluid promo-img">
+                <div class="promo-badge" *ngIf="promo.promoValue">
+                  <span>{{ promo.promoValue }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-7">
+              <h3 class="promo-title">{{ promo.title }}</h3>
+              <h5 class="promo-subtitle">{{ promo.subtitle }}</h5>
+              <p class="promo-description">{{ promo.description }}</p>
+
+              <div class="promo-footer">
+                <small class="promo-validity">
+                  <i class="far fa-clock"></i> Válido hasta: {{ promo.endDate | date:'dd/MM/yyyy' }}
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Promociones End -->

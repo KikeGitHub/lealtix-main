@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AboutComponent } from './about/about.component';
 import { OfferComponent } from './offer/offer.component';
+import { PromotionsComponent } from './promotions/promotions.component';
 import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,6 +18,7 @@ import { ProductsMenuService } from '../services/products-menu.service';
     NavBarComponent,
     AboutComponent,
     OfferComponent,
+    PromotionsComponent,
     MenuComponent,
     FooterComponent
   ],

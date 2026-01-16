@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, ValidatorFn, AbstractControl } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 // PrimeNG imports
@@ -32,6 +32,7 @@ import { ConfettiComponent } from '../confetti/confetti.component';
   imports: [
     ReactiveFormsModule,
     CommonModule,
+      RouterModule,
     InputTextModule,
     ButtonModule,
     InputMaskModule,
@@ -103,7 +104,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
     this.registroForm = this.fb.group({
       tenant: this.fb.group({
         fullName: ['', Validators.required],
-        fechaNacimiento: ['', Validators.required],
+        fechaNacimiento: ['', [Validators.required, this.minAgeValidator(18)]],
         telefono: [''],
         email: ['', [Validators.required, Validators.email]],
         password: ['', Validators.required],
@@ -172,6 +173,22 @@ export class RegistroComponent implements OnInit, OnDestroy {
   isFieldInvalid(fieldName: string): boolean {
     const field = this.tenant[fieldName];
     return field && field.invalid && (field.dirty || field.touched || this.submitted);
+  }
+
+  minAgeValidator(minAge: number): ValidatorFn {
+    return (control: AbstractControl) => {
+      const value = control.value;
+      if (!value) return null;
+      const dob = new Date(value);
+      if (isNaN(dob.getTime())) return { invalidDate: true };
+      const today = new Date();
+      let age = today.getFullYear() - dob.getFullYear();
+      const m = today.getMonth() - dob.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+        age--;
+      }
+      return age >= minAge ? null : { minAge: { requiredAge: minAge, actualAge: age } };
+    };
   }
 
   togglePasswordVisibility() {
