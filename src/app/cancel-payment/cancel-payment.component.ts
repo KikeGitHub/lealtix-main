@@ -28,7 +28,6 @@ export class CancelPaymentComponent implements OnInit {
       if (sessionId) {
         this.paymentService.getPaymentCancel(sessionId).subscribe({
           next: (data) => {
-            debugger
             this.userName = data.object.name;
             this.errorReason = data.object.description;
             this.loading = false;

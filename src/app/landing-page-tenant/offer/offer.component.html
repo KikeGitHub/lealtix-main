@@ -59,7 +59,7 @@
       <div class="form-row">
         <div class="form-group full-width">
           <label for="phone">Teléfono (Opcional)</label>
-          <input type="tel" id="phone" formControlName="phone" class="form-control p-4" placeholder="Tu Teléfono">
+          <input type="tel" id="phone" formControlName="phone" class="form-control p-4" placeholder="Tu Teléfono" maxlength="10" inputmode="numeric" pattern="[0-9]*" (input)="onPhoneInput($event)">
           <div *ngIf="customerForm.get('phone')?.invalid && customerForm.get('phone')?.touched" class="error-message">
             <small *ngIf="customerForm.get('phone')?.errors?.['invalidPhone']">Teléfono inválido. Debe ser 10 dígitos numéricos.</small>
           </div>

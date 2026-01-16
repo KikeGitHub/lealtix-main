@@ -103,8 +103,14 @@
                     class="w-full"
                     [class.p-invalid]="isFieldInvalid('fechaNacimiento')"
                   />
-                  <small *ngIf="isFieldInvalid('fechaNacimiento')" class="p-error">
+                  <small *ngIf="tenant['fechaNacimiento'].hasError('required') && isFieldInvalid('fechaNacimiento')" class="p-error">
                     <i class="pi pi-exclamation-circle"></i> La fecha de nacimiento es requerida
+                  </small>
+                  <small *ngIf="tenant['fechaNacimiento'].hasError('minAge') && isFieldInvalid('fechaNacimiento')" class="p-error">
+                    <i class="pi pi-exclamation-circle"></i> Debes tener al menos 18 años
+                  </small>
+                  <small *ngIf="tenant['fechaNacimiento'].hasError('invalidDate') && isFieldInvalid('fechaNacimiento')" class="p-error">
+                    <i class="pi pi-exclamation-circle"></i> Fecha inválida
                   </small>
                 </div>
 
@@ -181,7 +187,7 @@
 
           <div class="privacy-notice">
             <i class="pi pi-shield"></i>
-            <p>Al registrarte aceptas recibir promociones del negocio. Tus datos están protegidos y no se comparten con terceros. <a href="/privacy" target="_blank">Ver Aviso de Privacidad</a></p>
+            <p>Al registrarte aceptas recibir promociones del negocio. Tus datos están protegidos y no se comparten con terceros. <br><a [routerLink]="['/privacy']">Ver Aviso de Privacidad</a></p>
           </div>
 
           <div class="step-actions">
@@ -290,15 +296,12 @@
                 <span>{{ tenant['email'].value }}</span>
               </div>
             </div>
-
-            <div class="confirmation-actions">
-              <p-button
-                label="Ir al Dashboard"
-                icon="pi pi-external-link"
-                iconPos="right"
-                class="success-button"
-                (onClick)="goToDashboard()"
-              ></p-button>
+            <div class="confirmation-note" style="margin-top:1rem; text-align:center;">
+              <i class="pi pi-envelope" style="font-size:1.6rem;color:#0ea5a4;"></i>
+              <p class="fs-6 mb-0 text-secondary" style="max-width:720px;margin:0.5rem auto 0;">
+                En breve recibirás un correo electrónico con tus credenciales de acceso al panel de administración de tu página en Lealtix.
+                <br>Sigue las instrucciones del correo para iniciar sesión y configurar tu cuenta. Si no lo recibes en unos minutos, revisa la carpeta de spam o promociones.
+              </p>
             </div>
           </div>
         </div>
@@ -315,11 +318,11 @@
     <div class="footer-brand">
       <h5>Lealtix</h5>
     </div>
-    <div class="footer-links">
-      <a href="/">Inicio</a>
+      <div class="footer-links">
+      <a [routerLink]="['/']">Inicio</a>
       <a href="#">Beneficios</a>
       <a href="#">Precios</a>
-      <a href="/privacy">Aviso de Privacidad</a>
+      <a [routerLink]="['/privacy']">Aviso de Privacidad</a>
       <a href="#">Contacto</a>
     </div>
     <div class="footer-copyright">

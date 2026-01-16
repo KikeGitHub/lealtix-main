@@ -69,8 +69,20 @@ export class OfferComponent implements OnInit {
     return null;
   }
 
+  // Formatea el input en vivo: elimina no numéricos y limita a 10 dígitos
+  onPhoneInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const cleaned = input.value.replace(/\D+/g, '').slice(0, 10);
+    if (input.value !== cleaned) {
+      input.value = cleaned;
+    }
+    const control = this.customerForm.get('phone');
+    if (control && control.value !== cleaned) {
+      control.setValue(cleaned, { emitEvent: false });
+    }
+  }
+
   onSubmit(): void {
-    debugger;
     if (this.customerForm.invalid) {
       this.customerForm.markAllAsTouched();
       return;
@@ -116,7 +128,6 @@ export class OfferComponent implements OnInit {
         this.customerForm.reset();
       },
       error: (error) => {
-        debugger;
         this.isLoading = false;
         this.errorMessage = error.error.message || 'Hubo un error en el registro. Por favor, inténtalo de nuevo.';
         console.error('Error al crear el cliente:', error);

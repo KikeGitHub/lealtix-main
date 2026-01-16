@@ -24,13 +24,11 @@ export class SuccessPaymentComponent implements OnInit {
               private router: Router) {}
 
   ngOnInit() {
-    debugger
     this.route.queryParams.subscribe(params => {
       const sessionId = params['session_id'];
       if (sessionId) {
         this.paymentService.getPaymentSuccess(sessionId).subscribe({
           next: (data) => {
-            debugger
             this.userName = data.object.name;
             this.planName = data.object.plan;
             this.cost = data.object.cost + ' ' + data.object.currency;
