@@ -40,7 +40,6 @@ export class PagoComponent implements OnInit {
   }
 
   async pagar() {
-    debugger;
     if (!this.stripe || !this.plan?.priceId) {
       this.message = 'Plan no seleccionado o Stripe no cargado.';
       return;

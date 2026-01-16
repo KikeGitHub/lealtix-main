@@ -161,7 +161,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
           }
         },
         error: (err) => {
-          debugger;
           this.errorMsg = err?.error?.message || 'Invitación inválida o expirada.';
           this.loading = false;
           this.router.navigate(['/error'], { queryParams: { msg: this.errorMsg } });
@@ -280,8 +279,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
 
 
   async createStripePaymentIntent() {
-    // small debugger left intentionally commented for dev-time troubleshooting
-    // debugger;
+
     const paymentData = {
       email: this.tenant['email'].value,
       amount: 29900,
@@ -492,7 +490,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
       }
 
       const pi = (result as any).paymentIntent;
-      debugger;
       if (pi) {
         // Comprueba el estado explícitamente
         if (pi.status === 'succeeded') {

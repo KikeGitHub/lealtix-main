@@ -83,7 +83,6 @@ export class OfferComponent implements OnInit {
   }
 
   onSubmit(): void {
-    debugger;
     if (this.customerForm.invalid) {
       this.customerForm.markAllAsTouched();
       return;
@@ -129,7 +128,6 @@ export class OfferComponent implements OnInit {
         this.customerForm.reset();
       },
       error: (error) => {
-        debugger;
         this.isLoading = false;
         this.errorMessage = error.error.message || 'Hubo un error en el registro. Por favor, inténtalo de nuevo.';
         console.error('Error al crear el cliente:', error);
