@@ -60,6 +60,7 @@ export class LandingPageTenantComponent implements OnInit, OnDestroy {
   showBackToTop = false;
 
   ngOnInit() {
+    debugger;
     this.renderer.addClass(document.body, 'crema-bg');
     const slug = this.route.snapshot.paramMap.get('slug');
 
@@ -71,25 +72,34 @@ export class LandingPageTenantComponent implements OnInit, OnDestroy {
       this.tenantLandingPageService.getDatosPorSlug(slug).subscribe({
         next: (data: any) => {
           this.tenantId = data.object?.tenant?.id;
+          const tenantObj = data.object?.tenant || {};
           this.navBarData = {
-            logoUrl: data.object?.tenant?.logoUrl || '',
-            bussinessName: data.object?.tenant?.bussinessName || '',
-            since: data.object?.tenant?.slogan || ''
+            logoUrl: tenantObj.logoUrl || '',
+            bussinessName: tenantObj.bussinessName || tenantObj.nombreNegocio || tenantObj.nombre || '',
+            since: tenantObj.slogan || ''
           };
           this.aboutData = {
             since: data.object?.tenant?.slogan || '',
             story: data.object?.tenantConfig?.history || '',
             vision: data.object?.tenantConfig?.vision || ''
           };
+          const tc = data.object?.tenantConfig || {};
+          const sanitize = (v: any) => {
+            if (v === null || v === undefined) return '';
+            const s = String(v).trim();
+            if (s === '' || s === '#') return '';
+            return s;
+          };
+
           this.footerData = {
             dir: data.object?.tenant?.direccion || '',
             tel: data.object?.tenant?.telefono || '',
             bussinesEmail: data.object?.user?.email || '',
-            twiter: data.object?.tenantConfig?.twitter || '',
-            facebook: data.object?.tenantConfig?.facebook || '',
-            linkedin: data.object?.tenantConfig?.linkedin || '',
-            instagram: data.object?.tenantConfig?.instagram || '',
-            tiktok: data.object?.tenantConfig?.tiktok || '',
+            twiter: sanitize(tc.twitter),
+            facebook: sanitize(tc.facebook),
+            linkedin: sanitize(tc.linkedin),
+            instagram: sanitize(tc.instagram),
+            tiktok: sanitize(tc.tiktok),
             schelules: data.object?.tenant?.schedules || ''
           };
           // Cargar menú de productos para el tenant obtenido

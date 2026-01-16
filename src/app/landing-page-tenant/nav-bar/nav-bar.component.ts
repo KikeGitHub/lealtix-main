@@ -12,7 +12,15 @@ export class NavBarComponent {
 
   // NavBar data
   @Input() logoUrl: string = '';
-  @Input() bussinessName: string = '';
+  private _bussinessName: string = '';
+  @Input()
+  set bussinessName(v: string) {
+    this._bussinessName = v;
+    console.log('[NavBar] bussinessName set ->', v);
+  }
+  get bussinessName(): string {
+    return this._bussinessName;
+  }
   @Input() since: string = '';
 
   isMenuOpen = false;
