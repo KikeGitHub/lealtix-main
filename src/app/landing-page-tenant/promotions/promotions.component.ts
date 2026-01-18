@@ -35,17 +35,39 @@ export class PromotionsComponent implements OnInit {
     this.loading = true;
     this.tenantService.getActivePromotions(this.tenantId).subscribe({
       next: (response) => {
-        if (response.code === 200 && response.object) {
+        // Handle responses that may be either an array or an object with `object` array
+        if (!response) {
+          this.promotions = [];
+        } else if (Array.isArray(response)) {
+          this.promotions = response;
+        } else if (response.object && Array.isArray(response.object)) {
+          this.promotions = response.object;
+        } else if (response.code === 200 && response.object) {
           this.promotions = response.object;
         } else {
-           // Handle empty or error responses gracefully
-           // console.log("No promotions found");
+          console.log('No promotions found', response);
+          this.promotions = [];
         }
+
+        // Ensure promotionReward.usageLimit defaults to 1 when not provided
+        this.promotions = this.promotions.map(p => {
+          try {
+            if (p && p.promotionReward) {
+              if (p.promotionReward.usageLimit == null) {
+                p.promotionReward.usageLimit = 1;
+              }
+            }
+          } catch (e) {
+            // defensive: if shape is unexpected, skip
+          }
+          return p;
+        });
+
         this.loading = false;
       },
       error: (err) => {
         console.error('Error fetching promotions', err);
-        // this.error = 'Error al cargar las promociones.';
+        this.error = 'Error al cargar las promociones.';
         this.loading = false;
       }
     });

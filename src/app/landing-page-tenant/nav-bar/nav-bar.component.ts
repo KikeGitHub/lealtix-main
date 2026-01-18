@@ -22,6 +22,7 @@ export class NavBarComponent {
     return this._bussinessName;
   }
   @Input() since: string = '';
+  @Input() hasPromotions: boolean = false;
 
   isMenuOpen = false;
 
@@ -63,6 +64,7 @@ export class NavBarComponent {
 
   scrollToPromociones(event: Event) {
     event.preventDefault();
+    if (!this.hasPromotions) return; // do nothing if there are no promotions
     const promociones = document.querySelector('#promociones');
     if (promociones) {
       promociones.scrollIntoView({ behavior: 'smooth' });

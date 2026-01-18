@@ -19,4 +19,13 @@ export class FooterComponent {
   @Input() instagram: string = '';
   @Input() schelules: string = '';
   @Input() tiktok: string = '';
+
+  showIcon(value: string | null | undefined): boolean {
+    if (!value) return false;
+    const v = value.trim();
+    if (v.length === 0) return false;
+    // Show icon if it's a URL (starts with http/https or www.) or if it's a long value (>20 chars)
+    const isUrl = /^(https?:\/\/|www\.)/i.test(v);
+    return isUrl || v.length > 20;
+  }
 }
