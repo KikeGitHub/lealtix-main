@@ -31,6 +31,7 @@ export class LandingPageTenantComponent implements OnInit, OnDestroy {
     bussinessName: '',
     since: ''
   };
+  hasPromotions: boolean = false;
   aboutData = {
     since: '',
     story: '',
@@ -105,6 +106,20 @@ export class LandingPageTenantComponent implements OnInit, OnDestroy {
           // Cargar menú de productos para el tenant obtenido
           if (this.tenantId && this.tenantId > 0) {
             this.getProductsMenuByTenantId();
+            // Consultar promociones activas para mostrar/ocultar tooltip en el menú
+            this.tenantLandingPageService.getActivePromotions(this.tenantId).subscribe({
+              next: (p: any) => {
+                // Respuesta API puede devolver un array directo o un objeto con `object`.
+                if (Array.isArray(p)) {
+                  this.hasPromotions = p.length > 0;
+                } else if (p && Array.isArray(p.object)) {
+                  this.hasPromotions = p.object.length > 0;
+                } else {
+                  this.hasPromotions = false;
+                }
+              },
+              error: () => this.hasPromotions = false
+            });
           }
         },
         error: (err: any) => {

@@ -25,7 +25,7 @@
             <div class="col-sm-7">
               <h3 class="promo-title">{{ promo.title }}</h3>
               <h5 class="promo-subtitle">{{ promo.subtitle }}</h5>
-              <p class="promo-description">{{ promo.description }}</p>
+              <p class="promo-description">{{ promo.promotionReward?.description || promo.description }}</p>
 
               <div class="promo-footer">
                 <small class="promo-validity">
