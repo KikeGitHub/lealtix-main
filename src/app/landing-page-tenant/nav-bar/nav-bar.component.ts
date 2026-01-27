@@ -78,4 +78,29 @@ export class NavBarComponent {
       footer.scrollIntoView({ behavior: 'smooth' });
     }
   }
+
+  /**
+   * Valida si la URL del logo es una cadena no vacía y parece una URL/ruta válida.
+   * Acepta URLs absolutas (http(s)://), data: y rutas relativas como /assets/...
+   */
+  isValidLogo(url?: string): boolean {
+    if (!url) return false;
+    const v = url.trim();
+    if (!v) return false;
+
+    // Intenta construir URL absoluta
+    try {
+      // new URL() acepta URLs absolutas; si es relativa fallará y seguiremos con otras comprobaciones
+      // eslint-disable-next-line no-new
+      new URL(v);
+      return true;
+    } catch (e) {
+      // not absolute, allow common relative patterns: /path, ./path, ../path, assets/... etc.
+      if (/^(\/|\.\/|\.\.\/)/.test(v)) return true;
+      if (/^[a-zA-Z0-9_\-]+\//.test(v)) return true;
+      // allow data URI
+      if (v.startsWith('data:')) return true;
+      return false;
+    }
+  }
 }

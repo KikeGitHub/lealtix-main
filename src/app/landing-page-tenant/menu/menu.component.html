@@ -7,31 +7,29 @@
 
     <div class="row flex-column flex-lg-row flex-wrap">
       <ng-container *ngFor="let categoria of menuCategorias; let i = index">
-        <div class="col-12 col-lg-6 mb-4">
-          <h1 class="mb-4 text-center text-lg-start">{{ categoria.nombre }}</h1>
+        <div class="col-12 col-lg-4 mb-3">
+          <h1 class="mb-3 text-center text-lg-start">{{ categoria.nombre }}</h1>
           <ng-container *ngFor="let producto of categoria.productos">
-            <div class="row align-items-center mb-4">
-              <div class="col-4 col-sm-3 text-center">
+            <div class="row align-items-center mb-3">
+              <div class="col-3 col-sm-3 text-center">
                 <div class="menu-img-wrapper">
                   <h5 [ngClass]="producto.img ? 'menu-price-img-custom' : 'menu-price-custom'">{{ producto.precio }}</h5>
                   <ng-container *ngIf="producto.img; else defaultIcon">
-                    <img class="w-100 rounded-circle mb-2 mb-sm-0" style="max-width:90px;"
+                    <img class="w-100 rounded-circle" style="max-width:65px;"
                       [src]="producto.img" alt="">
                   </ng-container>
                   <ng-template #defaultIcon>
-                    <i class="fas fa-mug-hot fa-3x text-gray-400"></i>
+                    <i class="fas fa-mug-hot fa-2x text-gray-400"></i>
                   </ng-template>
                 </div>
               </div>
-              <div class="col-8 col-sm-9">
+              <div class="col-9">
                 <h4>{{ producto.prod }}</h4>
                 <p class="m-0">{{ producto.descProd }}</p>
               </div>
             </div>
           </ng-container>
         </div>
-        <!-- Si hay más de dos categorías, muestra las siguientes abajo -->
-        <div *ngIf="i % 2 === 1 && i + 1 < menuCategorias.length" class="w-100"></div>
       </ng-container>
     </div>
 
