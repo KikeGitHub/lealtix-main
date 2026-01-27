@@ -1,3 +1,14 @@
+.menu-prod-titulo {
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: left;
+  word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: block;
+}
 /* Posiciona el precio encima de la imagen */
 .menu-img-wrapper {
   position: relative;
@@ -36,6 +47,80 @@
   border-radius: 38px;
   font-size: 0.85rem;
   z-index: 2;
+}
+/* Columnas del menú */
+.menu-col {
+  display: block;
+  padding-right: 12px;
+  padding-left: 12px;
+}
+.menu-col-1 {}
+.menu-col-2 {}
+.menu-col-3 {}
+
+/* Títulos y descripciones con fuente pequeña y justificado */
+.menu-categoria-titulo {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Separador visual por categoría */
+.menu-categoria {
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Barra de acento bajo el título */
+.menu-categoria-titulo {
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+.menu-categoria-titulo::after {
+  content: '';
+  display: block;
+  width: 56px;
+  height: 4px;
+  background: linear-gradient(90deg,#DA9F5B,#C87A2A);
+  border-radius: 3px;
+  margin-top: 0.5rem;
+}
+
+/* Quitar separador en la última categoría */
+.menu-categorias > .menu-categoria:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0.25rem;
+}
+.menu-prod-titulo {
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: left;
+  word-break: break-word;
+}
+.menu-prod-desc {
+  font-size: 0.85rem;
+  text-align: justify;
+  word-break: break-word;
+}
+
+/* Imagen tamaño normal y reducido */
+.menu-img {
+  max-width: 65px;
+  width: 65px;
+  height: 65px;
+}
+.menu-img-small {
+  max-width: 45px;
+  width: 45px;
+  height: 45px;
+}
+
+/* Precio más pequeño en 2 y 3 columnas */
+.menu-price-small {
+  font-size: 0.75rem !important;
+  width: 30px !important;
+  height: 30px !important;
 }
 /* Estilo personalizado para el precio del menú */
 :host ::ng-deep .menu-price-custom {
