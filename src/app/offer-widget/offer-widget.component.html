@@ -1,0 +1,60 @@
+<div class="offer">
+  <div class="container">
+    <h1 class="offer-title">Regístrate para recibir promociones 🎉</h1>
+
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()" class="offer-form">
+      <div class="row">
+        <div class="col">
+          <label for="name">Nombre Completo</label>
+          <input id="name" type="text" formControlName="name" placeholder="Tu Nombre" />
+          <div class="error" *ngIf="customerForm.get('name')?.invalid && customerForm.get('name')?.touched">
+            <small *ngIf="customerForm.get('name')?.errors?.['required']">El nombre es requerido.</small>
+          </div>
+        </div>
+
+        <div class="col">
+          <label for="email">Email</label>
+          <input id="email" type="email" formControlName="email" placeholder="Tu Email" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label for="birthDate">Fecha de Nacimiento</label>
+          <input id="birthDate" type="date" formControlName="birthDate" />
+        </div>
+
+        <div class="col">
+          <label for="gender">Género</label>
+          <select id="gender" formControlName="gender">
+            <option value="" disabled>Selecciona tu género</option>
+            <option value="Hombre">Hombre</option>
+            <option value="Mujer">Mujer</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col full-width">
+          <label for="phone">Teléfono (Opcional)</label>
+          <input id="phone" type="tel" formControlName="phone" placeholder="Tu Teléfono" maxlength="10" inputmode="numeric" (input)="onPhoneInput($event)" />
+        </div>
+      </div>
+
+      <div class="legal">
+        <label>
+          <input type="checkbox" formControlName="acceptedPromotions" />
+          Acepto recibir promociones, descuentos y comunicaciones comerciales.
+        </label>
+      </div>
+
+      <div class="actions">
+        <button type="submit" [disabled]="customerForm.invalid || isLoading">{{ isLoading ? 'Enviando...' : 'Guardar' }}</button>
+      </div>
+    </form>
+
+    <div class="alert success" *ngIf="successMessage">{{ successMessage }}</div>
+    <div class="alert error" *ngIf="errorMessage">{{ errorMessage }}</div>
+  </div>
+</div>
