@@ -35,7 +35,7 @@
 .btn-outline-light:focus .icon-facebook svg,
 .btn-outline-light:hover .icon-twitter svg,
 .btn-outline-light:focus .icon-twitter svg {
-  fill: #222;
+  fill: #C68B59;
 }
 /* Estilos inspirados en offer.component.css para un footer visualmente consistente */
 .footer {
@@ -56,7 +56,7 @@
   transition: color 0.2s;
 }
 .footer a:hover {
-  color: #ffc107;
+  color: #C68B59;
 }
 .footer .btn-outline-light {
   border-color: #fff;

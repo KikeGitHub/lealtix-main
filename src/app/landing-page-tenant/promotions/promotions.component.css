@@ -12,7 +12,7 @@
 .promotions-title {
   position: relative;
   display: inline-block;
-  color: #DA9F5B !important;
+  color: #C68B59 !important;
   font-weight: 900 !important;
   letter-spacing: 5px;
   text-transform: uppercase;
@@ -26,7 +26,7 @@
   height: 2px;
   top: 50%;
   margin-top: -1px;
-  background: #DA9F5B;
+  background: #C68B59;
 }
 
 .promotions-title::before {
@@ -43,13 +43,13 @@
   border-radius: 15px;
   padding: 2rem;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 12px 40px rgba(198, 139, 89, 0.12);
   height: 100%;
 }
 
 .promo-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 40px rgba(218, 159, 91, 0.3);
+  box-shadow: 0 15px 40px rgba(198, 139, 89, 0.12);
 }
 
 /* Imagen de la promoción */
@@ -64,7 +64,7 @@
   height: 180px;
   object-fit: cover;
   border-radius: 50%;
-  border: 5px solid #DA9F5B;
+  border: 5px solid #C68B59;
   transition: transform 0.3s ease;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
@@ -78,7 +78,7 @@
   position: absolute;
   top: -10px;
   right: -10px;
-  background: #DA9F5B;
+  background: #C68B59;
   color: white;
   width: 60px;
   height: 60px;
@@ -94,21 +94,21 @@
 
 /* Textos de la promoción */
 .promo-title {
-  color: #33211D;
+  color: #2C1E1A;
   font-weight: 700;
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
 .promo-subtitle {
-  color: #DA9F5B;
+  color: #C68B59;
   font-style: italic;
   font-weight: 500;
   margin-bottom: 1rem;
 }
 
 .promo-description {
-  color: #555;
+  color: #4A3A35;
   font-size: 0.95rem;
   line-height: 1.6;
   margin-bottom: 1.5rem;
@@ -123,7 +123,7 @@
 }
 
 .btn-promo {
-  background-color: #DA9F5B;
+  background-color: #C68B59;
   color: white;
   border: none;
   padding: 0.75rem 2rem;
@@ -131,13 +131,13 @@
   font-weight: 600;
   font-size: 1rem;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(218, 159, 91, 0.3);
+  box-shadow: 0 4px 12px rgba(198, 139, 89, 0.3);
 }
 
 .btn-promo:hover {
-  background-color: #c8883f;
+  background-color: #B07A4E;
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(218, 159, 91, 0.5);
+  box-shadow: 0 6px 16px rgba(198, 139, 89, 0.5);
 }
 
 .promo-validity {
@@ -149,7 +149,7 @@
 }
 
 .promo-validity i {
-  color: #DA9F5B;
+  color: #C68B59;
 }
 
 /* Responsividad */

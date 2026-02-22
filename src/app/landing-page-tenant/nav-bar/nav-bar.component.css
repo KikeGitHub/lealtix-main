@@ -40,6 +40,10 @@
     text-align: left;
     font-size: 1.1rem;
     margin-right: 0;
+    color: #FFFFFF !important;
+  }
+  .navbar-nav .nav-link:hover {
+    color: #C68B59 !important;
   }
   .navbar-collapse {
     width: 100%;
@@ -86,7 +90,7 @@
   width: 100%;
 }
 .nav-bar {
-  background: linear-gradient(90deg, #6f4e37 0%, #b6894b 100%);
+  background: linear-gradient(90deg, #2C1E1A 0%, #3d2a24 100%);
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
@@ -95,7 +99,7 @@
 }
 
 .navbar-brand h1 {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: 2.5rem;
   font-weight: 700;
   letter-spacing: 2px;

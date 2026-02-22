@@ -9,21 +9,21 @@
   padding: 1rem !important;
 }
 .about-section {
-  background-color: #FFFBF2;
+  background-color: #FDF8F1;
 }
 /* Estilo personalizado para el texto 'Atendiendo desde 1990' */
 .display-4 {
   font-weight: 700 !important;
-  color: #33211D !important;
+  color: #2C1E1A !important;
 }
 /* Fondo color crema para la sección About */
 .about-section {
-  background-color: #FFFBF2;
+  background-color: #FDF8F1;
 }
 
 /* Color personalizado para títulos */
 .text-primary.text-uppercase {
-  color: #DA9F5B !important;
+  color: #C68B59 !important;
 }
 /* Estilos para el componente About */
 .container-fluid {
@@ -45,6 +45,7 @@
 .section-title h1 {
   font-size: 2.5rem;
   font-weight: 700;
+  color: #2C1E1A;
 }
 .row {
   display: flex;

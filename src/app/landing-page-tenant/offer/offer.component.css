@@ -1,8 +1,8 @@
 /* Estilos personalizados para el botón primario del formulario Offer */
 :host ::ng-deep .btn-primary {
-  color: #212529 !important;
-  background-color: #DA9F5B !important;
-  border-color: #DA9F5B !important;
+  color: #2C1E1A !important;
+  background-color: #C68B59 !important;
+  border-color: #C68B59 !important;
   padding: 1rem 2rem;
   font-size: 1.1rem;
   font-weight: bold;
@@ -13,6 +13,11 @@
   background-color: #a88255 !important;
   border-color: #a88255 !important;
   cursor: not-allowed;
+}
+
+:host ::ng-deep .btn-primary:hover {
+  background-color: #B07A4E !important;
+  border-color: #B07A4E !important;
 }
 
 /* Estructura del formulario */
@@ -88,7 +93,7 @@ select.form-control {
   background: rgba(255,255,255,0.04);
   padding: 0.85rem 1rem;
   border-radius: 8px;
-  border-left: 4px solid rgba(218,159,91,0.95); /* acento consistente con tema */
+  border-left: 4px solid #C68B59;
   font-size: 0.92rem;
   color: #f8f9fa; /* texto principal claro para fondo oscuro */
   margin-top: 1rem;
@@ -175,7 +180,7 @@ select.form-control {
 
 /* Estilos generales de la sección */
 .offer-title {
-  color: #DA9F5B !important;
+  color: #C68B59 !important;
   font-size: 3.5rem;
   font-weight: 700 !important;
   line-height: 1.2;

@@ -14,9 +14,8 @@ export class MenuComponent {
   // Calcula el número de columnas según la cantidad de productos
   getColumnCount(productos: any[]): number {
     const count = productos.length;
-    if (count > 10) return 3;
-    if (count > 5) return 2;
-    return 1;
+    if (count > 10) return 3;  // 3 columnas si hay más de 10 productos
+    return 2;  // 2 columnas por defecto (mínimo)
   }
 
   // Divide los productos en subgrupos para cada columna
@@ -33,9 +32,8 @@ export class MenuComponent {
   // Devuelve la clase de columna bootstrap según la cantidad de columnas
   getColClass(productos: any[]): string {
     const cols = this.getColumnCount(productos);
-    if (cols === 1) return 'col-12';
     if (cols === 2) return 'col-12 col-md-6';
-    // 3 columns: full width on xs, two on md, three on lg
+    // 3 columns: full width on xs, 50% on md, 33% on lg+
     return 'col-12 col-md-6 col-lg-4';
   }
 }
