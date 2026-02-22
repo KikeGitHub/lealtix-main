@@ -1,7 +1,6 @@
 import { Component, HostListener, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { AboutComponent } from './about/about.component';
 import { OfferComponent } from './offer/offer.component';
 import { PromotionsComponent } from './promotions/promotions.component';
 import { MenuComponent } from './menu/menu.component';
@@ -16,7 +15,6 @@ import { ProductsMenuService } from '../services/products-menu.service';
   imports: [
     CommonModule,
     NavBarComponent,
-    AboutComponent,
     OfferComponent,
     PromotionsComponent,
     MenuComponent,

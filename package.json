@@ -52,10 +52,12 @@
     "@angular/build": "^20.2.0",
     "@angular/cli": "^20.2.0",
     "@angular/compiler-cli": "^20.2.1",
+    "@tailwindcss/postcss": "^4.2.0",
     "@types/canvas-confetti": "^1.9.0",
     "@types/jasmine": "~5.1.0",
     "@types/jest": "^30.0.0",
     "@types/stripe-v3": "^3.1.33",
+    "autoprefixer": "^10.4.24",
     "esbuild": "^0.27.2",
     "jasmine-core": "~5.9.0",
     "karma": "~6.4.0",
@@ -63,6 +65,8 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.19",
     "typescript": "~5.9.2"
   }
 }
