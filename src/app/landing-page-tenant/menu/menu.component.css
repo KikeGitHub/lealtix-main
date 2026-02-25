@@ -1,337 +1,73 @@
-.menu-prod-titulo {
-  font-size: 1rem;
-  font-weight: 500;
-  text-align: left;
-  word-break: break-word;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-  display: block;
+.menu-grid-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: background-color 0.3s ease;
+  border-radius: 0.75rem;
+  flex-wrap: wrap;
 }
-/* Posiciona el precio encima de la imagen */
+
+.menu-grid-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
 .menu-img-wrapper {
-  position: relative;
-  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  background-color: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.menu-price-custom {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  background: rgba(0,0,0,0.6);
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.95rem;
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* New class for image case: inherit centered styles but float top-right when image exists */
 .menu-price-img-custom {
-  /* start from base */
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  left: auto;
-  transform: none;
-  color: #33211D;
-  background: #DA9F5B;
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 38px;
-  font-size: 0.85rem;
-  z-index: 2;
-}
-/* Columnas del menú */
-.menu-col {
-  display: block;
-  padding-right: 12px;
-  padding-left: 12px;
-}
-.menu-col-1 {}
-.menu-col-2 {}
-.menu-col-3 {}
-
-/* Títulos y descripciones con fuente pequeña y justificado */
-.menu-categoria-titulo {
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-/* Separador visual por categoría */
-.menu-categoria {
-  padding-bottom: 1.25rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-}
-
-/* Barra de acento bajo el título */
-.menu-categoria-titulo {
-  position: relative;
-  padding-bottom: 0.5rem;
-}
-.menu-categoria-titulo::after {
-  content: '';
-  display: block;
-  width: 56px;
-  height: 4px;
-  background: linear-gradient(90deg,#DA9F5B,#C87A2A);
-  border-radius: 3px;
-  margin-top: 0.5rem;
-}
-
-/* Quitar separador en la última categoría */
-.menu-categorias > .menu-categoria:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-  padding-bottom: 0.25rem;
-}
-.menu-prod-titulo {
-  font-size: 1rem;
-  font-weight: 500;
-  text-align: left;
-  word-break: break-word;
-}
-.menu-prod-desc {
-  font-size: 0.85rem;
-  text-align: justify;
-  word-break: break-word;
-}
-
-/* Imagen tamaño normal y reducido */
-.menu-img {
-  max-width: 65px;
-  width: 65px;
-  height: 65px;
-}
-.menu-img-small {
-  max-width: 45px;
-  width: 45px;
-  height: 45px;
-}
-
-/* Precio más pequeño en 2 y 3 columnas */
-.menu-price-small {
-  font-size: 0.75rem !important;
-  width: 30px !important;
-  height: 30px !important;
-}
-/* Estilo personalizado para el precio del menú */
-:host ::ng-deep .menu-price-custom {
-  position: absolute;
-  margin: 0;
-  top: -4px;
-  right: 8px;
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 38px;
-  color: #33211D;
-  background: #DA9F5B;
-  font-size: 0.85rem;
-  z-index: 2;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-
-
-:host ::ng-deep h5,
-:host ::ng-deep h6,
-:host ::ng-deep .font-weight-normal {
-  font-weight: 400 !important;
-}
-:host ::ng-deep h5,
-:host ::ng-deep .h5 {
-  font-size: 0.95rem;
-}
-/* Estilos personalizados y responsivos para imágenes y márgenes en Menu */
-:host ::ng-deep .mb-3,
-:host ::ng-deep .my-3 {
-  margin-bottom: 0.5rem !important;
-}
-:host ::ng-deep .w-100 {
-  width: 100% !important;
-}
-:host ::ng-deep .rounded-circle {
-  border-radius: 50% !important;
-}
-:host ::ng-deep img {
-  vertical-align: middle;
-  border-style: none;
-}
-@media (min-width: 576px) {
-  :host ::ng-deep .mb-sm-0,
-  :host ::ng-deep .my-sm-0 {
-    margin-bottom: 0 !important;
-  }
-}
-:host ::ng-deep p {
-  display: block;
-  margin-block-start: 0.3em;
-  margin-block-end: 0.3em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  unicode-bidi: isolate;
-}
-:host ::ng-deep h4 {
-  display: block;
-  margin-block-start: 0.5em;
-  margin-block-end: 0.25em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
+  color: #c68b58;
   font-weight: bold;
-  unicode-bidi: isolate;
-}
-/* Tipografía y títulos personalizados para Menu */
-:host ::ng-deep h1,
-:host ::ng-deep h2,
-:host ::ng-deep .font-weight-bold {
-  font-weight: 700 !important;
-}
-:host ::ng-deep h1,
-:host ::ng-deep .h1 {
-  font-size: 1.5rem;
-}
-:host ::ng-deep h1,
-:host ::ng-deep h2,
-:host ::ng-deep h3,
-:host ::ng-deep h4,
-:host ::ng-deep h5,
-:host ::ng-deep h6,
-:host ::ng-deep .h1,
-:host ::ng-deep .h2,
-:host ::ng-deep .h3,
-:host ::ng-deep .h4,
-:host ::ng-deep .h5,
-:host ::ng-deep .h6 {
-  margin-bottom: 0.25rem;
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  line-height: 1.2;
-  color: #33211D;
-}
-:host ::ng-deep h1,
-:host ::ng-deep h2,
-:host ::ng-deep h3,
-:host ::ng-deep h4,
-:host ::ng-deep h5,
-:host ::ng-deep h6 {
-  margin-top: 0;
-  margin-bottom: .5rem;
-}
-:host ::ng-deep *,
-:host ::ng-deep *::before,
-:host ::ng-deep *::after {
-  box-sizing: border-box;
-}
-/* Fondo color crema para la sección Menu */
-.menu-section {
-  background-color: #FFFBF2;
-}
-/* Título principal y subtítulo */
-.menu-img-wrapper { position: relative; }
-.menu-price--floating {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  left: auto;
-  transform: none;
-  color: #33211D;
-  background: #DA9F5B;
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 38px;
-  font-size: 0.85rem;
-  z-index: 2;
+  margin-left: auto;
+  font-size: 1.125rem;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-/* menu-price-img-custom: same as menu-price-custom but positioned top-right for images */
-.menu-price-img-custom {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  left: auto;
-  transform: none;
-  color: #33211D;
-  background: #DA9F5B;
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 38px;
-  font-size: 0.85rem;
-  z-index: 2;
-}
-.menu-price {
-  color: #DA9F5B;
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-.w-100 {
-  width: 100%;
-}
-.rounded-circle {
-  border-radius: 50%;
-}
-.mb-3 {
-  margin-bottom: 0.5rem;
-}
-.mb-5 {
-  margin-bottom: 1.5rem;
-}
-.pt-5 {
-  padding-top: 1.5rem !important;
-}
-.m-0 {
-  margin: 0 !important;
-}
+/* Responsive typography */
+@media (max-width: 640px) {
+  .menu-grid-item {
+    padding: 0.75rem 0.5rem;
+    gap: 0.75rem;
+  }
 
-.menu-title {
-  color: #DA9F5B !important;
-  text-transform: uppercase !important;
-  letter-spacing: 5px;
-  font-size: 2.2rem;
-  font-weight: 300;
-  line-height: 1.2;
-}
+  .menu-img-wrapper {
+    width: 50px;
+    height: 50px;
+  }
 
-/* Optimización de layout para menú compacto */
-.menu-section {
-  background-color: #FFFBF2;
-  padding: 1.5rem 0 !important;
-}
+  .menu-grid-item h4 {
+    font-size: 0.95rem;
+  }
 
-/* Reducir tamaños de imágenes */
-:host ::ng-deep img[style*="max-width:90px"] {
-  max-width: 65px !important;
-}
+  .menu-grid-item p {
+    font-size: 0.7rem;
+  }
 
-:host ::ng-deep img {
-  max-width: 65px;
-}
-
-/* Reducir espacios entre items */
-:host ::ng-deep .row.align-items-center.mb-4 {
-  margin-bottom: 1.2rem !important;
-}
-
-/* Optimizar la columna de 3 items */
-@media (min-width: 1200px) {
-  :host ::ng-deep .col-lg-6 {
-    flex: 0 0 calc(33.3333% - 0.5rem);
-    max-width: calc(33.3333% - 0.5rem);
-    margin-right: 0.75rem;
+  .menu-price-img-custom {
+    font-size: 1rem;
   }
 }
+
+@media (max-width: 768px) {
+  .menu-grid-item {
+    padding: 0.75rem;
+  }
+
+  .menu-img-wrapper {
+    width: 55px;
+    height: 55px;
+  }
+}
+/* Removed old classes as they are not used with Tailwind CSS */

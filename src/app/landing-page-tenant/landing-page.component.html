@@ -3,19 +3,20 @@
     [logoUrl]="navBarData.logoUrl"
     [bussinessName]="navBarData.bussinessName"
     [since]="navBarData.since"
-    [hasPromotions]="hasPromotions"
-  ></app-nav-bar>
-  <app-about
-    [since]="aboutData.since"
     [story]="aboutData.story"
     [vision]="aboutData.vision"
-  ></app-about>
-  <app-offer [tenantId]="tenantId"></app-offer>
-  <app-menu
+    [hasPromotions]="hasPromotions"
+  ></app-nav-bar>
+
+<app-promotions [tenantId]="tenantId" *ngIf="hasPromotions"></app-promotions>
+
+<app-menu
     [menuCategorias]="menuCategorias"
     [defaultImg]="''"></app-menu>
-  <app-promotions [tenantId]="tenantId"></app-promotions>
-  <app-footer
+
+<app-offer [tenantId]="tenantId"></app-offer>
+
+<app-footer
     [dir]="footerData.dir"
     [tel]="footerData.tel"
     [bussinesEmail]="footerData.bussinesEmail"
@@ -23,21 +24,16 @@
     [facebook]="footerData.facebook"
     [linkedin]="footerData.linkedin"
     [instagram]="footerData.instagram"
+    [tiktok]="footerData.tiktok"
     [schelules]="footerData.schelules"
   ></app-footer>
 
-  <!-- Back to Top -->
-  <button
-    *ngIf="showBackToTop"
-    (click)="scrollToTop()"
-    class="btn btn-lg btn-light btn-lg-square back-to-top"
-    style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; box-shadow: 0 4px 16px rgba(0,0,0,0.15); border-radius: 50%; border: none;"
-  >
-    <span style="display: inline-block; width: 1.5em; height: 1.5em; color: #222;">
-      <svg width="1.5em" height="1.5em" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 8.5l-5 5 1.41 1.41L12 11.33l3.59 3.58L17 13.5l-5-5z"/>
-        <path d="M12 4.5l-5 5 1.41 1.41L12 7.33l3.59 3.58L17 9.5l-5-5z"/>
-      </svg>
-    </span>
-  </button>
+<!-- Back to Top Button -->
+<button
+  *ngIf="showBackToTop"
+  (click)="scrollToTop()"
+  class="fixed bottom-20 right-20 z-1000 w-14 h-14 rounded-full bg-light text-espresso shadow-lg hover:shadow-xl transition-all flex items-center justify-center"
+>
+  <span class="material-symbols-outlined">expand_less</span>
+</button>
 

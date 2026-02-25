@@ -1,42 +1,38 @@
-<!-- Promociones Start -->
-<div id="promociones" class="container-fluid promotions-section my-5 py-5" *ngIf="promotions.length > 0">
-  <div class="container py-5">
-    <div class="section-title text-center mb-5">
-      <h4 class="promotions-title">PROMOCIONES ACTIVAS</h4>
-      <h1 class="display-3 text-white mt-3">¡Ofertas Especiales para Ti!</h1>
-      <p class="text-white-50 mt-3">Aprovecha nuestras promociones exclusivas</p>
+<section class="py-12 md:py-24 px-4 md:px-6 bg-background-light" id="promotions" *ngIf="promotions.length > 0">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-8 md:mb-16">
+      <span class="text-caramel font-bold tracking-[0.2em] uppercase text-xs md:text-sm">Ofertas Limitadas</span>
+      <h2 class="text-3xl md:text-5xl font-black text-espresso mt-3 md:mt-4">Promociones activas</h2>
     </div>
-
-    <div class="row">
-      <div class="col-lg-6 mb-5" *ngFor="let promo of promotions">
-        <div class="promo-card h-100">
-          <div class="row align-items-center h-100">
-            <div class="col-sm-5 text-center">
-              <div class="promo-image-wrapper">
-                <img
-                  [src]="promo.imageUrl || (promo.template && promo.template.defaultImageUrl) || 'assets/img/service-1.jpg'"
-                  [alt]="promo.title"
-                  class="img-fluid promo-img">
-                <div class="promo-badge" *ngIf="promo.promoValue">
-                  <span>{{ promo.promoValue }}</span>
-                </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+      <div class="promo-card bg-bone-white p-6 md:p-8 rounded-xl md:rounded-2xl border border-primary/10 relative group" *ngFor="let promo of promotions; let i = index">
+        <span class="absolute top-4 md:top-6 right-4 md:right-6 bg-caramel text-white text-[8px] md:text-[10px] font-black px-2 md:px-3 py-1 rounded-full uppercase tracking-widest">
+          {{ i === 0 ? 'Temporada' : (i === 1 ? 'Exclusiva' : 'Nuevo') }}
+        </span>
+        <div class="flex flex-col md:flex-row items-stretch gap-4">
+          <div class="md:w-1/4">
+            <img *ngIf="promo.imageUrl; else iconBlock" [src]="promo.imageUrl" [alt]="promo.title || 'Promoción'" class="w-full h-32 md:h-32 object-cover rounded-lg shadow-inner" />
+            <ng-template #iconBlock>
+              <div class="size-12 md:size-14 bg-caramel/10 rounded-lg md:rounded-xl flex items-center justify-center text-caramel mb-4 md:mb-0 h-32 md:h-32">
+                <span class="material-symbols-outlined text-2xl md:text-3xl">
+                  {{ i === 0 ? 'local_fire_department' : (i === 1 ? 'bakery_dining' : 'package_2') }}
+                </span>
+              </div>
+            </ng-template>
+          </div>
+          <div class="md:w-3/4 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg md:text-2xl font-bold text-espresso mb-2 md:mb-3">{{ promo.title }}</h3>
+              <p class="text-xs md:text-sm text-espresso/70 mb-3 leading-relaxed">{{ promo.promotionReward?.description || promo.description }}</p>
+              <div class="flex items-center gap-2 text-[10px] md:text-xs text-caramel/80 font-medium">
+                <span class="material-symbols-outlined text-sm">schedule</span>
+                <span>Válido: {{ formatDate(promo.startDate) }} - {{ formatDate(promo.endDate) }}</span>
               </div>
             </div>
-            <div class="col-sm-7">
-              <h3 class="promo-title">{{ promo.title }}</h3>
-              <h5 class="promo-subtitle">{{ promo.subtitle }}</h5>
-              <p class="promo-description">{{ promo.promotionReward?.description || promo.description }}</p>
 
-              <div class="promo-footer">
-                <small class="promo-validity">
-                  <i class="far fa-clock"></i> Válido hasta: {{ promo.endDate | date:'dd/MM/yyyy' }}
-                </small>
-              </div>
-            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<!-- Promociones End -->
+</section>

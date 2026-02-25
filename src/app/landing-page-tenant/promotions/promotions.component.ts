@@ -72,4 +72,11 @@ export class PromotionsComponent implements OnInit {
       }
     });
   }
+
+  formatDate(dateString: string): string {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+    return date.toLocaleDateString('es-ES', options);
+  }
 }

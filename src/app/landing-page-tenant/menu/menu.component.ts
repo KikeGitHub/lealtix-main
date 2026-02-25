@@ -11,31 +11,33 @@ import { Component, Input } from '@angular/core';
 export class MenuComponent {
   @Input() defaultImg = '';
   @Input() menuCategorias: any[] = [];
-  // Calcula el número de columnas según la cantidad de productos
-  getColumnCount(productos: any[]): number {
-    const count = productos.length;
-    if (count > 10) return 3;
-    if (count > 5) return 2;
-    return 1;
+
+  selectedCategory: string = 'Todos';
+
+  // Retorna los productos para una columna específica
+  productosPorColumna(categoriaIdx: number, columnIdx: number): any[] {
+    const filteredCategories = this.getFilteredCategories();
+    if (!filteredCategories[categoriaIdx]) return [];
+    const productos = filteredCategories[categoriaIdx].productos || [];
+    const itemsPerCol = Math.ceil(productos.length / 2);
+    const start = columnIdx * itemsPerCol;
+    return productos.slice(start, start + itemsPerCol);
   }
 
-  // Divide los productos en subgrupos para cada columna
-  splitProductos(productos: any[]): any[][] {
-    const cols = this.getColumnCount(productos);
-    const perCol = Math.ceil(productos.length / cols);
-    const result = [];
-    for (let i = 0; i < cols; i++) {
-      result.push(productos.slice(i * perCol, (i + 1) * perCol));
+  getFilteredCategories(): any[] {
+    if (this.selectedCategory === 'Todos') {
+      return this.menuCategorias;
     }
-    return result;
+    return this.menuCategorias.filter(cat => cat.nombre === this.selectedCategory);
   }
 
-  // Devuelve la clase de columna bootstrap según la cantidad de columnas
-  getColClass(productos: any[]): string {
-    const cols = this.getColumnCount(productos);
-    if (cols === 1) return 'col-12';
-    if (cols === 2) return 'col-12 col-md-6';
-    // 3 columns: full width on xs, two on md, three on lg
-    return 'col-12 col-md-6 col-lg-4';
+  selectCategory(categoryName: string): void {
+    this.selectedCategory = categoryName;
+  }
+
+  getCategoryNames(): string[] {
+    // Get unique category names to avoid duplicates
+    const uniqueNames = [...new Set(this.menuCategorias.map(cat => cat.nombre))];
+    return ['Todos', ...uniqueNames];
   }
 }

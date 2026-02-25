@@ -1,54 +1,69 @@
-<!-- Menu Start -->
-<div id="menu" class="container-fluid menu-section py-5">
-  <div class="container">
-    <div class="section-title text-center">
-      <h4 class="menu-title">Nuestro Menú</h4>
+<section class="py-12 md:py-24 px-4 md:px-6 bg-espresso text-white" id="menu">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-12 gap-6 md:gap-8">
+      <div>
+        <h2 class="text-3xl md:text-5xl font-black mb-4 md:mb-6">Nuestro Menu</h2>
+        <div class="flex flex-wrap gap-2 md:gap-4">
+          <button
+            *ngFor="let catName of getCategoryNames()"
+            (click)="selectCategory(catName)"
+            [ngClass]="{
+              'bg-caramel text-white': selectedCategory === catName,
+              'bg-white/5 hover:bg-white/10 text-white/70': selectedCategory !== catName
+            }"
+            class="px-4 md:px-6 py-2 rounded-full font-bold text-xs md:text-sm transition-colors">
+            {{ catName }}
+          </button>
+        </div>
+      </div>
     </div>
-
-    <div class="menu-categorias">
-      <ng-container *ngFor="let categoria of menuCategorias; let i = index">
-        <div class="mb-4 menu-categoria">
-          <h1 class="mb-3 text-center text-lg-start menu-categoria-titulo">{{ categoria.nombre }}</h1>
-          <div class="row">
-            <ng-container *ngIf="splitProductos(categoria.productos) as columnas">
-              <ng-container *ngFor="let columna of columnas; let colIdx = index">
-                <div [class]="getColClass(categoria.productos) + ' menu-col'">
-                  <ng-container *ngFor="let producto of columna">
-                    <div class="row align-items-center mb-3">
-                      <div class="col-3 col-sm-3 text-center">
-                        <div class="menu-img-wrapper">
-                          <h5 [ngClass]="{
-                            'menu-price-img-custom': producto.img,
-                            'menu-price-custom': !producto.img,
-                            'menu-price-small': splitProductos(categoria.productos).length > 1
-                          }">{{ producto.precio }}</h5>
-                          <ng-container *ngIf="producto.img; else defaultIcon">
-                            <img class="rounded-circle"
-                              [ngClass]="{
-                                'menu-img': splitProductos(categoria.productos).length === 1,
-                                'menu-img-small': splitProductos(categoria.productos).length > 1
-                              }"
-                              [src]="producto.img" alt="">
-                          </ng-container>
-                          <ng-template #defaultIcon>
-                            <i class="fas fa-mug-hot fa-2x text-gray-400"></i>
-                          </ng-template>
-                        </div>
-                      </div>
-                      <div class="col-9">
-                        <h4 class="menu-prod-titulo">{{ producto.prod }}</h4>
-                        <p class="m-0 menu-prod-desc">{{ producto.descProd }}</p>
-                      </div>
-                    </div>
-                  </ng-container>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-x-12 md:gap-y-2">
+      <ng-container *ngFor="let categoria of getFilteredCategories(); let catIdx = index">
+        <div class="space-y-1" *ngIf="productosPorColumna(catIdx, 0) as prods1">
+          <ng-container *ngFor="let producto of prods1">
+            <div class="menu-grid-item">
+              <div class="menu-img-wrapper">
+                <img
+                  [src]="producto.img || ''"
+                  alt="{{producto.prod}}"
+                  class="w-full h-full object-cover"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+                />
+                <div class="hidden items-center justify-center text-white/20">
+                  <span class="material-symbols-outlined">coffee</span>
                 </div>
-              </ng-container>
-            </ng-container>
-          </div>
+              </div>
+              <div class="flex-grow">
+                <h4 class="font-bold text-lg leading-tight">{{producto.prod}}</h4>
+                <p class="text-white/50 text-xs">{{producto.descProd}}</p>
+              </div>
+              <span class="menu-price-img-custom">{{producto.precio}}</span>
+            </div>
+          </ng-container>
+        </div>
+        <div class="space-y-1" *ngIf="productosPorColumna(catIdx, 1) as prods2">
+          <ng-container *ngFor="let producto of prods2">
+            <div class="menu-grid-item">
+              <div class="menu-img-wrapper">
+                <img
+                  [src]="producto.img || ''"
+                  alt="{{producto.prod}}"
+                  class="w-full h-full object-cover"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+                />
+                <div class="hidden items-center justify-center text-white/20">
+                  <span class="material-symbols-outlined">coffee</span>
+                </div>
+              </div>
+              <div class="flex-grow">
+                <h4 class="font-bold text-lg leading-tight">{{producto.prod}}</h4>
+                <p class="text-white/50 text-xs">{{producto.descProd}}</p>
+              </div>
+              <span class="menu-price-img-custom">{{producto.precio}}</span>
+            </div>
+          </ng-container>
         </div>
       </ng-container>
     </div>
-
   </div>
-</div>
-<!-- Menu End -->
+</section>

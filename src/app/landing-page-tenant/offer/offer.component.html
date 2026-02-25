@@ -1,101 +1,118 @@
-<!-- Offer Start -->
-<div id="offer" class="offer container-fluid my-5 py-5 text-center position-relative overlay-top overlay-bottom">
-  <div class="container py-5">
-    <h1 class="offer-title">Regístrate para recibir promociones 🎉</h1>
-    <h2 class="text-white mb-3">¡Al registrarte obtienes un cupón de descuento exclusivo!</h2>
-    <h5 class="text-white font-weight-normal mb-4 pb-3">
-      ✨ “Regístrate y forma parte de nuestra comunidad exclusiva: solo quienes están dentro reciben promociones
-      especiales, sorpresas y descuentos que nadie más tendrá.”
-    </h5>
-
-    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()" class="offer-form">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="name">Nombre Completo</label>
-          <input type="text" id="name" formControlName="name" class="form-control p-4" placeholder="Tu Nombre">
-          <div *ngIf="customerForm.get('name')?.invalid && customerForm.get('name')?.touched" class="error-message">
-            <small *ngIf="customerForm.get('name')?.errors?.['required']">El nombre es requerido.</small>
-            <small *ngIf="customerForm.get('name')?.errors?.['minlength']">Debe tener al menos 2 caracteres.</small>
-            <small *ngIf="customerForm.get('name')?.errors?.['maxlength']">Máximo 140 caracteres.</small>
-            <small *ngIf="customerForm.get('name')?.errors?.['pattern']">Solo letras y espacios permitidos.</small>
+<section class="py-10 md:py-16 px-4 md:px-6 bg-bone-white" id="rewards">
+  <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row border border-primary/10">
+    <div class="md:w-[38%] bg-espresso p-5 md:p-8 text-white flex flex-col justify-center">
+      <h2 class="text-xl md:text-2xl font-black mb-3 md:mb-4">Regístrate con Nosotros</h2>
+      <p class="text-xs md:text-sm text-white/70 mb-4 md:mb-6 leading-relaxed">Desbloquea recompensas por niveles, acceso anticipado a tuestes especiales y un panel personalizado de preparación.</p>
+      <ul class="space-y-2 md:space-y-3">
+        <li class="flex items-center gap-2 text-xs md:text-sm font-medium">
+          <span class="material-symbols-outlined text-caramel text-base">check_circle</span>
+          Descuentos por monto de compra
+        </li>
+        <li class="flex items-center gap-2 text-xs md:text-sm font-medium">
+          <span class="material-symbols-outlined text-caramel text-base">check_circle</span>
+          Beneficios especiales en tu cumpleaños
+        </li>
+        <li class="flex items-center gap-2 text-xs md:text-sm font-medium">
+          <span class="material-symbols-outlined text-caramel text-base">check_circle</span>
+          Tarjeta de lealtad por visitas
+        </li>
+      </ul>
+    </div>
+    <div class="md:w-[62%] p-5 md:p-8 lg:p-10">
+      <form [formGroup]="customerForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-widest text-espresso/60 mb-2">Nombre completo</label>
+          <input
+            class="w-full bg-background-light border-0 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-caramel transition-all"
+            placeholder="Ej: Juana Pérez"
+            type="text"
+            formControlName="name"
+          />
+          <div *ngIf="customerForm.get('name')?.invalid && customerForm.get('name')?.touched" class="text-red-500 text-xs mt-1">
+            <small *ngIf="customerForm.get('name')?.errors?.['required']">El nombre es obligatorio.</small>
           </div>
         </div>
-
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" formControlName="email" class="form-control p-4" placeholder="Tu Email">
-          <div *ngIf="customerForm.get('email')?.invalid && customerForm.get('email')?.touched" class="error-message">
-            <small *ngIf="customerForm.get('email')?.errors?.['required']">El email es requerido.</small>
-            <small *ngIf="customerForm.get('email')?.errors?.['email']">Email inválido.</small>
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-widest text-espresso/60 mb-2">Fecha de nacimiento</label>
+          <input
+            class="w-full bg-background-light border-0 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-caramel transition-all"
+            type="date"
+            formControlName="birthDate"
+          />
+          <div *ngIf="customerForm.get('birthDate')?.invalid && customerForm.get('birthDate')?.touched" class="text-red-500 text-xs mt-1">
+            <small *ngIf="customerForm.get('birthDate')?.errors?.['required']">La fecha es obligatoria.</small>
           </div>
         </div>
-      </div>
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-widest text-espresso/60 mb-2">Género</label>
+          <select
+            class="w-full bg-background-light border-0 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-caramel transition-all"
+            formControlName="gender"
+          >
+            <option value="">Selecciona género</option>
+            <option value="Male">Hombre</option>
+            <option value="Female">Mujer</option>
+            <option value="otro">Otro</option>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label for="birthDate">Fecha de Nacimiento</label>
-          <input type="date" id="birthDate" formControlName="birthDate" class="form-control p-4">
-          <div *ngIf="customerForm.get('birthDate')?.invalid && customerForm.get('birthDate')?.touched" class="error-message">
-            <small *ngIf="customerForm.get('birthDate')?.errors?.['required']">La fecha de nacimiento es requerida.</small>
-            <small *ngIf="customerForm.get('birthDate')?.errors?.['invalidDate']">Fecha inválida.</small>
-            <small *ngIf="customerForm.get('birthDate')?.errors?.['minAge']">Debes tener más de 12 años.</small>
-          </div>
-        </div>
 
-        <div class="form-group">
-          <label for="gender">Género</label>
-          <select id="gender" formControlName="gender" class="form-control p-4">
-            <option value="" disabled>Selecciona tu género</option>
-            <option value="Hombre">Hombre</option>
-            <option value="Mujer">Mujer</option>
-            <option value="Otro">Otro</option>
           </select>
-          <div *ngIf="customerForm.get('gender')?.invalid && customerForm.get('gender')?.touched" class="error-message">
-            <small *ngIf="customerForm.get('gender')?.errors?.['required']">El género es requerido.</small>
+          <div *ngIf="customerForm.get('gender')?.invalid && customerForm.get('gender')?.touched" class="text-red-500 text-xs mt-1">
+            <small *ngIf="customerForm.get('gender')?.errors?.['required']">El género es obligatorio.</small>
           </div>
         </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group full-width">
-          <label for="phone">Teléfono (Opcional)</label>
-          <input type="tel" id="phone" formControlName="phone" class="form-control p-4" placeholder="Tu Teléfono" maxlength="10" inputmode="numeric" pattern="[0-9]*" (input)="onPhoneInput($event)">
-          <div *ngIf="customerForm.get('phone')?.invalid && customerForm.get('phone')?.touched" class="error-message">
-            <small *ngIf="customerForm.get('phone')?.errors?.['invalidPhone']">Teléfono inválido. Debe ser 10 dígitos numéricos.</small>
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-widest text-espresso/60 mb-2">Teléfono</label>
+          <input
+            class="w-full bg-background-light border-0 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-caramel transition-all"
+            placeholder="5512345678"
+            type="tel"
+            formControlName="phone"
+            maxlength="10"
+            pattern="[0-9]{10}"
+            inputmode="numeric"
+            (input)="onPhoneInput($event)"
+          />
+          <div *ngIf="customerForm.get('phone')?.invalid && customerForm.get('phone')?.touched" class="text-red-500 text-xs mt-1">
+            <small *ngIf="customerForm.get('phone')?.errors?.['invalidPhone']">Debe ser un número de 10 dígitos.</small>
           </div>
         </div>
-      </div>
-
-      <!-- Bloque legal: texto informativo sobre promociones y cancelación (diseño más vistoso) -->
-      <div class="legal-text">
-        <div class="legal-icon" aria-hidden="true">
-          <!-- Envelope icon -->
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M3 6.5C3 5.67157 3.67157 5 4.5 5H19.5C20.3284 5 21 5.67157 21 6.5V17.5C21 18.3284 20.3284 19 19.5 19H4.5C3.67157 19 3 18.3284 3 17.5V6.5Z" stroke="currentColor" stroke-width="0" fill="#DA9F5B" />
-            <path d="M21 6L12 13L3 6" stroke="#fff" stroke-opacity="0.9" stroke-width="0" fill="#fff" />
-          </svg>
-        </div>
-        <div class="legal-copy">
-          <div class="form-check d-flex align-items-center justify-content-center">
-            <input id="acceptPromotions" type="checkbox" class="form-check-input mr-2" aria-label="Aceptar promociones" formControlName="acceptedPromotions" />
-            <label for="acceptPromotions" class="form-check-label legal-main">Acepto recibir promociones, descuentos y comunicaciones comerciales de este negocio.</label>
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-widest text-espresso/60 mb-2">Correo electrónico</label>
+          <input
+            class="w-full bg-background-light border-0 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-caramel transition-all"
+            placeholder="ejemplo@correo.com"
+            type="email"
+            formControlName="email"
+          />
+          <div *ngIf="customerForm.get('email')?.invalid && customerForm.get('email')?.touched" class="text-red-500 text-xs mt-1">
+            <small *ngIf="customerForm.get('email')?.errors?.['required']">El correo es obligatorio.</small>
+            <small *ngIf="customerForm.get('email')?.errors?.['email']">Correo inválido.</small>
           </div>
-          <p class="legal-sub">Puedes cancelar tu suscripción en cualquier momento.</p>
         </div>
-      </div>
-
-      <div class="form-actions">
-        <button class="btn btn-primary" type="submit" [disabled]="customerForm.invalid || isLoading">
-          <span *ngIf="!isLoading">Guardar</span>
-          <div *ngIf="isLoading" class="spinner"></div>
-        </button>
-      </div>
-
-    </form>
-
-    <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
-    <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
-
+        <div class="md:col-span-2 mt-3 space-y-3">
+          <label class="flex items-start gap-3 cursor-pointer group">
+            <input
+              class="mt-1 rounded text-caramel focus:ring-caramel border-espresso/10 w-4 h-4 transition-all"
+              type="checkbox"
+              formControlName="acceptedPromotions"
+            />
+            <span class="text-sm text-espresso/70 group-hover:text-espresso transition-colors">Acepto los <a class="text-caramel font-bold" href="#">Términos del servicio</a> y la Política de privacidad.</span>
+          </label>
+        </div>
+        <div class="md:col-span-2 pt-2">
+          <button
+            class="w-full md:w-full bg-caramel text-white font-black py-4 rounded-xl hover:shadow-xl hover:shadow-caramel/20 transition-all flex items-center justify-center gap-2 text-base"
+            type="submit"
+            [disabled]="customerForm.invalid || isLoading"
+          >
+            <span *ngIf="!isLoading">Registrarme</span>
+            <div *ngIf="isLoading" class="spinner"></div>
+            <span class="material-symbols-outlined">person_add</span>
+          </button>
+        </div>
+      </form>
+      <div *ngIf="successMessage" class="alert alert-success mt-3 text-green-600 p-3 bg-green-50 rounded-lg">{{ successMessage }}</div>
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3 text-red-600 p-3 bg-red-50 rounded-lg">{{ errorMessage }}</div>
+    </div>
   </div>
-</div>
-<!-- Offer End -->
+</section>

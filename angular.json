@@ -23,6 +23,7 @@
               }
             ],
             "styles": [
+              "src/global-styles.css",
               "src/custom-theme.scss",
               "node_modules/primeicons/primeicons.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -121,6 +122,7 @@
               }
             ],
             "styles": [
+              "src/global-styles.css",
               "src/styles.css"
             ]
           }
