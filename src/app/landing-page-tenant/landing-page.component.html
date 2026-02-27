@@ -28,11 +28,14 @@
     [schelules]="footerData.schelules"
   ></app-footer>
 
+<!-- Lealbot Chatbot -->
+<app-lealbot [tenantId]="tenantId"></app-lealbot>
+
 <!-- Back to Top Button -->
 <button
   *ngIf="showBackToTop"
   (click)="scrollToTop()"
-  class="fixed bottom-20 right-20 z-1000 w-14 h-14 rounded-full bg-light text-espresso shadow-lg hover:shadow-xl transition-all flex items-center justify-center"
+  class="fixed bottom-4 right-20 z-1000 w-14 h-14 rounded-full bg-light text-espresso shadow-lg hover:shadow-xl transition-all flex items-center justify-center"
 >
   <span class="material-symbols-outlined">expand_less</span>
 </button>
