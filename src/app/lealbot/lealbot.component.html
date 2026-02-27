@@ -1,0 +1,170 @@
+<!-- Botón Flotante -->
+<div class="lealbot-floating-container" *ngIf="!state.isOpen">
+  <div class="lealbot-message-bubble-floating">
+    <span class="lealbot-message-text">¡Ordena aquí! 🍽️</span>
+  </div>
+  <div class="lealbot-floating-button" (click)="toggleChat()">
+    <button
+      pButton
+      type="button"
+      icon="pi pi-comments"
+      [rounded]="true"
+      [text]="true"
+      severity="info"
+      class="lealbot-bot-button">
+    </button>
+    <span class="lealbot-pulse-ring"></span>
+  </div>
+</div>
+
+<div class="lealbot-floating-button-open" *ngIf="state.isOpen" (click)="toggleChat()">
+  <button
+    pButton
+    type="button"
+    icon="pi pi-comments"
+    [rounded]="true"
+    [text]="true"
+    severity="info"
+    class="lealbot-bot-button">
+  </button>
+</div>
+
+<!-- Ventana de Chat -->
+<div class="lealbot-chat-window" [ngClass]="{'lealbot-open': state.isOpen}" *ngIf="state.isOpen">
+  <!-- Header -->
+  <div class="lealbot-header">
+    <div class="lealbot-header-content">
+      <i class="pi pi-comments text-xl"></i>
+      <h3 class="ml-3 font-semibold">Lealbot</h3>
+    </div>
+    <div class="lealbot-header-actions">
+      <button
+        pButton
+        type="button"
+        icon="pi pi-refresh"
+        [rounded]="true"
+        [text]="true"
+        severity="secondary"
+        (click)="resetChat()"
+        class="lealbot-reset-btn"
+        pTooltip="Reiniciar conversación"
+        tooltipPosition="left">
+      </button>
+      <button
+        pButton
+        type="button"
+        icon="pi pi-times"
+        [rounded]="true"
+        [text]="true"
+        severity="secondary"
+        (click)="toggleChat()">
+      </button>
+    </div>
+  </div>
+
+  <!-- Mensajes -->
+  <div class="lealbot-messages" #messagesContainer>
+    <div
+      *ngFor="let message of state.messages"
+      class="lealbot-message"
+      [ngClass]="'lealbot-message-' + message.sender.toLowerCase()">
+
+      <!-- Avatar para BOT -->
+      <div *ngIf="message.sender === 'BOT'" class="lealbot-avatar bot">
+        <i class="pi pi-comments"></i>
+      </div>
+
+      <!-- Contenido del mensaje -->
+      <div class="lealbot-message-content">
+        <div class="lealbot-message-bubble" [ngClass]="'bubble-' + message.sender.toLowerCase()">
+          {{ message.content }}
+        </div>
+        <div *ngIf="message.timestamp" class="lealbot-message-time">
+          {{ message.timestamp | date: 'short' }}
+        </div>
+      </div>
+
+      <!-- Avatar para USER -->
+      <div *ngIf="message.sender === 'USER'" class="lealbot-avatar user">
+        <i class="pi pi-user"></i>
+      </div>
+    </div>
+
+    <!-- Indicador de escritura -->
+    <div *ngIf="state.isLoading" class="lealbot-message lealbot-message-bot">
+      <div class="lealbot-avatar bot">
+        <i class="pi pi-comments"></i>
+      </div>
+      <div class="lealbot-message-content">
+        <div class="lealbot-message-bubble bubble-bot">
+          <div class="typing-indicator">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Respuestas Rápidas (Chips) -->
+  <div *ngIf="currentQuickReplies.length > 0" class="lealbot-quick-replies">
+    <button
+      *ngFor="let chip of currentQuickReplies"
+      type="button"
+      class="lealbot-chip"
+      (click)="handleQuickReply(chip.value)"
+      [disabled]="chip.disabled || state.isLoading">
+      {{ chip.label }}
+    </button>
+  </div>
+
+  <!-- Área de Entrada de Usuario -->
+  <div class="lealbot-input-area">
+    <form (ngSubmit)="sendMessage()" class="lealbot-input-form">
+      <input
+        *ngIf="currentInputType !== 'TEXTAREA'"
+        type="text"
+        [(ngModel)]="userInput"
+        [placeholder]="inputPlaceholder || 'Escribe un mensaje...'"
+        name="userInput"
+        class="lealbot-input"
+        [disabled]="state.isLoading"
+        autocomplete="off"
+        (keyup.enter)="sendMessage()">
+
+      <textarea
+        *ngIf="currentInputType === 'TEXTAREA'"
+        [(ngModel)]="userInput"
+        [placeholder]="inputPlaceholder || 'Añade notas especiales...'"
+        name="userInput"
+        class="lealbot-textarea"
+        [disabled]="state.isLoading"
+        rows="3">
+      </textarea>
+
+      <button
+        type="submit"
+        pButton
+        icon="pi pi-send"
+        [rounded]="true"
+        [text]="true"
+        severity="info"
+        [disabled]="!userInput.trim() || state.isLoading"
+        class="lealbot-send-btn">
+      </button>
+    </form>
+
+    <!-- Información de Error -->
+    <div *ngIf="state.error" class="lealbot-error-message">
+      <i class="pi pi-exclamation-circle"></i>
+      {{ state.error }}
+    </div>
+
+    <!-- Resumen del Carrito (Mini Preview) -->
+    <div *ngIf="state.cart.length > 0" class="lealbot-cart-preview">
+      <div class="cart-summary">
+        <span class="cart-count">{{ state.cart.length }} items</span>
+        <span class="cart-total">${{ state.total.toFixed(2) }}</span>
+      </div>
+    </div>
+  </div>
+</div>
