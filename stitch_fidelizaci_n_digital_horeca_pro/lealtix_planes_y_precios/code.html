@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lealtix - Planes y Precios</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#000000",
+                        "on-surface-variant": "#45464d",
+                        "outline-variant": "#c6c6cd",
+                        "on-secondary-container": "#006f66",
+                        "surface-container-high": "#dce9ff",
+                        "on-primary-container": "#7c839b",
+                        "secondary-fixed": "#89f5e7",
+                        "background": "#f8f9ff",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "inverse-surface": "#213145",
+                        "tertiary-fixed-dim": "#ffb690",
+                        "secondary-container": "#86f2e4",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#e5eeff",
+                        "secondary-fixed-dim": "#6bd8cb",
+                        "on-background": "#0b1c30",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#ffdbca",
+                        "secondary": "#006a61",
+                        "on-primary-fixed": "#131b2e",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface": "#f8f9ff",
+                        "surface-variant": "#d3e4fe",
+                        "on-surface": "#0b1c30",
+                        "surface-dim": "#cbdbf5",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#bec6e0",
+                        "error-container": "#ffdad6",
+                        "primary": "#000000",
+                        "on-secondary-fixed": "#00201d",
+                        "outline": "#76777d",
+                        "on-tertiary-container": "#d95f00",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "surface-bright": "#f8f9ff",
+                        "on-tertiary-fixed-variant": "#783200",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#005049",
+                        "on-tertiary-fixed": "#341100",
+                        "surface-tint": "#565e74",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#eff4ff",
+                        "primary-fixed-dim": "#bec6e0",
+                        "tertiary-container": "#341100",
+                        "on-error": "#ffffff",
+                        "primary-container": "#131b2e",
+                        "primary-fixed": "#dae2fd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "gutter": "24px",
+                        "margin-desktop": "40px",
+                        "stack-sm": "8px",
+                        "container-max": "1440px",
+                        "margin-mobile": "16px",
+                        "stack-md": "16px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "label-sm": ["Inter"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .soft-shadow {
+            box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+        }
+        .soft-shadow-hover:hover {
+            box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.04);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased selection:bg-surface-variant selection:text-on-surface min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 backdrop-blur-md fixed top-0 w-full z-50 border-b border-outline-variant/30 shadow-sm flex justify-between items-center h-20 px-margin-desktop max-w-container-max mx-auto">
+<div class="flex items-center gap-gutter">
+<a class="text-headline-md font-headline-lg text-on-background tracking-tight" href="#">Lealtix</a>
+</div>
+<div class="hidden md:flex items-center gap-gutter">
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low transition-all duration-300 px-3 py-2 rounded font-label-md text-label-md" href="#">Solutions</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low transition-all duration-300 px-3 py-2 rounded font-label-md text-label-md" href="#">Technology</a>
+<a class="text-secondary font-bold border-b-2 border-secondary hover:bg-surface-container-low transition-all duration-300 px-3 py-2 rounded font-label-md text-label-md" href="#">Pricing</a>
+</div>
+<div class="flex items-center">
+<button class="bg-on-tertiary-container text-white font-label-md text-label-md px-4 py-2 rounded-DEFAULT font-bold border-b-2 border-tertiary-container/50 hover:bg-on-tertiary-container/90 transition-all active:scale-95 duration-150">Get Started</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-28 pb-stack-lg px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full relative">
+<!-- Hero Section -->
+<section class="text-center py-stack-lg relative z-10">
+<h1 class="font-display-lg text-display-lg text-on-surface mb-stack-sm tracking-tight">Planes Escalables para cada Negocio</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-stack-lg">Precisión y lealtad para el sector HORECA. Sin tarifas ocultas, solo resultados medibles para tu crecimiento.</p>
+<!-- Billing Toggle -->
+<div class="flex items-center justify-center gap-4 mb-stack-lg">
+<span class="font-label-md text-label-md text-on-surface-variant">Mensual</span>
+<button aria-label="Toggle billing period" class="w-12 h-6 bg-secondary rounded-full relative transition-colors focus:outline-none focus:ring-2 focus:ring-secondary/50">
+<div class="w-5 h-5 bg-white rounded-full absolute top-0.5 right-0.5 shadow-sm transition-transform"></div>
+</button>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Anual <span class="text-secondary text-xs ml-1 bg-secondary-fixed/30 px-2 py-0.5 rounded-full">-20%</span></span>
+</div>
+</section>
+<!-- Pricing Cards Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-stack-lg items-center z-10 relative">
+<!-- Start Tier -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-lg soft-shadow soft-shadow-hover transition-all duration-300 border border-outline-variant/20 flex flex-col h-full">
+<div class="mb-stack-md">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Start</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Para negocios que dan sus primeros pasos en fidelización.</p>
+</div>
+<div class="mb-stack-lg">
+<span class="font-display-lg text-display-lg text-on-surface">$49</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">/mes</span>
+</div>
+<ul class="space-y-4 mb-stack-lg flex-grow">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary icon-filled text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface">1 Ubicación</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary icon-filled text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface">Hasta 3 Usuarios</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline-variant text-[20px]" data-icon="remove">remove</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant line-through">Integración POS</span>
+</li>
+</ul>
+<button class="w-full bg-transparent border border-secondary text-secondary font-label-md text-label-md py-3 rounded-DEFAULT font-bold hover:bg-secondary/10 transition-all mt-auto">Comenzar Gratis</button>
+</div>
+<!-- Pro Tier (Recommended) -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-lg soft-shadow shadow-lg border-2 border-on-tertiary-container relative flex flex-col h-full md:scale-105 z-20">
+<div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-on-tertiary-container text-white px-4 py-1 rounded-full font-label-sm text-label-sm font-bold uppercase tracking-wider">
+                    Recomendado
+                </div>
+<div class="mb-stack-md mt-2">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Pro</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Ideal para restaurantes en crecimiento buscando automatización.</p>
+</div>
+<div class="mb-stack-lg">
+<span class="font-display-lg text-display-lg text-on-surface">$129</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">/mes</span>
+</div>
+<ul class="space-y-4 mb-stack-lg flex-grow">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-on-tertiary-container icon-filled text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface">Hasta 5 Ubicaciones</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-on-tertiary-container icon-filled text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface">Usuarios Ilimitados</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-on-tertiary-container icon-filled text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface font-semibold">Integración POS Activa</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-on-tertiary-container icon-filled text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface">10,000 Push/mes</span>
+</li>
+</ul>
+<button class="w-full bg-on-tertiary-container text-white font-label-md text-label-md py-3 rounded-DEFAULT font-bold border-b-2 border-tertiary-container/50 hover:bg-on-tertiary-container/90 transition-all mt-auto">Elegir Pro</button>
+</div>
+<!-- Business Tier -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-lg soft-shadow soft-shadow-hover transition-all duration-300 border border-outline-variant/20 flex flex-col h-full">
+<div class="mb-stack-md">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Business</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Para cadenas y franquicias con necesidades avanzadas.</p>
+</div>
+<div class="mb-stack-lg">
+<span class="font-display-lg text-display-lg text-on-surface">$299</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">/mes</span>
+</div>
+<ul class="space-y-4 mb-stack-lg flex-grow">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary icon-filled text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface">Ubicaciones Ilimitadas</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary icon-filled text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface">Usuarios Ilimitados</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary icon-filled text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface">Integración POS Personalizada</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary icon-filled text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface">Push Ilimitados</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary icon-filled text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface">Soporte Dedicado 24/7</span>
+</li>
+</ul>
+<button class="w-full bg-transparent border border-secondary text-secondary font-label-md text-label-md py-3 rounded-DEFAULT font-bold hover:bg-secondary/10 transition-all mt-auto">Contactar Ventas</button>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="bg-surface-container-high rounded-xl p-stack-lg text-center mt-stack-lg max-w-4xl mx-auto border border-surface-variant soft-shadow">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-stack-sm">¿Listo para elevar tu negocio HORECA?</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-stack-md max-w-xl mx-auto">Únete a cientos de restaurantes que ya están optimizando su ROI y fidelizando a sus clientes con Lealtix.</p>
+<button class="bg-on-tertiary-container text-white font-label-md text-label-md px-8 py-4 rounded-DEFAULT font-bold border-b-2 border-tertiary-container/50 hover:bg-on-tertiary-container/90 transition-all text-lg">Elige tu plan y comienza la transformación</button>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-stack-lg bg-on-background grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop py-stack-lg max-w-container-max mx-auto border-t border-outline-variant/10">
+<div class="col-span-1">
+<div class="text-headline-md font-headline-md text-background mb-4 tracking-tight">Lealtix</div>
+<p class="font-body-sm text-body-sm text-outline-variant mb-4">© 2024 Lealtix. All rights reserved. Precision Loyalty for HORECA.</p>
+</div>
+<div class="col-span-1 flex flex-col gap-2">
+<a class="font-label-sm text-label-sm text-outline-variant hover:text-white transition-colors hover:translate-x-1 duration-200 active:opacity-80" href="#">Resources</a>
+<a class="font-label-sm text-label-sm text-outline-variant hover:text-white transition-colors hover:translate-x-1 duration-200 active:opacity-80" href="#">Industry Segments</a>
+</div>
+<div class="col-span-1 flex flex-col gap-2">
+<a class="font-label-sm text-label-sm text-outline-variant hover:text-white transition-colors hover:translate-x-1 duration-200 active:opacity-80" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-outline-variant hover:text-white transition-colors hover:translate-x-1 duration-200 active:opacity-80" href="#">Terms of Service</a>
+</div>
+<div class="col-span-1 flex flex-col gap-2">
+<a class="font-label-sm text-label-sm text-outline-variant hover:text-white transition-colors hover:translate-x-1 duration-200 active:opacity-80" href="#">Contact</a>
+</div>
+</footer>
+</body></html>

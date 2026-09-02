@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lealtix - Solutions for Restaurants and Bars</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary": "#000000",
+                      "on-surface-variant": "#45464d",
+                      "outline-variant": "#c6c6cd",
+                      "on-secondary-container": "#006f66",
+                      "surface-container-high": "#dce9ff",
+                      "on-primary-container": "#7c839b",
+                      "secondary-fixed": "#89f5e7",
+                      "background": "#f8f9ff",
+                      "on-primary": "#ffffff",
+                      "inverse-on-surface": "#eaf1ff",
+                      "inverse-surface": "#213145",
+                      "tertiary-fixed-dim": "#ffb690",
+                      "secondary-container": "#86f2e4",
+                      "on-error-container": "#93000a",
+                      "surface-container": "#e5eeff",
+                      "secondary-fixed-dim": "#6bd8cb",
+                      "on-background": "#0b1c30",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed": "#ffdbca",
+                      "secondary": "#006a61",
+                      "on-primary-fixed": "#131b2e",
+                      "surface-container-highest": "#d3e4fe",
+                      "surface": "#f8f9ff",
+                      "surface-variant": "#d3e4fe",
+                      "on-surface": "#0b1c30",
+                      "surface-dim": "#cbdbf5",
+                      "on-tertiary": "#ffffff",
+                      "inverse-primary": "#bec6e0",
+                      "error-container": "#ffdad6",
+                      "primary": "#000000",
+                      "on-secondary-fixed": "#00201d",
+                      "outline": "#76777d",
+                      "on-tertiary-container": "#d95f00",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "surface-bright": "#f8f9ff",
+                      "on-tertiary-fixed-variant": "#783200",
+                      "error": "#ba1a1a",
+                      "on-secondary-fixed-variant": "#005049",
+                      "on-tertiary-fixed": "#341100",
+                      "surface-tint": "#565e74",
+                      "on-secondary": "#ffffff",
+                      "surface-container-low": "#eff4ff",
+                      "primary-fixed-dim": "#bec6e0",
+                      "tertiary-container": "#341100",
+                      "on-error": "#ffffff",
+                      "primary-container": "#131b2e",
+                      "primary-fixed": "#dae2fd"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "gutter": "24px",
+                      "margin-desktop": "40px",
+                      "stack-sm": "8px",
+                      "container-max": "1440px",
+                      "margin-mobile": "16px",
+                      "stack-md": "16px",
+                      "stack-lg": "32px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "60px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .soft-shadow {
+            box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+        }
+        .soft-shadow-hover:hover {
+            box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.05);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased selection:bg-secondary selection:text-white">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm">
+<div class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-headline-lg text-on-background tracking-tight">Lealtix</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-secondary font-bold border-b-2 border-secondary font-label-md text-label-md hover:bg-surface-container-low transition-all duration-300 py-2" href="#">Solutions</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md hover:bg-surface-container-low transition-all duration-300 py-2" href="#">Technology</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md hover:bg-surface-container-low transition-all duration-300 py-2" href="#">Pricing</a>
+</div>
+<div class="flex items-center">
+<button class="bg-[#d95f00] text-white font-label-md text-label-md px-6 py-2.5 rounded hover:opacity-90 transition-opacity border-b-2 border-[#a64900] active:translate-y-[1px] active:border-b-0 shadow-sm">Get Started</button>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="pt-32 pb-stack-lg px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-12 gap-gutter items-center min-h-[80vh]">
+<div class="md:col-span-6 flex flex-col gap-stack-md z-10">
+<span class="text-secondary font-label-md text-label-md uppercase tracking-wider">HORECA Solutions</span>
+<h1 class="font-display-lg text-display-lg text-on-background mb-4">Lealtad que Alimenta tus Resultados</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-xl">Transform casual diners into regulars. Our precision loyalty platform for restaurants and bars drives measurable increases in average ticket size and table rotation without the friction of app downloads.</p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-[#d95f00] text-white font-label-md text-label-md px-8 py-3.5 rounded hover:opacity-90 transition-opacity border-b-2 border-[#a64900] active:translate-y-[1px] active:border-b-0 shadow-sm flex items-center gap-2">
+                    Book a Demo
+                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+<button class="bg-transparent border border-secondary text-secondary font-label-md text-label-md px-8 py-3.5 rounded hover:bg-secondary/5 transition-colors flex items-center gap-2">
+                    Calculate ROI
+                </button>
+</div>
+<div class="mt-8 flex items-center gap-6 text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-sm text-label-sm">No Apps to Download</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-sm text-label-sm">POS Integrated</span>
+</div>
+</div>
+</div>
+<div class="md:col-span-6 relative h-[500px] w-full rounded-xl overflow-hidden soft-shadow border border-outline-variant/20">
+<div class="bg-cover bg-center w-full h-full" data-alt="A modern, high-tech dashboard interface displayed on a sleek monitor. The screen shows detailed analytics, charts, and customer behavior metrics specifically tailored for a restaurant or bar setting. The aesthetic is clean, professional B2B SaaS in light mode, with a crisp white background, navy text, and vibrant teal and orange accents. The surrounding environment is subtly suggested to be a premium restaurant back-office." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDiY8EoumklmW1GDnDyu2pXhLWty361aRnaLsUAQe78pZXJt6hJjhr9PEwx8PKwl09vH_SsJRKTKVP8jdncpsLof39Tc_Tcqmxz2czaMr2VaMUGFGrRcoevTiCD9IZyGFS2tAR8NJ2JXwow83t685blJxpRHCJOJ1UBwG6iOv0c29j44Z9wnTeJ9QiZwRLRUgRvP2rRZzOICKKnPEXFghQVs12sshd1St-iCkMwwe8SZAk2JmDnwd0Y')"></div>
+<!-- Overlay UI Elements to simulate dashboard -->
+<div class="absolute bottom-6 left-6 right-6 glass-panel rounded-lg p-4 flex justify-between items-center soft-shadow">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Avg. Ticket Increase</p>
+<p class="font-headline-md text-headline-md text-[#d95f00]">+24%</p>
+</div>
+<div class="h-10 w-px bg-outline-variant/30"></div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Repeat Rate</p>
+<p class="font-headline-md text-headline-md text-secondary">3.2x</p>
+</div>
+</div>
+</div>
+</header>
+<!-- Footer -->
+<footer class="w-full mt-stack-lg bg-on-background grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop py-stack-lg max-w-container-max mx-auto border-t border-outline-variant/10">
+<div class="col-span-1 md:col-span-1">
+<span class="text-headline-md font-headline-md text-background">Lealtix</span>
+<p class="text-on-primary-fixed-variant font-body-sm text-body-sm mt-4">© 2024 Lealtix. All rights reserved. Precision Loyalty for HORECA.</p>
+</div>
+<div class="col-span-1 md:col-span-3 flex flex-wrap gap-8 md:justify-end">
+<a class="text-outline-variant hover:text-white transition-colors font-label-sm text-label-sm hover:translate-x-1 transition-transform duration-200" href="#">Resources</a>
+<a class="text-outline-variant hover:text-white transition-colors font-label-sm text-label-sm hover:translate-x-1 transition-transform duration-200" href="#">Industry Segments</a>
+<a class="text-outline-variant hover:text-white transition-colors font-label-sm text-label-sm hover:translate-x-1 transition-transform duration-200" href="#">Privacy Policy</a>
+<a class="text-outline-variant hover:text-white transition-colors font-label-sm text-label-sm hover:translate-x-1 transition-transform duration-200" href="#">Terms of Service</a>
+<a class="text-outline-variant hover:text-white transition-colors font-label-sm text-label-sm hover:translate-x-1 transition-transform duration-200" href="#">Contact</a>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lealtix - Precision Loyalty for HORECA</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary": "#000000",
+                      "on-surface-variant": "#45464d",
+                      "outline-variant": "#c6c6cd",
+                      "on-secondary-container": "#006f66",
+                      "surface-container-high": "#dce9ff",
+                      "on-primary-container": "#7c839b",
+                      "secondary-fixed": "#89f5e7",
+                      "background": "#f8f9ff",
+                      "on-primary": "#ffffff",
+                      "inverse-on-surface": "#eaf1ff",
+                      "inverse-surface": "#213145",
+                      "tertiary-fixed-dim": "#ffb690",
+                      "secondary-container": "#86f2e4",
+                      "on-error-container": "#93000a",
+                      "surface-container": "#e5eeff",
+                      "secondary-fixed-dim": "#6bd8cb",
+                      "on-background": "#0b1c30",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed": "#ffdbca",
+                      "secondary": "#006a61",
+                      "on-primary-fixed": "#131b2e",
+                      "surface-container-highest": "#d3e4fe",
+                      "surface": "#f8f9ff",
+                      "surface-variant": "#d3e4fe",
+                      "on-surface": "#0b1c30",
+                      "surface-dim": "#cbdbf5",
+                      "on-tertiary": "#ffffff",
+                      "inverse-primary": "#bec6e0",
+                      "error-container": "#ffdad6",
+                      "primary": "#000000",
+                      "on-secondary-fixed": "#00201d",
+                      "outline": "#76777d",
+                      "on-tertiary-container": "#d95f00",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "surface-bright": "#f8f9ff",
+                      "on-tertiary-fixed-variant": "#783200",
+                      "error": "#ba1a1a",
+                      "on-secondary-fixed-variant": "#005049",
+                      "on-tertiary-fixed": "#341100",
+                      "surface-tint": "#565e74",
+                      "on-secondary": "#ffffff",
+                      "surface-container-low": "#eff4ff",
+                      "primary-fixed-dim": "#bec6e0",
+                      "tertiary-container": "#341100",
+                      "on-error": "#ffffff",
+                      "primary-container": "#131b2e",
+                      "primary-fixed": "#dae2fd"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "gutter": "24px",
+                      "margin-desktop": "40px",
+                      "stack-sm": "8px",
+                      "container-max": "1440px",
+                      "margin-mobile": "16px",
+                      "stack-md": "16px",
+                      "stack-lg": "32px"
+              },
+              "fontFamily": {
+                      "body-md": ["Inter"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "label-sm": ["Inter"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "label-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "body-sm": ["Inter"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .shadow-soft {
+            box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+        }
+        .shadow-hover {
+            box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -2px rgba(15, 23, 42, 0.05);
+        }
+        
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #000000, #006a61);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased overflow-x-hidden pt-20">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-on-background/80 backdrop-blur-md shadow-sm border-b border-outline-variant/30">
+<div class="flex justify-between items-center h-20 px-margin-desktop max-w-container-max mx-auto">
+<div class="text-headline-md font-headline-lg text-on-background tracking-tight flex items-center gap-2 cursor-pointer">
+<span class="material-symbols-outlined fill text-secondary" data-icon="trending_up" style="font-size: 32px;">trending_up</span>
+                 Lealtix
+            </div>
+<div class="hidden md:flex gap-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md py-2" href="#">Solutions</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md py-2" href="#">Technology</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md py-2" href="#">Pricing</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary text-on-primary font-label-md text-label-md px-6 py-2.5 rounded hover:bg-surface-container-low hover:text-primary transition-all duration-300 border-b-2 border-transparent hover:border-primary">
+                    Get Started
+                </button>
+</div>
+</div>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="relative pt-stack-lg pb-stack-lg md:pt-32 md:pb-24 overflow-hidden">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop grid md:grid-cols-12 gap-gutter items-center">
+<div class="md:col-span-6 z-10">
+<h1 class="font-display-lg text-display-lg md:text-[56px] leading-[1.1] text-on-surface mb-stack-md">
+                        Convierte visitas ocasionales en <span class="gradient-text">clientes habituales</span>, sin fricción.
+                    </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg max-w-lg">
+                        Plataforma de lealtad 100% digital diseñada exclusivamente para el sector HORECA. Captura datos, automatiza recompensas y multiplica el ROI de cada mesa.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="bg-[#d95f00] text-white font-label-md text-label-md px-8 py-4 rounded font-bold border-b-[3px] border-[#a64900] active:border-b-0 active:translate-y-[3px] transition-all hover:brightness-110 flex justify-center items-center gap-2">
+                            Agenda una Demo
+                            <span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<button class="bg-transparent border border-secondary text-secondary font-label-md text-label-md px-8 py-4 rounded hover:bg-surface-container-low transition-colors flex justify-center items-center">
+                            Ver Solución
+                        </button>
+</div>
+<div class="mt-stack-lg flex items-center gap-4 text-on-surface-variant font-label-sm text-label-sm">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-surface object-cover" data-alt="Close up professional headshot of a restaurant manager, well lit, corporate modern style, isolated on grey background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmhRG8Jl8hhdZ18bcHDB_9w87XCQsCWlTY7IEKNcJiCYpb3kh06_YJqOTbKpoV_sZaWq6M6JtFLC6H4yfc6mzQ6TAkA923IX3PNmcNfkCdHZBQbERTQ2BG77XpJg8y215ojtgPO_9_7Hbpo4jI_NAweQaAZRbA72r_Tsv3lI2jgf7dtVEUj4oH0Mb4J9odOXj9MPlWnxjyny9a9RQPnI5d-g8seGFJiuAgMP9S8-V0KI-KtW900VAw"/>
+<img class="w-8 h-8 rounded-full border-2 border-surface object-cover" data-alt="Close up professional headshot of a cafe owner, smiling, well lit, corporate modern style, isolated on grey background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwYY18jMvCbNBHnRlRegBCZMeWNtSGK2jr99_hpBCErM4CxLIB80D_uZ7UINWKwAWS2X3SqniwKV-06HIiP-c-qZOFgOMr95XFmv_OH7vL0IS6Qug-RwaEA2JCRyjRcSTHNpXSPOCKq2N30bRq6S3BZ2BRM4aHyYc8QyGyHPnkDYLB8j3FJ3FqSkVuB99--0m5d7rtE0LmiI35f3VY3ecianucJZPqDlL6CI5ujHt1MipKGQcP70hv"/>
+<img class="w-8 h-8 rounded-full border-2 border-surface object-cover" data-alt="Close up professional headshot of a hotel executive, serious but approachable, well lit, corporate modern style, isolated on grey background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAs8uXaDBm2rXXU0rzP5nGKdGdAWrjMBhmy_AbD8fALXwnuDXlYmFY7TeEB7igyxt5M-DR04U-n8LFpwjAPCYuB6-EEd4CudeLsAHlatJIUGhS4eKMZliIFfnASlhMZj8MvpEQLuBICf-JnetNUsIW1TTE-5VqjRO8UpQTPPNPLKGL3uH6SyoAVT1SSxW17DHPge2qrChRCssk3DvF_o3zqmYCGV_gnfi6LwAcclM_wgxPLeOnIzxN"/>
+</div>
+<p>+500 negocios ya confían en Lealtix</p>
+</div>
+</div>
+<div class="md:col-span-6 relative h-[400px] md:h-[600px] rounded-xl overflow-hidden shadow-soft">
+<img class="absolute inset-0 w-full h-full object-cover" data-alt="High-end 3D isometric render of a modern minimalist restaurant interior combined with a glowing smartphone displaying a digital wallet app and loyalty points. Clean lighting, soft shadows, sophisticated corporate tech aesthetic with navy and teal accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkv8SMUhzI_-BMdoYnjJI77PA4Ev6EPQQ7s5nq0FMfBKBobvKoc9RbmGfEOklqILRHMFUgj5dJfTAL2R0VGh8Ajznc9HShjLXLmRxjdr5YCKxmNkyaBSKoK4EE3tC1Ik1xIWkIm27A7jNq5nBqNJWrFpgvtOrarAEYucIfz7N0P-y-QpNSk5rp_oL_ZUNOIHiTeBJ3lFeafLEydEHL--yOCpJyCudViIWeho_qVaR00rOUDaLqZRlB"/>
+<!-- Floating UI Element -->
+<div class="absolute bottom-8 left-8 bg-white/90 backdrop-blur-md p-4 rounded-lg shadow-hover flex items-center gap-4 border border-outline-variant/20">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="loyalty">loyalty</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Nueva visita registrada</p>
+<p class="font-headline-md text-[18px] text-on-surface">+150 Puntos</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Social Proof -->
+<section class="py-stack-md border-y border-outline-variant/20 bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<p class="text-center font-label-sm text-label-sm text-outline mb-6 tracking-widest uppercase">Operando en los mejores establecimientos</p>
+<div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tighter">BistroNova</span>
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tighter">HotelLuxe</span>
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tighter">CaféGourmet</span>
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tighter">UrbanEats</span>
+</div>
+</div>
+</section>
+<!-- Problem vs Solution -->
+<section class="py-stack-lg md:py-24 bg-surface-container-low">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg md:text-[40px] text-on-surface mb-4">La diferencia entre esperar y retener</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Deja de depender de la suerte. Transforma la gestión de tus clientes de un proceso ciego a una máquina de retención predecible.</p>
+</div>
+<div class="grid md:grid-cols-2 gap-gutter">
+<!-- Problem Card -->
+<div class="bg-white p-8 rounded-xl shadow-soft border border-outline-variant/10 opacity-80">
+<div class="flex items-center gap-3 mb-6 text-on-surface-variant">
+<span class="material-symbols-outlined text-error" data-icon="block">block</span>
+<h3 class="font-headline-md text-[20px]">Marketing a Ciegas</h3>
+</div>
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline mt-0.5" data-icon="close">close</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Tarjetas de papel que se pierden u olvidan.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline mt-0.5" data-icon="close">close</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Cero datos sobre quiénes son tus mejores clientes.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline mt-0.5" data-icon="close">close</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Incapacidad para reactivar clientes inactivos.</span>
+</li>
+</ul>
+</div>
+<!-- Solution Card -->
+<div class="bg-white p-8 rounded-xl shadow-hover border-t-4 border-t-secondary relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary-container rounded-bl-full -z-10 opacity-50"></div>
+<div class="flex items-center gap-3 mb-6 text-secondary">
+<span class="material-symbols-outlined fill" data-icon="check_circle">check_circle</span>
+<h3 class="font-headline-md text-[20px] text-on-surface">Datos Accionables y Lealtad Digital</h3>
+</div>
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-0.5" data-icon="check">check</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Wallet digital integrado (Apple/Google). Cero fricción.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-0.5" data-icon="check">check</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Dashboard en tiempo real con perfiles de consumo detallados.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-0.5" data-icon="check">check</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Campañas automatizadas basadas en comportamiento.</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- ROI Calculator -->
+<section class="py-stack-lg md:py-24 bg-surface">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="grid md:grid-cols-12 gap-gutter items-center">
+<div class="md:col-span-5">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">Calcula tu Retorno de Inversión</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Descubre cuánto estás perdiendo al no fidelizar activamente a tus clientes. Pequeños incrementos en retención generan impactos masivos en rentabilidad.</p>
+<div class="flex items-center gap-4 bg-surface-container-highest p-4 rounded-lg border border-outline-variant/30">
+<div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="insights">insights</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Basado en promedios de la industria HORECA con un aumento conservador del 15% en retención.</p>
+</div>
+</div>
+<div class="md:col-span-7 bg-white p-8 rounded-xl shadow-soft border border-outline-variant/10">
+<div class="grid md:grid-cols-2 gap-6 mb-8">
+<!-- Input 1 -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-2">Visitas Diarias Promedio</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-outline material-symbols-outlined text-[20px]" data-icon="group">group</span>
+<input class="w-full pl-10 pr-4 py-3 rounded border border-outline-variant/50 focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-md outline-none bg-surface-container-lowest" type="number" value="120"/>
+</div>
+</div>
+<!-- Input 2 -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-2">Ticket Promedio ($)</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-outline material-symbols-outlined text-[20px]" data-icon="payments">payments</span>
+<input class="w-full pl-10 pr-4 py-3 rounded border border-outline-variant/50 focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-md outline-none bg-surface-container-lowest" type="number" value="25"/>
+</div>
+</div>
+</div>
+<!-- Result -->
+<div class="bg-inverse-surface p-6 rounded-lg text-center relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-secondary/20 to-transparent opacity-20"></div>
+<p class="font-label-md text-label-md text-inverse-primary mb-2 relative z-10">Proyección de Ganancias Extras (Mensual)</p>
+<p class="font-display-lg text-[48px] text-white font-bold relative z-10">+$13,500</p>
+<p class="font-label-sm text-label-sm text-outline-variant mt-2 relative z-10">Potencial incremento en facturación</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-on-background dark:bg-tertiary w-full mt-stack-lg border-t border-outline-variant/10 text-background">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop py-stack-lg max-w-container-max mx-auto">
+<div class="col-span-1 md:col-span-1">
+<div class="text-headline-md font-headline-md text-background tracking-tight flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined fill text-secondary-fixed" data-icon="trending_up" style="font-size: 24px;">trending_up</span>
+                     Lealtix
+                </div>
+<p class="font-body-sm text-body-sm text-outline-variant">© 2024 Lealtix. All rights reserved. Precision Loyalty for HORECA.</p>
+</div>
+<div class="flex flex-col gap-3 font-label-sm text-label-sm">
+<a class="text-outline-variant hover:text-white hover:translate-x-1 transition-all duration-200" href="#">Resources</a>
+<a class="text-outline-variant hover:text-white hover:translate-x-1 transition-all duration-200" href="#">Industry Segments</a>
+</div>
+<div class="flex flex-col gap-3 font-label-sm text-label-sm">
+<a class="text-outline-variant hover:text-white hover:translate-x-1 transition-all duration-200" href="#">Privacy Policy</a>
+<a class="text-outline-variant hover:text-white hover:translate-x-1 transition-all duration-200" href="#">Terms of Service</a>
+</div>
+<div class="flex flex-col gap-3 font-label-sm text-label-sm">
+<a class="text-outline-variant hover:text-white hover:translate-x-1 transition-all duration-200" href="#">Contact</a>
+</div>
+</div>
+</footer>
+</body></html>
