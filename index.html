@@ -87,23 +87,25 @@
   <header
     class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 header-theme-dark backdrop-blur-md border-b"
     id="main-nav">
-    <div class="max-w-container-max mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    <div class="relative max-w-container-max mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
 
-      <!-- Brand Logo (Dynamic: Isotipo in Hero, ImagotipoH2 in other sections) -->
-      <a href="#inicio" class="flex items-center gap-3 group py-1">
-        <img id="nav-brand-logo" src="assets/images/isotipo.png" alt="LEALTIX Logo"
-          class="h-9 sm:h-10 w-auto object-contain transition-all duration-300 group-hover:scale-105" />
-      </a>
+      <!-- Brand Logo Container (Fixed width to prevent shifting, centers Isotipo) -->
+      <div class="w-36 sm:w-44 flex items-center justify-start">
+        <a href="#inicio" class="flex items-center justify-center group py-1">
+          <img id="nav-brand-logo" src="assets/images/isotipo.png" alt="LEALTIX Logo"
+            class="h-9 sm:h-10 w-auto object-contain transition-all duration-300 group-hover:scale-105" />
+        </a>
+      </div>
 
-      <!-- Desktop Navigation Links -->
-      <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
+      <!-- Desktop Navigation Links (Permanently Centered at absolute 50%) -->
+      <nav class="hidden lg:flex items-center gap-1 xl:gap-2 absolute left-1/2 -translate-x-1/2">
         <a href="#soluciones" class="nav-link">Soluciones</a>
         <a href="#tecnologia" class="nav-link">Tecnología & Dashboard</a>
         <a href="#planes" class="nav-link">Planes & Precios</a>
       </nav>
 
-      <!-- Desktop CTAs -->
-      <div class="hidden sm:flex items-center gap-3">
+      <!-- Desktop CTAs (Fixed width to balance layout) -->
+      <div class="hidden sm:flex items-center justify-end w-36 sm:w-44 gap-3">
         <button class="open-demo-modal btn-specular-header text-sm py-2.5 px-5">
           <span>Agendar Demo</span>
           <span class="material-symbols-outlined text-[18px]">calendar_today</span>
