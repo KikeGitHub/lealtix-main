@@ -135,7 +135,7 @@ button {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(135deg, #0b1c30 15%, #006a61 65%, #d95f00 100%);
+  background-image: linear-gradient(135deg, #00c4b4 0%, #00877a 45%, #ff7300 100%);
 }
 
 .gradient-teal-text {
