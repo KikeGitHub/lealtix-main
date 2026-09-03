@@ -179,13 +179,13 @@
 
       </div>
 
-      <!-- Bottom Glued Group (Left: CTA + Badges | Right: Platform Value Text) -->
+      <!-- Bottom Glued Group (Left: CTA | Right: Platform Text | Bottom: Centered Badges) -->
       <div id="hero-bottom-group"
-        class="w-full flex flex-col md:flex-row items-start md:items-end justify-between gap-6 sm:gap-8 mt-auto pt-6 will-change-[opacity,transform]">
+        class="w-full flex flex-col mt-auto pt-6 will-change-[opacity,transform]">
 
-        <!-- Left Column: CTA Button + Proof & Trust Badges (Pinned to LEFT margin) -->
-        <div class="flex flex-col items-start text-left gap-3.5 max-w-xl">
-          <!-- CTA Button (Above Badges) -->
+        <!-- Upper Row: Left CTA Button + Right Platform Value Text -->
+        <div class="w-full flex flex-col md:flex-row items-start md:items-end justify-between gap-6 sm:gap-8 mb-4">
+          <!-- Left Column: CTA Button -->
           <div id="hero-cta-wrapper"
             class="flex items-center justify-start w-full sm:w-auto will-change-[opacity,transform]">
             <a href="#soluciones"
@@ -195,31 +195,31 @@
             </a>
           </div>
 
-          <!-- Proof & Trust Badges (Directly under CTA button) -->
-          <div class="flex flex-wrap items-center justify-start gap-4 sm:gap-6 text-[#cccccc]">
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined fill text-secondary text-xl">verified</span>
-              <span class="text-xs sm:text-sm font-medium text-[#cccccc]">Sin descargar apps</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined fill text-secondary text-xl">point_of_sale</span>
-              <span class="text-xs sm:text-sm font-medium text-[#cccccc]">Compatible con tu POS</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined fill text-roi-orange text-xl">bolt</span>
-              <span class="text-xs sm:text-sm font-medium text-[#cccccc]">Activación en 24h</span>
-            </div>
+          <!-- Right Column: Value Pitch Text (Pinned to RIGHT margin in exactly 3 lines) -->
+          <div class="w-full max-w-xl lg:max-w-2xl text-left md:text-right">
+            <p
+              class="font-body text-xs sm:text-[14px] lg:text-[15px] leading-snug sm:leading-relaxed text-[#d4ffdf] font-medium drop-shadow-md">
+              La plataforma de lealtad inteligente para restaurantes, bares y hoteles.<br class="hidden sm:inline" />
+              Recompensas instantáneas en <strong class="text-white font-semibold">Apple Wallet</strong> y <strong class="text-white font-semibold">Google Wallet</strong>.<br class="hidden sm:inline" />
+              Captura datos, automatiza visitas y multiplica el ticket promedio.
+            </p>
           </div>
         </div>
 
-        <!-- Right Column: Value Pitch Text (Pinned to RIGHT margin in exactly 3 lines) -->
-        <div class="w-full max-w-xl lg:max-w-2xl text-left md:text-right">
-          <p
-            class="font-body text-xs sm:text-[14px] lg:text-[15px] leading-snug sm:leading-relaxed text-[#d4ffdf] font-medium drop-shadow-md">
-            La plataforma de lealtad inteligente para restaurantes, bares y hoteles.<br class="hidden sm:inline" />
-            Recompensas instantáneas en <strong class="text-white font-semibold">Apple Wallet</strong> y <strong class="text-white font-semibold">Google Wallet</strong>.<br class="hidden sm:inline" />
-            Captura datos, automatiza visitas y multiplica el ticket promedio.
-          </p>
+        <!-- Proof & Trust Badges (Centered at the very bottom) -->
+        <div class="flex flex-wrap items-center justify-center gap-6 mt-1 w-full text-[#cccccc]">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined fill text-secondary text-xl">verified</span>
+            <span class="text-xs sm:text-sm font-medium text-[#cccccc]">Sin descargar apps</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined fill text-secondary text-xl">point_of_sale</span>
+            <span class="text-xs sm:text-sm font-medium text-[#cccccc]">Compatible con tu POS</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined fill text-roi-orange text-xl">bolt</span>
+            <span class="text-xs sm:text-sm font-medium text-[#cccccc]">Activación en 24h</span>
+          </div>
         </div>
 
       </div>
