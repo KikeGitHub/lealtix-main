@@ -162,6 +162,7 @@ button {
 
 /* Buttons */
 .btn-primary-roi {
+  position: relative;
   background: var(--color-roi-orange);
   color: #ffffff;
   font-family: var(--font-body);
@@ -169,7 +170,7 @@ button {
   font-size: 0.95rem;
   padding: 12px 24px;
   border-radius: var(--radius-md);
-  border-bottom: 3px solid var(--color-roi-orange-border);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -177,17 +178,59 @@ button {
   box-shadow: var(--shadow-orange);
   transition: all var(--transition-fast);
   cursor: pointer;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Specular Border Beam for ROI Buttons */
+.btn-primary-roi::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--specular-angle, 2.4rad) at 50% 50%,
+    transparent 0deg,
+    rgba(255, 255, 255, 0.98) 40deg,
+    transparent 80deg,
+    transparent 180deg,
+    rgba(255, 255, 255, 0.98) 220deg,
+    transparent 260deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: var(--specular-intensity, 0);
+  transition: opacity 0.25s ease;
+}
+
+/* Specular Ambient Glow inside ROI Buttons */
+.btn-primary-roi::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at var(--specular-x, 50%) var(--specular-y, 50%),
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
+  opacity: var(--specular-intensity, 0);
+  transition: opacity 0.25s ease;
+  z-index: -1;
 }
 
 .btn-primary-roi:hover {
   background: var(--color-roi-orange-hover);
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px -4px rgba(217, 95, 0, 0.4);
+  box-shadow: 0 12px 28px -4px rgba(217, 95, 0, 0.45);
 }
 
 .btn-primary-roi:active {
   transform: translateY(1px);
-  border-bottom-width: 1px;
 }
 
 .btn-secondary-teal {
