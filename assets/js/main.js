@@ -21,7 +21,7 @@ function initHeroRipple() {
   if (!container || typeof RippleDistortion === 'undefined') return;
 
   new RippleDistortion('#hero-ripple-container', {
-    src: 'assets/images/imagotipoV.svg',
+    src: 'assets/images/imagotipoV.svg?t=' + Date.now(),
     interactiveTarget: '#inicio',
     brushSize: 180,
     strength: 0.32,
