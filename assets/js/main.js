@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSolutionsTabs();
   initDemoModal();
   initFaqAccordion();
+  initLealboxChatbot();
 });
 
 function initHeroVideoCrossDissolve() {
@@ -780,4 +781,172 @@ function initSpecularEffect() {
   }
 
   requestAnimationFrame(render);
+}
+
+/* ==========================================================================
+   10. Lealbox AI Chatbot Controller
+   ========================================================================== */
+function initLealboxChatbot() {
+  const openBtn = document.getElementById('open-lealbox-chat');
+  const closeBtn = document.getElementById('close-lealbox-chat');
+  const chatModal = document.getElementById('lealbox-chat-modal');
+  const tooltip = document.getElementById('chatbot-tooltip');
+  const messagesContainer = document.getElementById('chat-messages-container');
+  const chatForm = document.getElementById('chat-input-form');
+  const userInput = document.getElementById('chat-user-input');
+  const quickPills = document.querySelectorAll('.chat-pill');
+
+  if (!openBtn || !chatModal) return;
+
+  const toggleChat = () => {
+    const isHidden = chatModal.classList.contains('hidden');
+    if (isHidden) {
+      chatModal.classList.remove('hidden');
+      chatModal.classList.add('flex');
+      if (userInput) userInput.focus();
+    } else {
+      chatModal.classList.add('hidden');
+      chatModal.classList.remove('flex');
+    }
+  };
+
+  openBtn.addEventListener('click', toggleChat);
+  if (closeBtn) closeBtn.addEventListener('click', toggleChat);
+  if (tooltip) tooltip.addEventListener('click', toggleChat);
+
+  // Auto-scroll chat to bottom
+  const scrollToBottom = () => {
+    if (messagesContainer) {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+  };
+
+  // Add message bubble
+  const addMessage = (text, sender = 'bot') => {
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-message-bubble flex items-start gap-2.5';
+
+    if (sender === 'user') {
+      bubble.classList.add('justify-end');
+      bubble.innerHTML = `
+        <div class="bg-gradient-to-r from-secondary to-[#2dd4bf] text-[#0b1c30] font-semibold p-3.5 rounded-2xl rounded-tr-sm max-w-[85%] leading-relaxed shadow-md">
+          ${text}
+        </div>
+      `;
+    } else {
+      bubble.innerHTML = `
+        <div class="w-7 h-7 rounded-full bg-[#d4af37]/20 border border-[#d4af37]/50 flex items-center justify-center shrink-0 mt-0.5">
+          <span class="material-symbols-outlined text-[#f6d365] text-sm">smart_toy</span>
+        </div>
+        <div class="bg-white/10 text-[#f8fafc] p-3.5 rounded-2xl rounded-tl-sm border border-white/15 max-w-[85%] leading-relaxed">
+          ${text}
+        </div>
+      `;
+    }
+
+    messagesContainer.appendChild(bubble);
+    scrollToBottom();
+  };
+
+  // Typing indicator
+  const showTyping = () => {
+    const indicator = document.createElement('div');
+    indicator.id = 'chat-typing-indicator';
+    indicator.className = 'chat-message-bubble flex items-center gap-2 text-xs text-slate-300';
+    indicator.innerHTML = `
+      <div class="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
+        <span class="material-symbols-outlined text-xs text-[#2dd4bf]">smart_toy</span>
+      </div>
+      <div class="flex items-center gap-1 bg-white/10 px-3 py-2 rounded-xl">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#2dd4bf] typing-dot"></span>
+        <span class="w-1.5 h-1.5 rounded-full bg-[#2dd4bf] typing-dot"></span>
+        <span class="w-1.5 h-1.5 rounded-full bg-[#2dd4bf] typing-dot"></span>
+      </div>
+    `;
+    messagesContainer.appendChild(indicator);
+    scrollToBottom();
+  };
+
+  const hideTyping = () => {
+    const ind = document.getElementById('chat-typing-indicator');
+    if (ind) ind.remove();
+  };
+
+  // Bot Knowledge Engine
+  const getBotResponse = (query) => {
+    const q = query.toLowerCase();
+
+    if (q.includes('ecosistema') || q.includes('como funciona') || q.includes('cómo funciona')) {
+      return `El <strong>Ecosistema LEALTIX</strong> conecta toda la operación en tiempo real:<br><br>
+      • <strong>Front-Office (Píxel):</strong> Marca blanca incrustada en tu dominio web.<br>
+      • <strong>Lealbox:</strong> Mesero Virtual con IA y memoria de consumo.<br>
+      • <strong>Comandix:</strong> Sincronización en sala para meseros.<br>
+      • <strong>Kitchndix:</strong> Control KDS en cocina con checklist y cronómetro.<br><br>
+      Todo sincronizado con el Dashboard central para el dueño o gerente.`;
+    }
+
+    if (q.includes('lealbox') || q.includes('comandix') || q.includes('kitchndix') || q.includes('trilogia') || q.includes('trilogía')) {
+      return `Nuestra <strong>Trilogía Operativa</strong> une los puntos clave:<br><br>
+      1. 🤖 <strong>Lealbox:</strong> Chatbot con IA que recuerda el historial del comensal y hace venta cruzada.<br>
+      2. 📱 <strong>Comandix:</strong> Tableta para meseros que recibe las comandas al instante.<br>
+      3. 🍳 <strong>Kitchndix:</strong> Monitor KDS con checklist de recetas para evitar mermas.<br><br>
+      ¿Te gustaría ver una demo de estos módulos?`;
+    }
+
+    if (q.includes('precio') || q.includes('plan') || q.includes('costo') || q.includes('cuanto cuesta') || q.includes('cuánto cuesta') || q.includes('mxn')) {
+      return `Contamos con esquemas transparentes en <strong>MXN</strong>:<br><br>
+      ☕ <strong>Plan Básico (~$500 MXN/mes):</strong> Control operativo, base de datos y correos transaccionales (ideal cafeterías).<br>
+      ⚡ <strong>Plan Pro (~$1,200 MXN/mes):</strong> IA Lealbox, Trilogía Operativa (Comandix + Kitchndix), WhatsApp y Servicio Administrado.<br>
+      🏢 <strong>Enterprise (A Medida):</strong> Multi-sucursal y sector hotelero HORECA.`;
+    }
+
+    if (q.includes('demo') || q.includes('agendar') || q.includes('probar') || q.includes('contacto') || q.includes('llamada')) {
+      const demoModal = document.getElementById('demo-modal');
+      if (demoModal) {
+        setTimeout(() => {
+          chatModal.classList.add('hidden');
+          demoModal.classList.remove('hidden');
+          demoModal.classList.add('flex');
+        }, 1200);
+      }
+      return `¡Excelente! Te abriré de inmediato el formulario para agendar una <strong>Demostración Personalizada</strong> con un especialista del sector HORECA. 🚀`;
+    }
+
+    if (q.includes('hibrido') || q.includes('híbrido') || q.includes('servicio administrado')) {
+      return `Con nuestro <strong>Modelo Híbrido</strong>:<br>
+      <em>"Tú te dedicas a vender comida; nosotros nos encargamos de que tus clientes regresen."</em><br><br>
+      Nuestro equipo se encarga de operar la base de datos y lanzar las campañas de retención sin que inviertas tiempo de tu personal.`;
+    }
+
+    return `Entiendo perfectamente tu interés en <em>"${query}"</em>. En <strong>LEALTIX</strong> optimizamos tanto la retención de clientes con IA como la sincronización de tu cocina y sala.<br><br>
+    ¿Deseas que agendemos una <strong>Demostración en Vivo</strong> para tu restaurante o cafetería?`;
+  };
+
+  const handleUserMessage = (msg) => {
+    if (!msg.trim()) return;
+    addMessage(msg, 'user');
+    showTyping();
+
+    setTimeout(() => {
+      hideTyping();
+      const botReply = getBotResponse(msg);
+      addMessage(botReply, 'bot');
+    }, 800);
+  };
+
+  if (chatForm && userInput) {
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = userInput.value;
+      userInput.value = '';
+      handleUserMessage(val);
+    });
+  }
+
+  quickPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      const question = pill.dataset.question || pill.textContent.trim();
+      handleUserMessage(question);
+    });
+  });
 }
