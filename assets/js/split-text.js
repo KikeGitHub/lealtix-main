@@ -1,92 +1,69 @@
 /**
  * SplitText GSAP Kinetic Typography Controller
- * Staggered character & word entrance and exit animations across all sections.
- * Automatically initializes on section titles and subtitles with ScrollTrigger.
+ * Staggered character & word entrance animations across ALL sections.
+ * Guarantees every single section title (h2) and subtitle (p / span) enters with kinetic SplitText.
  */
 
-class SplitTextAnimation {
-  constructor(target, options = {}) {
-    this.el = typeof target === 'string' ? document.querySelector(target) : target;
-    if (!this.el) return;
+(function () {
+  'use strict';
 
-    this.options = Object.assign({
-      mode: 'chars', // 'chars' or 'words'
-      delay: 18, // ms between items
-      duration: 0.85,
-      ease: 'power3.out',
-      fromY: 105,
-      trigger: this.el,
-      isHero: false
-    }, options);
+  // Helper to split text into words and chars while preserving child nodes
+  function splitNodeToSpans(node, mode) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const text = node.textContent;
+      if (!text.trim()) return document.createTextNode(text);
 
-    this.init();
-  }
+      const fragment = document.createDocumentFragment();
+      const words = text.split(/(\s+)/);
 
-  init() {
-    this.splitElements();
-    if (this.options.isHero) {
-      this.initHeroAnimation();
-    } else {
-      this.initScrollTriggerAnimation();
-    }
-  }
+      words.forEach(word => {
+        if (/^\s+$/.test(word)) {
+          fragment.appendChild(document.createTextNode(word));
+        } else if (word) {
+          const wordSpan = document.createElement('span');
+          wordSpan.className = 'split-word';
 
-  splitElements() {
-    this.el.classList.add('split-parent');
-
-    // Recursively split text nodes while preserving span wrappers (such as .gradient-text, bold, etc.)
-    const splitNode = node => {
-      if (node.nodeType === Node.TEXT_NODE) {
-        const text = node.textContent;
-        if (!text.trim()) return document.createTextNode(text);
-
-        const fragment = document.createDocumentFragment();
-        const words = text.split(/(\s+)/);
-
-        words.forEach(word => {
-          if (/^\s+$/.test(word)) {
-            fragment.appendChild(document.createTextNode(word));
-          } else if (word) {
-            const wordSpan = document.createElement('span');
-            wordSpan.className = 'split-word';
-
-            if (this.options.mode === 'words') {
-              wordSpan.textContent = word;
-            } else {
-              for (const char of word) {
-                const charSpan = document.createElement('span');
-                charSpan.className = 'split-char';
-                charSpan.textContent = char;
-                wordSpan.appendChild(charSpan);
-              }
+          if (mode === 'words') {
+            wordSpan.textContent = word;
+          } else {
+            for (const char of word) {
+              const charSpan = document.createElement('span');
+              charSpan.className = 'split-char';
+              charSpan.textContent = char;
+              wordSpan.appendChild(charSpan);
             }
-            fragment.appendChild(wordSpan);
           }
-        });
-        return fragment;
-      } else if (node.nodeType === Node.ELEMENT_NODE) {
-        const clone = node.cloneNode(false);
-        Array.from(node.childNodes).forEach(child => {
-          const splitChild = splitNode(child);
-          if (splitChild) clone.appendChild(splitChild);
-        });
-        return clone;
-      }
-      return node.cloneNode(true);
-    };
+          fragment.appendChild(wordSpan);
+        }
+      });
+      return fragment;
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      const clone = node.cloneNode(false);
+      Array.from(node.childNodes).forEach(child => {
+        const splitChild = splitNodeToSpans(child, mode);
+        if (splitChild) clone.appendChild(splitChild);
+      });
+      return clone;
+    }
+    return node.cloneNode(true);
+  }
 
-    const newChildren = Array.from(this.el.childNodes).map(splitNode);
-    this.el.innerHTML = '';
-    newChildren.forEach(child => this.el.appendChild(child));
+  function splitElement(el, mode = 'chars') {
+    if (!el || el.classList.contains('split-parent')) return [];
 
-    // Map smooth continuous multi-stop gradient across .gradient-text characters if present
-    const gradientChars = Array.from(this.el.querySelectorAll('.gradient-text .split-char'));
+    el.classList.add('split-parent');
+    const newChildren = Array.from(el.childNodes).map(child => splitNodeToSpans(child, mode));
+    el.innerHTML = '';
+    newChildren.forEach(child => el.appendChild(child));
+
+    // Handle continuous multi-stop gradient for .gradient-text characters if present
+    const gradientChars = Array.from(el.querySelectorAll('.gradient-text .split-char'));
     if (gradientChars.length > 1) {
       const stops = [
-        { t: 0.0, r: 45, g: 212, b: 191 },   // #2dd4bf Teal
-        { t: 0.3, r: 56, g: 189, b: 248 },   // #38bdf8 Sky Blue
-        { t: 0.7, r: 251, g: 146, b: 60 },   // #fb923c Amber
-        { t: 1.0, r: 249, g: 115, b: 22 }    // #f97316 Vibrant Orange
+        { t: 0.0, r: 45, g: 212, b: 191 },
+        { t: 0.3, r: 56, g: 189, b: 248 },
+        { t: 0.7, r: 251, g: 146, b: 60 },
+        { t: 1.0, r: 249, g: 115, b: 22 }
       ];
 
       const interpolateColor = t => {
@@ -114,160 +91,164 @@ class SplitTextAnimation {
       });
     }
 
-    this.items = this.options.mode === 'words' 
-      ? Array.from(this.el.querySelectorAll('.split-word'))
-      : Array.from(this.el.querySelectorAll('.split-char'));
+    return mode === 'words' 
+      ? Array.from(el.querySelectorAll('.split-word'))
+      : Array.from(el.querySelectorAll('.split-char'));
   }
 
-  initHeroAnimation() {
-    if (typeof gsap === 'undefined' || !this.items.length) return;
+  function initSectionHeaderAnimations() {
+    if (typeof gsap === 'undefined') return;
 
-    gsap.set(this.items, {
-      opacity: 0,
-      yPercent: 115,
-      y: 20,
-      force3D: true
-    });
+    // 1. HERO TITLE SPECIAL KINETIC STREAM
+    const heroTitle = document.getElementById('hero-main-title') || document.getElementById('hero-title');
+    if (heroTitle && !heroTitle.classList.contains('split-parent')) {
+      const heroChars = splitElement(heroTitle, 'chars');
+      if (heroChars.length) {
+        gsap.set(heroChars, { opacity: 0, yPercent: 115, y: 20, force3D: true });
+        
+        let isInHero = true;
+        const handleHeroScroll = () => {
+          const scrollY = window.scrollY || window.pageYOffset;
+          const hideThreshold = window.innerHeight * 0.20;
 
-    let isInHero = true;
-    const handleScroll = () => {
-      const scrollY = window.scrollY || window.pageYOffset;
-      const hideThreshold = window.innerHeight * 0.20;
+          if (scrollY > hideThreshold && isInHero) {
+            isInHero = false;
+            gsap.to(heroChars, { opacity: 0, yPercent: -115, y: -20, duration: 0.6, ease: 'power2.in', stagger: 0.008, overwrite: 'auto' });
+          } else if (scrollY <= hideThreshold && !isInHero) {
+            isInHero = true;
+            gsap.to(heroChars, { opacity: 1, yPercent: 0, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.02, overwrite: 'auto' });
+          }
+        };
 
-      if (scrollY > hideThreshold && isInHero) {
-        isInHero = false;
-        gsap.to(this.items, {
-          opacity: 0,
-          yPercent: -115,
-          y: -20,
-          duration: 0.6,
-          ease: 'power2.in',
-          stagger: 0.008,
-          overwrite: 'auto'
-        });
-      } else if (scrollY <= hideThreshold && !isInHero) {
-        isInHero = true;
-        gsap.to(this.items, {
-          opacity: 1,
-          yPercent: 0,
-          y: 0,
-          duration: 0.9,
-          ease: 'power3.out',
-          stagger: 0.02,
-          overwrite: 'auto'
-        });
+        window.addEventListener('scroll', handleHeroScroll, { passive: true });
+
+        setTimeout(() => {
+          gsap.to(heroChars, { opacity: 1, yPercent: 0, y: 0, duration: 0.95, ease: 'power3.out', stagger: 0.022 });
+        }, 120);
       }
-    };
+    }
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    // 2. FIND EVERY SECTION IN MAIN CONTENT STREAM
+    const sections = Array.from(document.querySelectorAll('#main-content-stream section, #main-content-stream footer'));
 
-    setTimeout(() => {
-      gsap.to(this.items, {
-        opacity: 1,
-        yPercent: 0,
-        y: 0,
-        duration: 0.95,
-        ease: 'power3.out',
-        stagger: 0.024
-      });
-    }, 120);
-  }
+    sections.forEach(sec => {
+      // Find all heading elements inside this section
+      const heading = sec.querySelector('h2');
+      if (!heading) return;
 
-  initScrollTriggerAnimation() {
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined' || !this.items.length) return;
+      // Find badge (tag) and subtitle (p)
+      const container = heading.closest('.text-center') || heading.parentElement;
+      const badge = container ? container.querySelector('span') : null;
+      const subtitle = container ? container.querySelector('p') : null;
 
-    // Set initial hidden state
-    gsap.set(this.items, {
-      opacity: 0,
-      yPercent: this.options.fromY,
-      force3D: true
-    });
+      // Split elements
+      const badgeItems = badge ? splitElement(badge, 'words') : [];
+      const headingChars = splitElement(heading, 'chars');
+      const subtitleWords = subtitle ? splitElement(subtitle, 'words') : [];
 
-    const triggerEl = this.options.trigger || this.el.closest('.text-center') || this.el.closest('section') || this.el;
-    const staggerTime = Math.min(0.02, 0.55 / Math.max(1, this.items.length));
-
-    ScrollTrigger.create({
-      trigger: triggerEl,
-      start: 'top 85%',
-      onEnter: () => {
-        gsap.to(this.items, {
-          opacity: 1,
-          yPercent: 0,
-          duration: this.options.duration,
-          ease: 'power3.out',
-          stagger: staggerTime,
-          overwrite: 'auto'
-        });
-      },
-      onEnterBack: () => {
-        gsap.to(this.items, {
-          opacity: 1,
-          yPercent: 0,
-          duration: this.options.duration * 0.6,
-          ease: 'power3.out',
-          stagger: staggerTime * 0.5,
-          overwrite: 'auto'
-        });
-      },
-      onLeaveBack: () => {
-        gsap.to(this.items, {
-          opacity: 0,
-          yPercent: this.options.fromY,
-          duration: this.options.duration * 0.6,
-          ease: 'power2.in',
-          stagger: staggerTime * 0.5,
-          overwrite: 'auto'
-        });
+      // Set initial hidden state (below baseline)
+      if (badgeItems.length) {
+        gsap.set(badgeItems, { opacity: 0, yPercent: 80, force3D: true });
       }
+      if (headingChars.length) {
+        gsap.set(headingChars, { opacity: 0, yPercent: 110, rotateZ: 2, force3D: true });
+      }
+      if (subtitleWords.length) {
+        gsap.set(subtitleWords, { opacity: 0, yPercent: 90, force3D: true });
+      }
+
+      let isRevealed = false;
+
+      // Animation Timeline function
+      const revealHeader = () => {
+        if (isRevealed) return;
+        isRevealed = true;
+
+        const tl = gsap.timeline({ overwrite: 'auto' });
+
+        if (badgeItems.length) {
+          tl.to(badgeItems, {
+            opacity: 1,
+            yPercent: 0,
+            duration: 0.6,
+            ease: 'power3.out',
+            stagger: 0.03
+          }, 0);
+        }
+
+        if (headingChars.length) {
+          const charStagger = Math.min(0.018, 0.6 / headingChars.length);
+          tl.to(headingChars, {
+            opacity: 1,
+            yPercent: 0,
+            rotateZ: 0,
+            duration: 0.85,
+            ease: 'power3.out',
+            stagger: charStagger
+          }, badgeItems.length ? 0.12 : 0);
+        }
+
+        if (subtitleWords.length) {
+          const wordStagger = Math.min(0.025, 0.5 / subtitleWords.length);
+          tl.to(subtitleWords, {
+            opacity: 1,
+            yPercent: 0,
+            duration: 0.75,
+            ease: 'power3.out',
+            stagger: wordStagger
+          }, headingChars.length ? 0.25 : 0);
+        }
+      };
+
+      const resetHeader = () => {
+        if (!isRevealed) return;
+        isRevealed = false;
+
+        if (badgeItems.length) {
+          gsap.to(badgeItems, { opacity: 0, yPercent: 80, duration: 0.5, ease: 'power2.in', overwrite: 'auto' });
+        }
+        if (headingChars.length) {
+          gsap.to(headingChars, { opacity: 0, yPercent: 110, rotateZ: 2, duration: 0.5, ease: 'power2.in', overwrite: 'auto' });
+        }
+        if (subtitleWords.length) {
+          gsap.to(subtitleWords, { opacity: 0, yPercent: 90, duration: 0.5, ease: 'power2.in', overwrite: 'auto' });
+        }
+      };
+
+      // Intersection Observer with threshold & rootMargin
+      const targetObs = container || heading;
+      const observer = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          revealHeader();
+        } else if (entry.boundingClientRect.top > (window.innerHeight || 800) * 0.9) {
+          // Reset when scrolled back up above viewport
+          resetHeader();
+        }
+      }, {
+        threshold: [0, 0.15],
+        rootMargin: '0px 0px -8% 0px'
+      });
+
+      observer.observe(targetObs);
+
+      // Check initial position on load in case section is already in view
+      const checkInitialView = () => {
+        const rect = targetObs.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
+          revealHeader();
+        }
+      };
+
+      setTimeout(checkInitialView, 150);
     });
   }
-}
 
-// Auto-initialize SplitText on all non-hero sections
-function initAllSectionSplitText() {
-  // 1. Hero Title (Character level)
-  const heroTitle = document.querySelector('#hero-main-title') || document.querySelector('#hero-title');
-  if (heroTitle && !heroTitle.classList.contains('split-parent')) {
-    new SplitTextAnimation(heroTitle, {
-      isHero: true,
-      mode: 'chars',
-      delay: 24,
-      duration: 0.95
-    });
+  window.initAllSectionSplitText = initSectionHeaderAnimations;
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSectionHeaderAnimations);
+  } else {
+    initSectionHeaderAnimations();
   }
-
-  // 2. All Section Headings (H2) outside Hero
-  const sectionHeadings = document.querySelectorAll('#main-content-stream section h2');
-  sectionHeadings.forEach(h2 => {
-    if (!h2.classList.contains('split-parent')) {
-      new SplitTextAnimation(h2, {
-        mode: 'chars',
-        duration: 0.85,
-        fromY: 105,
-        trigger: h2.closest('.text-center') || h2
-      });
-    }
-  });
-
-  // 3. All Section Subtitles (P) and Upper category badges in section headers
-  const sectionSubtitles = document.querySelectorAll('#main-content-stream section .text-center > p, #main-content-stream section .text-center > span');
-  sectionSubtitles.forEach(sub => {
-    if (!sub.classList.contains('split-parent')) {
-      new SplitTextAnimation(sub, {
-        mode: 'words',
-        duration: 0.75,
-        fromY: 90,
-        trigger: sub.closest('.text-center') || sub
-      });
-    }
-  });
-}
-
-window.SplitTextAnimation = SplitTextAnimation;
-window.initAllSectionSplitText = initAllSectionSplitText;
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initAllSectionSplitText);
-} else {
-  initAllSectionSplitText();
-}
+})();
