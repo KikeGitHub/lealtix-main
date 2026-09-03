@@ -20,16 +20,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initHeroVideoFade() {
   const videoWrapper = document.getElementById('hero-video-wrapper');
-  if (!videoWrapper) return;
+  const ctaWrapper = document.getElementById('hero-cta-wrapper');
+  const bottomGroup = document.getElementById('hero-bottom-group');
 
   const onScroll = () => {
     const scrollY = window.scrollY || window.pageYOffset;
     const vh = window.innerHeight || 800;
-    // Fade video smoothly as subsequent sections slide over the hero
-    const progress = Math.min(1, Math.max(0, scrollY / (vh * 0.45)));
-    const opacity = 1 - Math.pow(progress, 1.4);
-    videoWrapper.style.opacity = Math.max(0, opacity).toFixed(3);
-    videoWrapper.style.transform = `scale(${(1 + progress * 0.04).toFixed(3)})`;
+
+    // Fade and slide smoothly as subsequent sections slide over the hero
+    const progress = Math.min(1, Math.max(0, scrollY / (vh * 0.32)));
+    const opacity = Math.max(0, 1 - Math.pow(progress, 1.3));
+    const translateY = (-progress * 28).toFixed(1);
+
+    if (videoWrapper) {
+      videoWrapper.style.opacity = opacity.toFixed(3);
+      videoWrapper.style.transform = `scale(${(1 + progress * 0.04).toFixed(3)})`;
+    }
+
+    if (ctaWrapper) {
+      ctaWrapper.style.opacity = opacity.toFixed(3);
+      ctaWrapper.style.transform = `translate3d(0, ${translateY}px, 0)`;
+      ctaWrapper.style.pointerEvents = opacity < 0.1 ? 'none' : 'auto';
+    }
+
+    if (bottomGroup) {
+      bottomGroup.style.opacity = opacity.toFixed(3);
+      bottomGroup.style.transform = `translate3d(0, ${translateY}px, 0)`;
+      bottomGroup.style.pointerEvents = opacity < 0.1 ? 'none' : 'auto';
+    }
   };
 
   window.addEventListener('scroll', onScroll, { passive: true });
