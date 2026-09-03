@@ -150,12 +150,14 @@ function initNavbarScroll() {
       }
     }
 
-    // If at the very top of the page (Hero section), always force dark header
-    if (scrollY < 80) {
-      navbar.classList.remove('header-theme-light');
-      navbar.classList.add('header-theme-dark');
+    // If in Hero range, force transparent header (Zero background)
+    if (isHero) {
+      navbar.classList.remove('header-theme-dark', 'header-theme-light');
+      navbar.classList.add('header-theme-transparent');
       return;
     }
+
+    navbar.classList.remove('header-theme-transparent');
 
     // Find all sections or footer elements by viewport position
     const sections = document.querySelectorAll('section, footer');

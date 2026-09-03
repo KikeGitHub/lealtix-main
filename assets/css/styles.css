@@ -571,6 +571,29 @@ input[type="range"]::-webkit-slider-thumb:hover {
   box-shadow: 0 0 20px rgba(0, 106, 97, 0.2);
 }
 
+/* Transparent Hero Header State (Zero Background in Hero) */
+#main-nav.header-theme-transparent {
+  background-color: transparent !important;
+  border-bottom-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+#main-nav.header-theme-transparent .nav-link {
+  color: #cccccc !important;
+  --specular-line-color: #2dd4bf;
+  --specular-glow-color: rgba(45, 212, 191, 0.25);
+}
+
+#main-nav.header-theme-transparent .nav-link:hover {
+  color: #ffffff !important;
+}
+
+#main-nav.header-theme-transparent #mobile-menu-btn {
+  color: #2dd4bf !important;
+}
+
 /* Dark Theme Header State (#062e3b) */
 #main-nav.header-theme-dark {
   background-color: rgba(6, 46, 59, 0.95) !important;
