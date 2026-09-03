@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavbarScroll();
   initSpecularEffect();
   initHeroTitleSplitText();
+  initHeroVideoFade();
   initCtaRipple();
   initRoiCalculator();
   initPricingToggle();
@@ -16,6 +17,24 @@ document.addEventListener('DOMContentLoaded', () => {
   initDemoModal();
   initFaqAccordion();
 });
+
+function initHeroVideoFade() {
+  const videoWrapper = document.getElementById('hero-video-wrapper');
+  if (!videoWrapper) return;
+
+  const onScroll = () => {
+    const scrollY = window.scrollY || window.pageYOffset;
+    const vh = window.innerHeight || 800;
+    // Fade video smoothly as subsequent sections slide over the hero
+    const progress = Math.min(1, Math.max(0, scrollY / (vh * 0.45)));
+    const opacity = 1 - Math.pow(progress, 1.4);
+    videoWrapper.style.opacity = Math.max(0, opacity).toFixed(3);
+    videoWrapper.style.transform = `scale(${(1 + progress * 0.04).toFixed(3)})`;
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}
 
 function initHeroTitleSplitText() {
   const title = document.getElementById('hero-main-title');
