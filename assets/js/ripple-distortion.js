@@ -436,6 +436,48 @@ class RippleDistortion {
     gl.vertexAttribPointer(cUvLoc, 2, gl.FLOAT, false, 16, 8);
 
     gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+    // 3. Physically ripple & displace the Hero Title Text in sync with water waves
+    if (!this.titleEl) {
+      this.titleEl = document.getElementById('hero-main-title');
+    }
+
+    if (this.titleEl) {
+      const rect = this.titleEl.getBoundingClientRect();
+      const heroRect = this.container.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      const titleCenterX = (rect.left + rect.width * 0.5 - heroRect.left) * dpr;
+      const titleCenterY = (heroRect.height - (rect.top + rect.height * 0.5 - heroRect.top)) * dpr;
+
+      let pushX = 0;
+      let pushY = 0;
+
+      for (let i = 0; i < this.MAX_WAVES; i++) {
+        const wave = this.waves[i];
+        if (wave.opacity <= 0.005) continue;
+
+        const dx = titleCenterX - wave.x;
+        const dy = titleCenterY - wave.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const radius = (wave.scale * wave.size) * 0.85;
+
+        if (dist < radius && dist > 0.001) {
+          const normDist = dist / radius;
+          const waveForce = Math.sin(normDist * Math.PI * 2.0 * this.options.rings) * wave.opacity * (1.0 - normDist);
+          pushX += (dx / dist) * waveForce * 18.0;
+          pushY += (dy / dist) * waveForce * 18.0;
+        }
+      }
+
+      if (Math.abs(pushX) > 0.04 || Math.abs(pushY) > 0.04) {
+        this.titleEl.style.transform = `translate3d(${pushX.toFixed(2)}px, ${(-pushY).toFixed(2)}px, 0) skewX(${(pushX * 0.35).toFixed(2)}deg) skewY(${(-pushY * 0.25).toFixed(2)}deg)`;
+        this.titleEl.style.filter = `drop-shadow(${(pushX * 0.6).toFixed(1)}px ${(-pushY * 0.6).toFixed(1)}px 6px rgba(45, 212, 191, 0.4))`;
+      } else {
+        this.titleEl.style.transform = 'translate3d(0, 0, 0)';
+        this.titleEl.style.filter = 'none';
+      }
+    }
   }
 }
 
