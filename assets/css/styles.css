@@ -771,3 +771,28 @@ input[type="range"]::-webkit-slider-thumb:hover {
               0 0 35px rgba(45, 212, 191, 0.25),
               inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
 }
+
+/* ==========================================================================
+   SplitText Kinetic Typography (Character Stagger & 3D Rise)
+   ========================================================================== */
+.split-parent {
+  overflow: visible;
+  display: inline-block;
+  white-space: normal;
+  word-wrap: break-word;
+  will-change: transform, opacity;
+}
+
+.split-word {
+  display: inline-block;
+  white-space: nowrap;
+  vertical-align: baseline;
+  overflow: hidden;
+}
+
+.split-char {
+  display: inline-block;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
