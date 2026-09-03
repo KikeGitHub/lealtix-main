@@ -191,7 +191,7 @@ class RippleDistortion {
         float amount = texture2D(uDisplacement, vUv).r;
         
         // Liquid Hole Mask: Only render where water waves exist
-        float alpha = smoothstep(0.008, 0.28, amount);
+        float alpha = smoothstep(0.012, 0.22, amount);
         if (alpha < 0.001) {
           discard;
         }
@@ -201,22 +201,16 @@ class RippleDistortion {
         vec2 dir = vec2(sin(theta), cos(theta));
         vec2 push = dir * amount * uStrength;
 
+        vec2 samplePos = clamp(base + push, vec2(0.002), vec2(0.998));
+
         vec3 color;
         if (uDispersion > 0.001) {
-          float split = uDispersion * 0.25;
-          color.r = texture2D(uTexture, base + push * (1.0 + split)).r;
-          color.g = texture2D(uTexture, base + push).g;
-          color.b = texture2D(uTexture, base + push * (1.0 - split)).b;
+          float split = uDispersion * 0.2;
+          color.r = texture2D(uTexture, clamp(samplePos + push * split, vec2(0.001), vec2(0.999))).r;
+          color.g = texture2D(uTexture, samplePos).g;
+          color.b = texture2D(uTexture, clamp(samplePos - push * split, vec2(0.001), vec2(0.999))).b;
         } else {
-          color = texture2D(uTexture, base + push).rgb;
-        }
-
-        if (uGrayscale > 0.001) {
-          color = mix(color, vec3(dot(color, vec3(0.2126, 0.7152, 0.0722))), uGrayscale);
-        }
-
-        if (uTintAmount > 0.001) {
-          color = mix(color, color * uTint * 1.9, clamp(amount * 1.6, 0.0, 1.0) * uTintAmount);
+          color = texture2D(uTexture, samplePos).rgb;
         }
 
         if (uGlint > 0.001) {
