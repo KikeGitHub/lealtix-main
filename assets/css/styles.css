@@ -816,3 +816,19 @@ input[type="range"]::-webkit-slider-thumb:hover {
   font-weight: 800;
   text-shadow: 0 4px 18px rgba(249, 115, 22, 0.25);
 }
+
+/* ==========================================================================
+   Hero Stacking Context & Curtain Flow
+   ========================================================================== */
+#inicio {
+  position: sticky !important;
+  top: 0;
+  z-index: 0 !important;
+}
+
+#main-content-stream {
+  position: relative;
+  z-index: 20 !important;
+  isolation: isolate;
+  background-color: var(--color-surface, #f8f9ff);
+}
