@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initNavbarScroll();
   initSpecularEffect();
+  initHeroRipple();
   initRoiCalculator();
   initPricingToggle();
   initDashboardSimulator();
@@ -14,6 +15,29 @@ document.addEventListener('DOMContentLoaded', () => {
   initDemoModal();
   initFaqAccordion();
 });
+
+function initHeroRipple() {
+  const container = document.getElementById('hero-ripple-container');
+  if (!container || typeof RippleDistortion === 'undefined') return;
+
+  new RippleDistortion('#hero-ripple-container', {
+    src: 'assets/images/ImagotipoV.png',
+    brushSize: 150,
+    strength: 0.25,
+    swirl: 0.8,
+    rings: 3.5,
+    spread: 6,
+    fade: 2.8,
+    spacing: 10,
+    dispersion: 0.04,
+    glint: 0.35,
+    tint: '#00c4b4',
+    tintAmount: 0.1,
+    grayscale: false,
+    highlightColor: '#ffffff',
+    trigger: 'hover'
+  });
+}
 
 /* ==========================================================================
    1. Navigation & Mobile Menu
