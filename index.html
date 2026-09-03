@@ -164,14 +164,26 @@
     <div
       class="relative z-10 max-w-container-max mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex flex-col justify-between items-center text-center">
 
-      <!-- Top Hero Title (Glued right below header, pinned to LEFT margin) -->
-      <div class="w-full flex flex-col items-start text-left mt-1 sm:mt-2 mb-auto">
+      <!-- Top Hero Row (Left: Main Title | Right: Floating "Ver Sistema" button pinned below header) -->
+      <div class="w-full flex flex-col sm:flex-row items-start justify-between gap-4 mt-1 sm:mt-2 mb-auto">
 
         <!-- Main Title (Left-aligned) -->
         <h1 id="hero-main-title"
           class="font-display font-extrabold text-[22px] sm:text-[29px] lg:text-[35px] leading-[1.25] text-[#2dd4bf] tracking-tight text-left will-change-transform max-w-2xl">
           Convierte visitas ocasionales en <span class="block gradient-text mt-0.5 sm:mt-1">clientes habituales</span>
         </h1>
+
+        <!-- Floating "Ver Sistema" Button (Top Right, glued near header) -->
+        <div class="shrink-0 self-start sm:self-center mt-1 sm:mt-0">
+          <a href="dashboard-demo.html" target="_blank" rel="noopener noreferrer"
+            class="group inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#0b1c30]/85 hover:bg-gradient-to-r hover:from-[#0b1c30] hover:to-[#062e3b] text-white border-2 border-[#2dd4bf]/60 hover:border-[#2dd4bf] backdrop-blur-xl shadow-[0_8px_25px_rgba(45,212,191,0.3)] hover:shadow-[0_12px_32px_rgba(45,212,191,0.55)] transition-all duration-300 font-display font-bold text-xs sm:text-sm tracking-wide">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#2dd4bf] animate-pulse"></span>
+            <span class="material-symbols-outlined text-[#2dd4bf] text-lg">dashboard</span>
+            <span class="text-white font-bold">Ver Sistema</span>
+            <span class="text-[10px] font-mono font-extrabold bg-[#2dd4bf]/20 text-[#2dd4bf] border border-[#2dd4bf]/40 px-2 py-0.5 rounded-full uppercase">Demo</span>
+            <span class="material-symbols-outlined text-sm text-[#2dd4bf] group-hover:translate-x-1 transition-transform">open_in_new</span>
+          </a>
+        </div>
 
       </div>
 
