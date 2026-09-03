@@ -21,13 +21,17 @@ function initHeroRipple() {
   if (!container || typeof RippleDistortion === 'undefined') return;
 
   new RippleDistortion('#hero-ripple-container', {
+    videoSelector: '#hero-bg-video',
     interactiveTarget: '#inicio',
-    brushSize: 180,
+    brushSize: 200,
+    strength: 0.38,
+    swirl: 0.85,
     rings: 3.5,
-    spread: 6.5,
+    spread: 7.0,
     fade: 2.8,
     spacing: 10,
-    glint: 0.85,
+    dispersion: 0.045,
+    glint: 0.65,
     tint: '#2dd4bf'
   });
 }
