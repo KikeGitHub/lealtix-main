@@ -927,15 +927,13 @@
     <section id="paradigma" data-theme="dark"
       class="py-24 md:py-32 relative overflow-hidden text-white border-b border-white/10">
 
-      <!-- Background Video with Overlay -->
-      <div class="absolute inset-0 z-0">
-        <video autoplay loop muted playsinline class="w-full h-full object-cover object-center brightness-75">
-          <source src="assets/videos/restaurant-icons.mp4" type="video/mp4" />
-          <source src="Restaurant_icons_transforming_to…_202609021314.mp4" type="video/mp4" />
-        </video>
-        <!-- Atmospheric gradient & liquid backdrop blur overlay -->
+      <!-- AeroShards Procedural 3D Faceted Crystal Shards Background -->
+      <canvas id="paradigma-shards-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
+      <!-- Background Ambient Atmosphere Overlay -->
+      <div class="absolute inset-0 z-0 pointer-events-none">
         <div
-          class="absolute inset-0 bg-gradient-to-b from-[#0b1c30]/85 via-[#071220]/80 to-[#0b1c30]/90 backdrop-blur-[3px]">
+          class="absolute inset-0 bg-gradient-to-b from-[#0b1c30]/90 via-[#071220]/80 to-[#0b1c30]/95 backdrop-blur-[1px]">
         </div>
       </div>
 
@@ -1813,6 +1811,8 @@
   <script src="assets/js/split-text.js"></script>
   <!-- WebGL Liquid Water Ripple Wave Engine -->
   <script src="assets/js/ripple-distortion.js"></script>
+  <!-- AeroShards 3D Faceted Crystal Particle Engine -->
+  <script src="assets/js/aero-shards.js"></script>
   <!-- Main JavaScript Controller -->
   <script src="assets/js/main.js"></script>
 </body>
