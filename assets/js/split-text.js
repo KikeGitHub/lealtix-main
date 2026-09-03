@@ -49,7 +49,11 @@
   }
 
   function splitElement(el, mode = 'chars') {
-    if (!el || el.classList.contains('split-parent')) return [];
+    if (!el || el.classList.contains('split-parent')) {
+      return el ? (mode === 'words' 
+        ? Array.from(el.querySelectorAll('.split-word'))
+        : Array.from(el.querySelectorAll('.split-char'))) : [];
+    }
 
     el.classList.add('split-parent');
     const newChildren = Array.from(el.childNodes).map(child => splitNodeToSpans(child, mode));
@@ -104,7 +108,7 @@
     if (heroTitle && !heroTitle.classList.contains('split-parent')) {
       const heroChars = splitElement(heroTitle, 'chars');
       if (heroChars.length) {
-        gsap.set(heroChars, { opacity: 0, yPercent: 115, y: 20, force3D: true });
+        gsap.set(heroChars, { opacity: 0, y: 35, force3D: true });
         
         let isInHero = true;
         const handleHeroScroll = () => {
@@ -113,17 +117,17 @@
 
           if (scrollY > hideThreshold && isInHero) {
             isInHero = false;
-            gsap.to(heroChars, { opacity: 0, yPercent: -115, y: -20, duration: 0.6, ease: 'power2.in', stagger: 0.008, overwrite: 'auto' });
+            gsap.to(heroChars, { opacity: 0, y: -30, duration: 0.6, ease: 'power2.in', stagger: 0.008, overwrite: 'auto' });
           } else if (scrollY <= hideThreshold && !isInHero) {
             isInHero = true;
-            gsap.to(heroChars, { opacity: 1, yPercent: 0, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.02, overwrite: 'auto' });
+            gsap.to(heroChars, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.02, overwrite: 'auto' });
           }
         };
 
         window.addEventListener('scroll', handleHeroScroll, { passive: true });
 
         setTimeout(() => {
-          gsap.to(heroChars, { opacity: 1, yPercent: 0, y: 0, duration: 0.95, ease: 'power3.out', stagger: 0.022 });
+          gsap.to(heroChars, { opacity: 1, y: 0, duration: 0.95, ease: 'power3.out', stagger: 0.022 });
         }, 120);
       }
     }
@@ -138,23 +142,23 @@
 
       // Find badge (tag) and subtitle (p)
       const container = heading.closest('.text-center') || heading.parentElement;
-      const badge = container ? container.querySelector('span') : null;
-      const subtitle = container ? container.querySelector('p') : null;
+      const badge = container ? (container.querySelector(':scope > span') || (heading.previousElementSibling && heading.previousElementSibling.tagName === 'SPAN' ? heading.previousElementSibling : null)) : null;
+      const subtitle = container ? (container.querySelector(':scope > p') || (heading.nextElementSibling && heading.nextElementSibling.tagName === 'P' ? heading.nextElementSibling : null)) : null;
 
       // Split elements
       const badgeItems = badge ? splitElement(badge, 'words') : [];
       const headingChars = splitElement(heading, 'chars');
       const subtitleWords = subtitle ? splitElement(subtitle, 'words') : [];
 
-      // Set initial hidden state (below baseline)
+      // Set initial hidden state
       if (badgeItems.length) {
-        gsap.set(badgeItems, { opacity: 0, yPercent: 80, force3D: true });
+        gsap.set(badgeItems, { opacity: 0, y: 15, force3D: true });
       }
       if (headingChars.length) {
-        gsap.set(headingChars, { opacity: 0, yPercent: 110, rotateZ: 2, force3D: true });
+        gsap.set(headingChars, { opacity: 0, y: 28, force3D: true });
       }
       if (subtitleWords.length) {
-        gsap.set(subtitleWords, { opacity: 0, yPercent: 90, force3D: true });
+        gsap.set(subtitleWords, { opacity: 0, y: 20, force3D: true });
       }
 
       let isRevealed = false;
@@ -169,34 +173,33 @@
         if (badgeItems.length) {
           tl.to(badgeItems, {
             opacity: 1,
-            yPercent: 0,
-            duration: 0.6,
+            y: 0,
+            duration: 0.55,
             ease: 'power3.out',
-            stagger: 0.03
+            stagger: 0.025
           }, 0);
         }
 
         if (headingChars.length) {
-          const charStagger = Math.min(0.018, 0.6 / headingChars.length);
+          const charStagger = Math.min(0.016, 0.55 / Math.max(1, headingChars.length));
           tl.to(headingChars, {
             opacity: 1,
-            yPercent: 0,
-            rotateZ: 0,
-            duration: 0.85,
+            y: 0,
+            duration: 0.75,
             ease: 'power3.out',
             stagger: charStagger
-          }, badgeItems.length ? 0.12 : 0);
+          }, badgeItems.length ? 0.08 : 0);
         }
 
         if (subtitleWords.length) {
-          const wordStagger = Math.min(0.025, 0.5 / subtitleWords.length);
+          const wordStagger = Math.min(0.02, 0.45 / Math.max(1, subtitleWords.length));
           tl.to(subtitleWords, {
             opacity: 1,
-            yPercent: 0,
-            duration: 0.75,
+            y: 0,
+            duration: 0.65,
             ease: 'power3.out',
             stagger: wordStagger
-          }, headingChars.length ? 0.25 : 0);
+          }, headingChars.length ? 0.18 : 0);
         }
       };
 
@@ -205,42 +208,41 @@
         isRevealed = false;
 
         if (badgeItems.length) {
-          gsap.to(badgeItems, { opacity: 0, yPercent: 80, duration: 0.5, ease: 'power2.in', overwrite: 'auto' });
+          gsap.to(badgeItems, { opacity: 0, y: 15, duration: 0.4, ease: 'power2.in', overwrite: 'auto' });
         }
         if (headingChars.length) {
-          gsap.to(headingChars, { opacity: 0, yPercent: 110, rotateZ: 2, duration: 0.5, ease: 'power2.in', overwrite: 'auto' });
+          gsap.to(headingChars, { opacity: 0, y: 28, duration: 0.4, ease: 'power2.in', overwrite: 'auto' });
         }
         if (subtitleWords.length) {
-          gsap.to(subtitleWords, { opacity: 0, yPercent: 90, duration: 0.5, ease: 'power2.in', overwrite: 'auto' });
+          gsap.to(subtitleWords, { opacity: 0, y: 20, duration: 0.4, ease: 'power2.in', overwrite: 'auto' });
         }
       };
 
-      // Intersection Observer with threshold & rootMargin
+      // Intersection Observer
       const targetObs = container || heading;
       const observer = new IntersectionObserver((entries) => {
         const entry = entries[0];
         if (entry.isIntersecting) {
           revealHeader();
-        } else if (entry.boundingClientRect.top > (window.innerHeight || 800) * 0.9) {
-          // Reset when scrolled back up above viewport
+        } else if (entry.boundingClientRect.top > (window.innerHeight || 800) * 0.95) {
           resetHeader();
         }
       }, {
-        threshold: [0, 0.15],
-        rootMargin: '0px 0px -8% 0px'
+        threshold: [0, 0.1],
+        rootMargin: '20px 0px -5% 0px'
       });
 
       observer.observe(targetObs);
 
-      // Check initial position on load in case section is already in view
+      // Check on load
       const checkInitialView = () => {
         const rect = targetObs.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
+        if (rect.top < window.innerHeight * 0.95 && rect.bottom > 0) {
           revealHeader();
         }
       };
 
-      setTimeout(checkInitialView, 150);
+      setTimeout(checkInitialView, 120);
     });
   }
 

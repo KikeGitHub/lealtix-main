@@ -829,9 +829,8 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .split-word {
   display: inline-block;
   white-space: nowrap;
-  vertical-align: top;
-  overflow: hidden;
-  padding-bottom: 0.08em;
+  vertical-align: baseline;
+  overflow: visible;
 }
 
 .split-char {
