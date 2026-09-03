@@ -580,12 +580,10 @@ function initSolutionsTabs() {
       const targetId = btn.dataset.target;
 
       tabButtons.forEach(b => {
-        b.classList.remove('active', 'bg-white', 'text-primary', 'shadow-soft');
-        b.classList.add('text-on-surface-variant');
+        b.classList.remove('active');
       });
 
-      btn.classList.add('active', 'bg-white', 'text-primary', 'shadow-soft');
-      btn.classList.remove('text-on-surface-variant');
+      btn.classList.add('active');
 
       tabPanels.forEach(panel => {
         panel.classList.add('hidden');
