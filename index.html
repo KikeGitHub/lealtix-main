@@ -1143,8 +1143,9 @@
 
         <!-- 3 Steps Visual Flow -->
         <div class="mt-20 text-center max-w-4xl mx-auto">
-          <h3 class="font-display font-bold text-2xl text-primary mb-2">Cero Fricción para tu Cliente</h3>
-          <p class="font-body text-sm text-on-surface-variant mb-12">Una experiencia fluida en 3 simples pasos.</p>
+          <h3 class="font-display font-bold text-2xl text-primary mb-2">Experiencia natural y sin pausas para sus
+            comensales.</h3>
+          <p class="font-body text-sm text-on-surface-variant mb-12">En 3 simples pasos.</p>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
 
@@ -1276,136 +1277,7 @@
     </section>
 
     <!-- =========================================================================
-       8. Calculadora Interactiva de ROI HORECA
-       ========================================================================= -->
-    <section id="roi-calculator" data-theme="light"
-      class="py-20 md:py-28 bg-surface-container-low border-t border-outline-variant/30">
-      <div class="max-w-container-max mx-auto px-4 sm:px-6 lg:px-8">
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-
-          <!-- Left Explainer -->
-          <div class="lg:col-span-5 space-y-6">
-            <div
-              class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-roi-orange-light text-roi-orange font-mono text-xs font-bold uppercase">
-              SIMULADOR FINANCIERO
-            </div>
-            <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-primary">
-              Calcula tu Retorno de Inversión en Tiempo Real
-            </h2>
-            <p class="font-body text-base text-on-surface-variant leading-relaxed">
-              Un aumento del 15% en la retención de clientes genera más del 50% de incremento en ganancias netas en el
-              sector gastronómico. Descubre cuánto estás dejando sobre la mesa.
-            </p>
-
-            <!-- Quick Presets -->
-            <div class="space-y-2 pt-2">
-              <p class="text-xs font-bold font-mono text-primary uppercase">Cargar Ejemplo Típico:</p>
-              <div class="flex flex-wrap gap-2">
-                <button
-                  class="roi-preset-btn text-xs font-semibold px-3 py-1.5 rounded-lg bg-white border border-outline-variant/30 text-on-surface-variant hover:border-secondary transition-all"
-                  data-visits="80" data-ticket="15">
-                  ☕ Cafetería ($15 / 80 visitas)
-                </button>
-                <button
-                  class="roi-preset-btn text-xs font-semibold px-3 py-1.5 rounded-lg bg-secondary text-white border border-secondary transition-all"
-                  data-visits="120" data-ticket="25">
-                  🍽️ Casual Dining ($25 / 120 visitas)
-                </button>
-                <button
-                  class="roi-preset-btn text-xs font-semibold px-3 py-1.5 rounded-lg bg-white border border-outline-variant/30 text-on-surface-variant hover:border-secondary transition-all"
-                  data-visits="200" data-ticket="65">
-                  🍷 Fine Dining ($65 / 200 visitas)
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Interactive Calculation Card -->
-          <div
-            class="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 border border-outline-variant/30 shadow-2xl space-y-8">
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
-              <!-- Input 1: Visitas Diarias -->
-              <div class="space-y-3">
-                <div class="flex justify-between items-center">
-                  <label for="roi-visits-input" class="text-xs font-bold text-primary font-mono uppercase">Visitas
-                    Diarias
-                    Promedio</label>
-                </div>
-                <div class="relative">
-                  <span
-                    class="absolute left-3.5 top-1/2 -translate-y-1/2 text-outline material-symbols-outlined text-lg">group</span>
-                  <input id="roi-visits-input" type="number" min="10" max="2000" value="120"
-                    class="w-full pl-10 pr-4 py-3 bg-surface rounded-xl border border-outline-variant/50 focus:border-secondary focus:ring-2 focus:ring-secondary/20 outline-none font-mono font-bold text-primary text-base" />
-                </div>
-                <input id="roi-visits-slider" type="range" min="10" max="500" value="120" class="w-full" />
-              </div>
-
-              <!-- Input 2: Ticket Promedio -->
-              <div class="space-y-3">
-                <div class="flex justify-between items-center">
-                  <label for="roi-ticket-input" class="text-xs font-bold text-primary font-mono uppercase">Ticket
-                    Promedio
-                    ($ USD / MXN)</label>
-                </div>
-                <div class="relative">
-                  <span
-                    class="absolute left-3.5 top-1/2 -translate-y-1/2 text-outline material-symbols-outlined text-lg">payments</span>
-                  <input id="roi-ticket-input" type="number" min="1" max="500" value="25"
-                    class="w-full pl-10 pr-4 py-3 bg-surface rounded-xl border border-outline-variant/50 focus:border-secondary focus:ring-2 focus:ring-secondary/20 outline-none font-mono font-bold text-primary text-base" />
-                </div>
-                <input id="roi-ticket-slider" type="range" min="5" max="150" value="25" class="w-full" />
-              </div>
-
-            </div>
-
-            <!-- Dynamic Output Card -->
-            <div
-              class="rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-primary via-primary-container to-[#071220] text-white shadow-xl relative overflow-hidden">
-              <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-secondary/30 rounded-full filter blur-2xl"></div>
-
-              <div class="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
-                <div>
-                  <span
-                    class="text-xs font-mono font-semibold text-secondary-container uppercase tracking-wider block mb-1">
-                    Ganancia Extra Mensual Proyectada
-                  </span>
-                  <div id="roi-monthly-profit"
-                    class="font-display font-extrabold text-4xl sm:text-5xl text-white tracking-tight">
-                    +$13,500
-                  </div>
-                  <div class="flex items-center gap-3 mt-2 text-xs text-outline-variant font-mono">
-                    <span id="roi-extra-visits">+540 visitas/mes</span>
-                    <span>•</span>
-                    <span id="roi-multiplier" class="text-secondary-container font-bold">104x ROI</span>
-                  </div>
-                </div>
-
-                <div
-                  class="sm:text-right border-t sm:border-t-0 sm:border-l border-white/15 pt-4 sm:pt-0 sm:pl-6 w-full sm:w-auto">
-                  <span class="text-xs font-mono text-outline-variant uppercase block">Impacto Anual</span>
-                  <div id="roi-annual-profit" class="font-display font-bold text-2xl text-roi-orange">
-                    +$162,000
-                  </div>
-                  <button class="open-demo-modal mt-3 btn-primary-roi text-xs py-2 px-4 w-full sm:w-auto">
-                    Capturar este ROI
-                  </button>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-    <!-- =========================================================================
-       9. Planes & Precios
+       8. Planes & Precios
        ========================================================================= -->
     <section id="planes" data-theme="light" class="py-20 md:py-28 bg-surface">
       <div class="max-w-container-max mx-auto px-4 sm:px-6 lg:px-8">
@@ -1717,7 +1589,7 @@
           EL MANIFIESTO LEALTIX
         </span>
         <h2 class="font-display font-extrabold text-3xl sm:text-5xl text-white tracking-tight mb-6">
-          Erradica la ceguera operativa. Escala sin fronteras.
+          Obtenga visibilidad total de su operación y expanda su modelo de negocio sin límites
           <span class="block text-[#2dd4bf] mt-2">Bienvenido a Lealtix.</span>
         </h2>
         <p class="font-body text-base sm:text-lg text-outline-variant max-w-2xl mx-auto mb-10 leading-relaxed">
@@ -1779,7 +1651,6 @@
             <h4 class="font-display font-bold text-sm text-white uppercase tracking-wider">Plataforma</h4>
             <ul class="space-y-2 text-sm">
               <li><a href="#tecnologia" class="hover:text-white transition-colors">Tecnología & Dashboard</a></li>
-              <li><a href="#roi-calculator" class="hover:text-white transition-colors">Calculadora de ROI</a></li>
               <li><a href="#planes" class="hover:text-white transition-colors">Planes y Precios</a></li>
               <li><a href="#faq" class="hover:text-white transition-colors">Preguntas Frecuentes</a></li>
             </ul>
