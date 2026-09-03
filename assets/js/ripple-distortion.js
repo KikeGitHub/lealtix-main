@@ -1,6 +1,6 @@
 /**
- * RippleDistortion WebGL Engine - Alpha Portal Mode
- * High-performance liquid ripple distortion shader that opens a dynamic liquid hole to reveal LEALTIX logo
+ * Pure WebGL Liquid Water Ripple Engine
+ * Interactive fluid water ripple waves with specular surface highlights for LEALTIX Hero
  */
 class RippleDistortion {
   constructor(container, options = {}) {
@@ -8,21 +8,14 @@ class RippleDistortion {
     if (!this.container) return;
 
     this.options = Object.assign({
-      src: 'assets/images/ImagotipoV-hero.png',
       interactiveTarget: '#inicio',
-      brushSize: 220,
-      strength: 0.35,
-      swirl: 0.85,
+      brushSize: 180,
       rings: 3.5,
-      spread: 7.0,
-      fade: 3.2,
-      spacing: 12,
-      dispersion: 0.05,
-      glint: 0.45,
-      tint: '#00c4b4',
-      tintAmount: 0.12,
-      grayscale: false,
-      highlightColor: '#ffffff'
+      spread: 6.5,
+      fade: 2.8,
+      spacing: 10,
+      glint: 0.85,
+      tint: '#2dd4bf'
     }, options);
 
     this.MAX_WAVES = 80;
@@ -53,7 +46,6 @@ class RippleDistortion {
     this.initWaves();
     this.initShaders();
     this.initBuffers();
-    this.initTexture();
     this.initEvents();
     this.resize();
 
@@ -74,16 +66,13 @@ class RippleDistortion {
       opacity: 0
     }));
     this.currentWave = 0;
-    this.offsets = new Float32Array(this.MAX_WAVES * 2);
-    this.scales = new Float32Array(this.MAX_WAVES * 2);
-    this.opacities = new Float32Array(this.MAX_WAVES);
   }
 
   hexToRGB(hex) {
     const clean = hex.replace('#', '');
     const full = clean.length === 3 ? clean.split('').map(c => c + c).join('') : clean;
     const n = parseInt(full, 16);
-    if (Number.isNaN(n)) return [1, 1, 1];
+    if (Number.isNaN(n)) return [0.176, 0.831, 0.749];
     return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
   }
 
@@ -149,7 +138,7 @@ class RippleDistortion {
       }
     `;
 
-    const compositeVS = `
+    const screenVS = `
       precision highp float;
       attribute vec2 position;
       attribute vec2 uv;
@@ -160,75 +149,38 @@ class RippleDistortion {
       }
     `;
 
-    const compositeFS = `
+    const screenFS = `
       precision highp float;
       varying vec2 vUv;
-      uniform sampler2D uTexture;
       uniform sampler2D uDisplacement;
-      uniform vec2 uResolution;
-      uniform vec2 uTextureSize;
       uniform vec2 uTexel;
       uniform vec3 uTint;
-      uniform vec3 uHighlight;
-      uniform float uStrength;
-      uniform float uSwirl;
-      uniform float uDispersion;
       uniform float uGlint;
-      uniform float uTintAmount;
-      uniform float uGrayscale;
-      const float TAU = 6.283185307179586;
-
-      vec2 coverUV(vec2 uv) {
-        vec2 safe = max(uTextureSize, vec2(1.0));
-        vec2 s = uResolution / safe;
-        vec2 scaledSize = safe * max(s.x, s.y);
-        vec2 offset = (uResolution - scaledSize) * 0.5;
-        vec2 p = (uv * uResolution - offset) / scaledSize;
-        return vec2(p.x, 1.0 - p.y);
-      }
 
       void main() {
         float amount = texture2D(uDisplacement, vUv).r;
-        
-        // Liquid Hole Mask: Only render where water waves exist
-        float alpha = smoothstep(0.012, 0.22, amount);
-        if (alpha < 0.001) {
+        if (amount < 0.002) {
           discard;
         }
 
-        vec2 base = coverUV(vUv);
-        float theta = amount * uSwirl * TAU;
-        vec2 dir = vec2(sin(theta), cos(theta));
-        vec2 push = dir * amount * uStrength;
+        float ex = texture2D(uDisplacement, vUv + vec2(uTexel.x, 0.0)).r - texture2D(uDisplacement, vUv - vec2(uTexel.x, 0.0)).r;
+        float ey = texture2D(uDisplacement, vUv + vec2(0.0, uTexel.y)).r - texture2D(uDisplacement, vUv - vec2(0.0, uTexel.y)).r;
+        vec3 normal = normalize(vec3(-ex * 32.0, -ey * 32.0, 1.0));
+        vec3 light = normalize(vec3(-0.35, 0.55, 1.0));
+        
+        float raw = pow(max(dot(normal, light), 0.0), 18.0);
+        float flatSpec = pow(max(light.z, 0.0), 18.0);
+        float glint = clamp((raw - flatSpec) / max(1.0 - flatSpec, 0.0001), 0.0, 1.0) * uGlint;
 
-        vec2 samplePos = clamp(base + push, vec2(0.002), vec2(0.998));
+        vec3 waterColor = mix(uTint, vec3(1.0), clamp(glint * 1.2, 0.0, 1.0));
+        float alpha = smoothstep(0.003, 0.16, amount) * (0.45 + glint * 0.55);
 
-        vec3 color;
-        if (uDispersion > 0.001) {
-          float split = uDispersion * 0.2;
-          color.r = texture2D(uTexture, clamp(samplePos + push * split, vec2(0.001), vec2(0.999))).r;
-          color.g = texture2D(uTexture, samplePos).g;
-          color.b = texture2D(uTexture, clamp(samplePos - push * split, vec2(0.001), vec2(0.999))).b;
-        } else {
-          color = texture2D(uTexture, samplePos).rgb;
-        }
-
-        if (uGlint > 0.001) {
-          float ex = texture2D(uDisplacement, vUv + vec2(uTexel.x, 0.0)).r - texture2D(uDisplacement, vUv - vec2(uTexel.x, 0.0)).r;
-          float ey = texture2D(uDisplacement, vUv + vec2(0.0, uTexel.y)).r - texture2D(uDisplacement, vUv - vec2(0.0, uTexel.y)).r;
-          vec3 normal = normalize(vec3(-ex * 26.0, -ey * 26.0, 1.0));
-          vec3 light = normalize(vec3(-0.35, 0.55, 1.0));
-          float raw = pow(max(dot(normal, light), 0.0), 22.0);
-          float flatSpec = pow(max(light.z, 0.0), 22.0);
-          color += uHighlight * clamp((raw - flatSpec) / max(1.0 - flatSpec, 0.0001), 0.0, 1.0) * uGlint;
-        }
-
-        gl_FragColor = vec4(color, alpha);
+        gl_FragColor = vec4(waterColor, alpha);
       }
     `;
 
     this.waveProgram = this.createProgram(waveVS, waveFS);
-    this.compositeProgram = this.createProgram(compositeVS, compositeFS);
+    this.screenProgram = this.createProgram(screenVS, screenFS);
   }
 
   initBuffers() {
@@ -259,26 +211,6 @@ class RippleDistortion {
     gl.bindFramebuffer(gl.FRAMEBUFFER, this.fbo);
     gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.fboTexture, 0);
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-  }
-
-  initTexture() {
-    const gl = this.gl;
-    this.imageTexture = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, this.imageTexture);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-
-    this.textureSize = [2400, 1350];
-    const image = new Image();
-    image.crossOrigin = 'anonymous';
-    image.onload = () => {
-      this.textureSize = [image.naturalWidth || 2400, image.naturalHeight || 1350];
-      gl.bindTexture(gl.TEXTURE_2D, this.imageTexture);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-    };
-    image.src = this.options.src;
   }
 
   resize() {
@@ -337,6 +269,11 @@ class RippleDistortion {
     };
 
     targetEl.addEventListener('pointermove', onPointerMove, { passive: true });
+
+    // Initial ambient gentle drop
+    setTimeout(() => {
+      this.setNewWave(this.width * 0.5, this.height * 0.5, 1.2);
+    }, 400);
   }
 
   animate(now) {
@@ -399,41 +336,28 @@ class RippleDistortion {
       gl.drawArrays(gl.TRIANGLES, 0, 6);
     }
 
-    // 2. Render composite pass directly over video with transparent alpha hole
+    // 2. Render water wave highlights directly over video background
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     gl.viewport(0, 0, this.width, this.height);
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
-    gl.useProgram(this.compositeProgram);
+    gl.useProgram(this.screenProgram);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
     gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, this.imageTexture);
-    gl.uniform1i(gl.getUniformLocation(this.compositeProgram, 'uTexture'), 0);
-
-    gl.activeTexture(gl.TEXTURE1);
     gl.bindTexture(gl.TEXTURE_2D, this.fboTexture);
-    gl.uniform1i(gl.getUniformLocation(this.compositeProgram, 'uDisplacement'), 1);
+    gl.uniform1i(gl.getUniformLocation(this.screenProgram, 'uDisplacement'), 0);
 
-    gl.uniform2f(gl.getUniformLocation(this.compositeProgram, 'uResolution'), this.width, this.height);
-    gl.uniform2f(gl.getUniformLocation(this.compositeProgram, 'uTextureSize'), this.textureSize[0], this.textureSize[1]);
-    gl.uniform2f(gl.getUniformLocation(this.compositeProgram, 'uTexel'), 1 / 512, 1 / 512);
+    gl.uniform2f(gl.getUniformLocation(this.screenProgram, 'uTexel'), 1 / 512, 1 / 512);
 
     const tintRGB = this.hexToRGB(this.options.tint);
-    const highlightRGB = this.hexToRGB(this.options.highlightColor);
-    gl.uniform3f(gl.getUniformLocation(this.compositeProgram, 'uTint'), tintRGB[0], tintRGB[1], tintRGB[2]);
-    gl.uniform3f(gl.getUniformLocation(this.compositeProgram, 'uHighlight'), highlightRGB[0], highlightRGB[1], highlightRGB[2]);
-    gl.uniform1f(gl.getUniformLocation(this.compositeProgram, 'uStrength'), this.options.strength);
-    gl.uniform1f(gl.getUniformLocation(this.compositeProgram, 'uSwirl'), this.options.swirl);
-    gl.uniform1f(gl.getUniformLocation(this.compositeProgram, 'uDispersion'), this.options.dispersion);
-    gl.uniform1f(gl.getUniformLocation(this.compositeProgram, 'uGlint'), this.options.glint);
-    gl.uniform1f(gl.getUniformLocation(this.compositeProgram, 'uTintAmount'), this.options.tintAmount);
-    gl.uniform1f(gl.getUniformLocation(this.compositeProgram, 'uGrayscale'), this.options.grayscale ? 1 : 0);
+    gl.uniform3f(gl.getUniformLocation(this.screenProgram, 'uTint'), tintRGB[0], tintRGB[1], tintRGB[2]);
+    gl.uniform1f(gl.getUniformLocation(this.screenProgram, 'uGlint'), this.options.glint);
 
-    const cPosLoc = gl.getAttribLocation(this.compositeProgram, 'position');
-    const cUvLoc = gl.getAttribLocation(this.compositeProgram, 'uv');
+    const cPosLoc = gl.getAttribLocation(this.screenProgram, 'position');
+    const cUvLoc = gl.getAttribLocation(this.screenProgram, 'uv');
     gl.bindBuffer(gl.ARRAY_BUFFER, this.quadBuffer);
     gl.enableVertexAttribArray(cPosLoc);
     gl.vertexAttribPointer(cPosLoc, 2, gl.FLOAT, false, 16, 0);

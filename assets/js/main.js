@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initNavbarScroll();
   initSpecularEffect();
+  initHeroRipple();
   initRoiCalculator();
   initPricingToggle();
   initDashboardSimulator();
@@ -14,6 +15,22 @@ document.addEventListener('DOMContentLoaded', () => {
   initDemoModal();
   initFaqAccordion();
 });
+
+function initHeroRipple() {
+  const container = document.getElementById('hero-ripple-container');
+  if (!container || typeof RippleDistortion === 'undefined') return;
+
+  new RippleDistortion('#hero-ripple-container', {
+    interactiveTarget: '#inicio',
+    brushSize: 180,
+    rings: 3.5,
+    spread: 6.5,
+    fade: 2.8,
+    spacing: 10,
+    glint: 0.85,
+    tint: '#2dd4bf'
+  });
+}
 
 /* ==========================================================================
    1. Navigation & Mobile Menu
