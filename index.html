@@ -140,10 +140,10 @@
   </header>
 
   <!-- =========================================================================
-       2. Hero Section
+       2. Hero Section (Pinned Static Backdrop)
        ========================================================================= -->
   <section id="inicio" data-theme="dark"
-    class="relative min-h-screen min-h-[100dvh] w-full flex flex-col justify-between pt-28 pb-6 sm:pt-36 sm:pb-8 overflow-hidden">
+    class="sticky top-0 min-h-screen min-h-[100dvh] h-screen w-full flex flex-col justify-between pt-28 pb-6 sm:pt-36 sm:pb-8 overflow-hidden z-0">
     <!-- Video Background at 100% Opacity -->
     <div class="absolute inset-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
       <video autoplay loop muted playsinline class="w-full h-full object-cover object-center opacity-100">
@@ -168,12 +168,13 @@
         <!-- Main Title (Outside container) -->
         <h1 id="hero-main-title"
           class="font-display font-extrabold text-4xl sm:text-5xl lg:text-[58px] leading-[1.12] text-[#2dd4bf] tracking-tight mb-8 will-change-transform">
-          Convierte visitas ocasionales en <span class="gradient-text">clientes habituales</span>.
+          Convierte visitas ocasionales en <span class="gradient-text">clientes habituales</span>
         </h1>
 
         <!-- CTA (Directly below Title) -->
         <div class="flex items-center justify-center w-full sm:w-auto">
-          <a href="#soluciones" class="btn-specular-header text-[#2dd4bf] text-base py-3 px-8 font-semibold rounded-full shadow-lg">
+          <a href="#soluciones"
+            class="btn-specular-header text-[#2dd4bf] text-base py-3 px-8 font-semibold rounded-full shadow-lg">
             <span>Explorar Soluciones</span>
             <span class="material-symbols-outlined text-[20px]">arrow_downward</span>
           </a>
@@ -187,7 +188,8 @@
         <!-- Value Pitch Container (GlareHover Effect + Text in #d4ffdf) -->
         <div
           class="glare-hover bg-white/25 backdrop-blur-md px-6 sm:px-10 lg:px-12 py-2 sm:py-2.5 rounded-2xl shadow-xl border border-white/30 w-full max-w-[1080px] mb-3 cursor-default">
-          <p class="font-body text-base sm:text-lg text-[#d4ffdf] font-medium leading-relaxed max-w-4xl mx-auto relative z-10">
+          <p
+            class="font-body text-base sm:text-lg text-[#d4ffdf] font-medium leading-relaxed max-w-4xl mx-auto relative z-10">
             La plataforma de lealtad inteligente para restaurantes, bares y hoteles. Recompensas instantáneas en
             <strong class="text-white">Apple Wallet</strong> y <strong class="text-white">Google Wallet</strong> sin
             obligar a descargar apps. Captura datos,
@@ -214,13 +216,12 @@
       </div>
 
     </div>
-    </div>
   </section>
 
   <!-- =========================================================================
-       3. Social Proof Marquee & Client Trust
+       3. Social Proof Marquee & Client Trust (Slides Over Hero)
        ========================================================================= -->
-  <section data-theme="light" class="py-8 bg-white border-y border-outline-variant/30 overflow-hidden">
+  <section data-theme="light" class="relative z-10 py-8 bg-white border-y border-outline-variant/30 overflow-hidden shadow-[0_-30px_60px_rgba(0,0,0,0.45)]">
     <div class="max-w-container-max mx-auto px-4 text-center mb-4">
       <p class="font-mono text-xs text-outline uppercase tracking-widest font-semibold">
         DISEÑADO PARA POTENCIAR LOS ALCANCES DE:
@@ -270,7 +271,8 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
 
         <!-- Old Way / Problem Card -->
-        <div class="glare-hover card-lift p-8 sm:p-10 rounded-2xl border-l-4 border-l-error/70 bg-white flex flex-col justify-between shadow-md">
+        <div
+          class="glare-hover card-lift p-8 sm:p-10 rounded-2xl border-l-4 border-l-error/70 bg-white flex flex-col justify-between shadow-md">
           <div class="relative z-10">
             <div class="flex items-center gap-3 mb-6">
               <div class="w-12 h-12 rounded-xl bg-error/10 text-error flex items-center justify-center">

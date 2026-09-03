@@ -111,29 +111,33 @@ class SplitTextAnimation {
   initAnimation() {
     if (typeof gsap === 'undefined') return;
 
-    if (typeof ScrollTrigger !== 'undefined') {
-      gsap.registerPlugin(ScrollTrigger);
-    }
-
     // Set initial from state (below the baseline)
     gsap.set(this.chars, {
       ...this.options.from,
       force3D: true
     });
 
-    // Entrance and Exit ScrollTrigger (al entrar y salir)
-    ScrollTrigger.create({
-      trigger: this.options.trigger,
-      start: 'top 85%',
-      end: 'bottom 15%',
-      onEnter: () => this.animateIn(),
-      onLeave: () => this.animateOut(),
-      onEnterBack: () => this.animateIn(),
-      onLeaveBack: () => this.animateOut()
-    });
+    let isInHero = true;
+
+    const handleScroll = () => {
+      const scrollY = window.scrollY || window.pageYOffset;
+      const hideThreshold = window.innerHeight * 0.20; // Triggers exit as sections slide over Hero
+
+      if (scrollY > hideThreshold && isInHero) {
+        isInHero = false;
+        this.animateOut();
+      } else if (scrollY <= hideThreshold && !isInHero) {
+        isInHero = true;
+        this.animateIn();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     // Initial entrance on page load
-    this.animateIn();
+    setTimeout(() => {
+      this.animateIn();
+    }, 120);
   }
 
   animateIn() {
@@ -153,7 +157,7 @@ class SplitTextAnimation {
       ...this.options.exitTo,
       duration: this.options.duration * 0.7,
       ease: 'power2.in',
-      stagger: (this.options.delay * 0.45) / 1000,
+      stagger: (this.options.delay * 0.4) / 1000,
       overwrite: 'auto'
     });
   }
