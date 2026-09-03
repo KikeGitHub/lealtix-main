@@ -463,6 +463,94 @@ input[type="range"]::-webkit-slider-thumb:hover {
   z-index: -1;
 }
 
+/* ==========================================================================
+   Specular Outline Header Button (Transparent Background + Specular Outline)
+   ========================================================================== */
+.btn-specular-header {
+  position: relative;
+  background: transparent !important;
+  font-family: var(--font-body);
+  font-weight: 600;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.25s ease;
+  z-index: 1;
+}
+
+/* Specular Border Beam for Header Button */
+.btn-specular-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--specular-angle, 2.4rad) at 50% 50%,
+    transparent 0deg,
+    var(--specular-btn-line, rgba(45, 212, 191, 0.95)) 40deg,
+    transparent 80deg,
+    transparent 180deg,
+    var(--specular-btn-line, rgba(45, 212, 191, 0.95)) 220deg,
+    transparent 260deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: var(--specular-intensity, 0);
+  transition: opacity 0.25s ease;
+}
+
+/* Specular Ambient Glow inside Header Button */
+.btn-specular-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at var(--specular-x, 50%) var(--specular-y, 50%),
+    var(--specular-btn-glow, rgba(45, 212, 191, 0.2)) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
+  opacity: var(--specular-intensity, 0);
+  transition: opacity 0.25s ease;
+  z-index: -1;
+}
+
+/* Dark Theme Header Button State */
+#main-nav.header-theme-dark .btn-specular-header {
+  color: #ffffff !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  --specular-btn-line: #2dd4bf;
+  --specular-btn-glow: rgba(45, 212, 191, 0.25);
+}
+
+#main-nav.header-theme-dark .btn-specular-header:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(45, 212, 191, 0.6);
+  box-shadow: 0 0 20px rgba(45, 212, 191, 0.3);
+}
+
+/* Light Theme Header Button State */
+#main-nav.header-theme-light .btn-specular-header {
+  color: #0b1c30 !important;
+  border: 1.5px solid rgba(11, 28, 48, 0.25);
+  --specular-btn-line: #00877a;
+  --specular-btn-glow: rgba(0, 106, 97, 0.15);
+}
+
+#main-nav.header-theme-light .btn-specular-header:hover {
+  background: rgba(11, 28, 48, 0.05) !important;
+  border-color: rgba(0, 106, 97, 0.6);
+  box-shadow: 0 0 20px rgba(0, 106, 97, 0.2);
+}
+
 /* Dark Theme Header State (#062e3b) */
 #main-nav.header-theme-dark {
   background-color: rgba(6, 46, 59, 0.95) !important;
