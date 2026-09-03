@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSpecularEffect();
   initHeroTitleSplitText();
   initHeroVideoFade();
+  initHeroVideoLoopBlur();
   initCtaRipple();
   initRoiCalculator();
   initPricingToggle();
@@ -17,6 +18,41 @@ document.addEventListener('DOMContentLoaded', () => {
   initDemoModal();
   initFaqAccordion();
 });
+
+function initHeroVideoLoopBlur() {
+  const video = document.querySelector('#hero-video-wrapper video');
+  if (!video) return;
+
+  const BLUR_DURATION = 1.0; // 1 second blur transition
+  const MAX_BLUR = 18; // Maximum blur in pixels
+
+  video.addEventListener('timeupdate', () => {
+    if (!video.duration || Number.isNaN(video.duration)) return;
+
+    const remaining = video.duration - video.currentTime;
+    const fromStart = video.currentTime;
+
+    let blurAmount = 0;
+
+    if (remaining < BLUR_DURATION) {
+      // Smoothly blur in during the last 1.0s (0 -> MAX_BLUR)
+      const t = 1 - (remaining / BLUR_DURATION);
+      blurAmount = Math.sin(t * Math.PI * 0.5) * MAX_BLUR;
+    } else if (fromStart < BLUR_DURATION) {
+      // Smoothly blur out during the first 1.0s of new loop (MAX_BLUR -> 0)
+      const t = 1 - (fromStart / BLUR_DURATION);
+      blurAmount = Math.sin(t * Math.PI * 0.5) * MAX_BLUR;
+    }
+
+    if (blurAmount > 0.1) {
+      video.style.filter = `blur(${blurAmount.toFixed(1)}px)`;
+      video.style.transform = `scale(${(1 + (blurAmount / MAX_BLUR) * 0.035).toFixed(3)})`;
+    } else {
+      video.style.filter = 'none';
+      video.style.transform = 'scale(1)';
+    }
+  });
+}
 
 function initHeroVideoFade() {
   const videoWrapper = document.getElementById('hero-video-wrapper');
