@@ -183,7 +183,8 @@ class RippleDistortion {
         vec2 s = uResolution / safe;
         vec2 scaledSize = safe * max(s.x, s.y);
         vec2 offset = (uResolution - scaledSize) * 0.5;
-        return (uv * uResolution - offset) / scaledSize;
+        vec2 p = (uv * uResolution - offset) / scaledSize;
+        return vec2(p.x, 1.0 - p.y);
       }
 
       void main() {
