@@ -575,24 +575,30 @@ function initSolutionsTabs() {
 
   if (!tabButtons.length) return;
 
-  tabButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetId = btn.dataset.target;
+  const activateTab = (btn) => {
+    const targetId = btn.dataset.target;
 
-      tabButtons.forEach(b => {
-        b.classList.remove('active');
-      });
-
-      btn.classList.add('active');
-
-      tabPanels.forEach(panel => {
-        panel.classList.add('hidden');
-        if (panel.id === targetId) {
-          panel.classList.remove('hidden');
-          panel.classList.add('animate-fadeIn');
-        }
-      });
+    tabButtons.forEach(b => {
+      b.classList.remove('active');
     });
+
+    btn.classList.add('active');
+
+    tabPanels.forEach(panel => {
+      panel.classList.add('hidden');
+      if (panel.id === targetId) {
+        panel.classList.remove('hidden');
+        panel.classList.add('animate-fadeIn');
+      }
+    });
+  };
+
+  tabButtons.forEach(btn => {
+    // Switch automatically on hover (mouseenter / pointerenter)
+    btn.addEventListener('mouseenter', () => activateTab(btn));
+    btn.addEventListener('pointerenter', () => activateTab(btn));
+    // Support click for mobile touchscreens
+    btn.addEventListener('click', () => activateTab(btn));
   });
 }
 
