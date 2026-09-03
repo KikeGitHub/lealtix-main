@@ -346,8 +346,8 @@ function initPricingToggle() {
   let isAnnual = false;
 
   const prices = {
-    monthly: { start: 49, pro: 129, business: 299 },
-    annual: { start: 39, pro: 99, business: 239 }
+    monthly: { start: '$500', pro: '$1,200', business: 'A medida' },
+    annual: { start: '$400', pro: '$960', business: 'A medida' }
   };
 
   toggleBtn.addEventListener('click', () => {
@@ -365,9 +365,9 @@ function initPricingToggle() {
     });
 
     setTimeout(() => {
-      if (priceStart) priceStart.textContent = `$${activeSet.start}`;
-      if (pricePro) pricePro.textContent = `$${activeSet.pro}`;
-      if (priceBusiness) priceBusiness.textContent = `$${activeSet.business}`;
+      if (priceStart) priceStart.textContent = activeSet.start;
+      if (pricePro) pricePro.textContent = activeSet.pro;
+      if (priceBusiness) priceBusiness.textContent = activeSet.business;
       
       periodLabels.forEach(lbl => {
         lbl.textContent = isAnnual ? '/mes (facturado anual)' : '/mes';
