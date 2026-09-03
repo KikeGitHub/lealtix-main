@@ -841,8 +841,12 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 
 .gradient-text {
-  display: inline !important;
+  display: inline-block;
   background: none !important;
+}
+
+.gradient-text.block {
+  display: block !important;
 }
 
 .gradient-text .split-char {
