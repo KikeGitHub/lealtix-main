@@ -24,6 +24,14 @@ function initHeroVideoCrossDissolve() {
   const videoB = document.getElementById('hero-video-b');
   if (!videoA || !videoB) return;
 
+  const PLAYBACK_RATE = 0.75; // 75% video playback speed
+  videoA.playbackRate = PLAYBACK_RATE;
+  videoB.playbackRate = PLAYBACK_RATE;
+
+  // Ensure playback rate remains 0.75 when video plays
+  videoA.addEventListener('play', () => { videoA.playbackRate = PLAYBACK_RATE; });
+  videoB.addEventListener('play', () => { videoB.playbackRate = PLAYBACK_RATE; });
+
   const DISSOLVE_TIME = 1.0; // 1 second cross-dissolve overlap
   let isDissolving = false;
   let activeVideo = videoA;
@@ -41,6 +49,7 @@ function initHeroVideoCrossDissolve() {
     if (remaining <= DISSOLVE_TIME && !isDissolving) {
       isDissolving = true;
       nextVideo.currentTime = 0;
+      nextVideo.playbackRate = PLAYBACK_RATE;
       nextVideo.play().then(() => {
         // Smooth cross-dissolve transition: nextVideo fades to 90% opacity, activeVideo fades out
         nextVideo.style.opacity = '0.9';
