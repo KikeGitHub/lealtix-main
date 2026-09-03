@@ -118,14 +118,40 @@ function initMobileMenu() {
 
 function initNavbarScroll() {
   const navbar = document.getElementById('main-nav');
+  const logoImg = document.getElementById('nav-brand-logo');
   if (!navbar) return;
 
+  let currentLogo = 'isotipo';
+
   function updateNavbarState() {
+    const scrollY = window.scrollY || window.pageYOffset;
     const navHeight = navbar.offsetHeight || 80;
     const probeY = navHeight / 2; // Exact probe line under header
+    const isHero = scrollY < (window.innerHeight * 0.3);
+
+    // Dynamic Logo Switch: Isotipo in Hero, ImagotipoH2 in other sections
+    if (logoImg) {
+      if (isHero && currentLogo !== 'isotipo') {
+        currentLogo = 'isotipo';
+        logoImg.style.opacity = '0';
+        setTimeout(() => {
+          logoImg.src = 'assets/images/isotipo.png';
+          logoImg.className = 'h-9 sm:h-10 w-auto object-contain transition-all duration-300 group-hover:scale-105';
+          logoImg.style.opacity = '1';
+        }, 120);
+      } else if (!isHero && currentLogo !== 'imagotipo') {
+        currentLogo = 'imagotipo';
+        logoImg.style.opacity = '0';
+        setTimeout(() => {
+          logoImg.src = 'assets/images/ImagotipoH2.png';
+          logoImg.className = 'h-10 sm:h-12 w-auto object-contain transition-all duration-300 group-hover:scale-105';
+          logoImg.style.opacity = '1';
+        }, 120);
+      }
+    }
 
     // If at the very top of the page (Hero section), always force dark header
-    if (window.scrollY < 80) {
+    if (scrollY < 80) {
       navbar.classList.remove('header-theme-light');
       navbar.classList.add('header-theme-dark');
       return;
