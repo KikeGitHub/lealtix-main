@@ -722,7 +722,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 
 /* ==========================================================================
-   GlareHover Effect (Diagonal Light Reflection Sweep - Smooth 20% Speed)
+   GlareHover Effect (3D Lift Elevation & Diagonal Light Reflection Sweep)
    ========================================================================== */
 .glare-hover {
   position: relative;
@@ -730,8 +730,12 @@ input[type="range"]::-webkit-slider-thumb:hover {
   --gh-angle: -45deg;
   --gh-duration: 3200ms;
   --gh-size: 260%;
-  --gh-rgba: rgba(255, 255, 255, 0.42);
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s ease;
+  --gh-rgba: rgba(255, 255, 255, 0.45);
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background-color 0.35s ease,
+              border-color 0.35s ease;
+  will-change: transform, box-shadow;
 }
 
 .glare-hover::before {
@@ -745,7 +749,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
     var(--gh-angle, -45deg),
     transparent 0%,
     transparent 38%,
-    var(--gh-rgba, rgba(255, 255, 255, 0.42)) 50%,
+    var(--gh-rgba, rgba(255, 255, 255, 0.45)) 50%,
     transparent 62%,
     transparent 100%
   );
@@ -760,6 +764,10 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 
 .glare-hover:hover {
-  border-color: rgba(255, 255, 255, 0.5) !important;
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4), 0 0 30px rgba(45, 212, 191, 0.15) !important;
+  transform: translateY(-8px) scale(1.018);
+  background-color: rgba(255, 255, 255, 0.32) !important;
+  border-color: rgba(255, 255, 255, 0.65) !important;
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.65),
+              0 0 35px rgba(45, 212, 191, 0.25),
+              inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
 }
