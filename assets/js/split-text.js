@@ -1,6 +1,6 @@
 /**
  * SplitText GSAP Kinetic Typography Controller
- * Staggered character entrance & exit animation for LEALTIX Hero Title
+ * Staggered character entrance & exit animation for LEALTIX Hero Title (Bottom to Top, Letter by Letter)
  */
 class SplitTextAnimation {
   constructor(target, options = {}) {
@@ -8,12 +8,12 @@ class SplitTextAnimation {
     if (!this.el) return;
 
     this.options = Object.assign({
-      delay: 35, // ms between chars
-      duration: 1.25,
+      delay: 28, // ms between each character
+      duration: 0.95,
       ease: 'power3.out',
-      from: { opacity: 0, y: 45, rotateX: -20 },
-      to: { opacity: 1, y: 0, rotateX: 0 },
-      exitTo: { opacity: 0, y: -40, rotateX: 20 },
+      from: { opacity: 0, yPercent: 115, y: 25 },
+      to: { opacity: 1, yPercent: 0, y: 0 },
+      exitTo: { opacity: 0, yPercent: -115, y: -25 },
       trigger: this.el
     }, options);
 
@@ -79,10 +79,9 @@ class SplitTextAnimation {
       gsap.registerPlugin(ScrollTrigger);
     }
 
-    // Set initial from state
+    // Set initial from state (below the baseline)
     gsap.set(this.chars, {
       ...this.options.from,
-      transformPerspective: 800,
       force3D: true
     });
 
@@ -118,7 +117,7 @@ class SplitTextAnimation {
       ...this.options.exitTo,
       duration: this.options.duration * 0.7,
       ease: 'power2.in',
-      stagger: (this.options.delay * 0.5) / 1000,
+      stagger: (this.options.delay * 0.45) / 1000,
       overwrite: 'auto'
     });
   }

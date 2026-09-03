@@ -773,7 +773,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 
 /* ==========================================================================
-   SplitText Kinetic Typography (Character Stagger & 3D Rise)
+   SplitText Kinetic Typography (Character Stagger & Rise From Bottom)
    ========================================================================== */
 .split-parent {
   overflow: visible;
@@ -788,11 +788,26 @@ input[type="range"]::-webkit-slider-thumb:hover {
   white-space: nowrap;
   vertical-align: baseline;
   overflow: hidden;
+  padding-bottom: 2px;
 }
 
 .split-char {
   display: inline-block;
   will-change: transform, opacity;
   backface-visibility: hidden;
-  transform-style: preserve-3d;
+}
+
+.gradient-text {
+  display: inline !important;
+  background: none !important;
+  -webkit-text-fill-color: initial !important;
+  color: inherit !important;
+}
+
+.gradient-text .split-char {
+  background: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 30%, #fb923c 70%, #f97316 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
 }
