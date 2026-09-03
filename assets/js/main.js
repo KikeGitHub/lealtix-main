@@ -573,7 +573,7 @@ function initFaqAccordion() {
    8. Specular Interactive Pointer Beam & Rim Light Controller
    ========================================================================== */
 function initSpecularEffect() {
-  const items = document.querySelectorAll('#main-nav .nav-link, .open-demo-modal, .btn-primary-roi');
+  const items = document.querySelectorAll('#main-nav .nav-link, .open-demo-modal, .btn-primary-roi, .btn-specular-header');
   if (!items.length) return;
 
   const proximityMax = 220; // Proximity threshold in pixels

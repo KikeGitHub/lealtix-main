@@ -472,6 +472,10 @@ input[type="range"]::-webkit-slider-thumb:hover {
   font-family: var(--font-body);
   font-weight: 600;
   border-radius: 9999px;
+  border: 1.5px solid rgba(45, 212, 191, 0.4);
+  color: #2dd4bf;
+  --specular-btn-line: #2dd4bf;
+  --specular-btn-glow: rgba(45, 212, 191, 0.25);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -480,6 +484,13 @@ input[type="range"]::-webkit-slider-thumb:hover {
   overflow: hidden;
   transition: all 0.25s ease;
   z-index: 1;
+}
+
+.btn-specular-header:hover {
+  background: rgba(45, 212, 191, 0.08) !important;
+  border-color: rgba(45, 212, 191, 0.8);
+  box-shadow: 0 0 25px rgba(45, 212, 191, 0.35);
+  transform: translateY(-2px);
 }
 
 /* Specular Border Beam for Header Button */
