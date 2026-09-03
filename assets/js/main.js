@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSpecularEffect();
   initHeroTitleSplitText();
   initHeroVideoFade();
-  initHeroVideoLoopBlur();
+  initHeroVideoCrossDissolve();
   initCtaRipple();
   initRoiCalculator();
   initPricingToggle();
@@ -19,39 +19,49 @@ document.addEventListener('DOMContentLoaded', () => {
   initFaqAccordion();
 });
 
-function initHeroVideoLoopBlur() {
-  const video = document.querySelector('#hero-video-wrapper video');
-  if (!video) return;
+function initHeroVideoCrossDissolve() {
+  const videoA = document.getElementById('hero-video-a');
+  const videoB = document.getElementById('hero-video-b');
+  if (!videoA || !videoB) return;
 
-  const BLUR_DURATION = 1.0; // 1 second blur transition
-  const MAX_BLUR = 18; // Maximum blur in pixels
+  const DISSOLVE_TIME = 1.0; // 1 second cross-dissolve overlap
+  let isDissolving = false;
+  let activeVideo = videoA;
+  let nextVideo = videoB;
 
-  video.addEventListener('timeupdate', () => {
-    if (!video.duration || Number.isNaN(video.duration)) return;
+  videoA.play().catch(() => {});
 
-    const remaining = video.duration - video.currentTime;
-    const fromStart = video.currentTime;
+  const checkDissolve = () => {
+    requestAnimationFrame(checkDissolve);
 
-    let blurAmount = 0;
+    if (!activeVideo.duration || Number.isNaN(activeVideo.duration)) return;
 
-    if (remaining < BLUR_DURATION) {
-      // Smoothly blur in during the last 1.0s (0 -> MAX_BLUR)
-      const t = 1 - (remaining / BLUR_DURATION);
-      blurAmount = Math.sin(t * Math.PI * 0.5) * MAX_BLUR;
-    } else if (fromStart < BLUR_DURATION) {
-      // Smoothly blur out during the first 1.0s of new loop (MAX_BLUR -> 0)
-      const t = 1 - (fromStart / BLUR_DURATION);
-      blurAmount = Math.sin(t * Math.PI * 0.5) * MAX_BLUR;
+    const remaining = activeVideo.duration - activeVideo.currentTime;
+
+    if (remaining <= DISSOLVE_TIME && !isDissolving) {
+      isDissolving = true;
+      nextVideo.currentTime = 0;
+      nextVideo.play().then(() => {
+        // Smooth cross-dissolve transition: nextVideo fades in, activeVideo fades out
+        nextVideo.style.opacity = '1';
+        activeVideo.style.opacity = '0';
+
+        setTimeout(() => {
+          activeVideo.pause();
+          activeVideo.currentTime = 0;
+          // Swap active/next roles
+          const temp = activeVideo;
+          activeVideo = nextVideo;
+          nextVideo = temp;
+          isDissolving = false;
+        }, (DISSOLVE_TIME * 1000) + 60);
+      }).catch(() => {
+        isDissolving = false;
+      });
     }
+  };
 
-    if (blurAmount > 0.1) {
-      video.style.filter = `blur(${blurAmount.toFixed(1)}px)`;
-      video.style.transform = `scale(${(1 + (blurAmount / MAX_BLUR) * 0.035).toFixed(3)})`;
-    } else {
-      video.style.filter = 'none';
-      video.style.transform = 'scale(1)';
-    }
-  });
+  requestAnimationFrame(checkDissolve);
 }
 
 function initHeroVideoFade() {
