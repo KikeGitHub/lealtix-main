@@ -1,6 +1,6 @@
 /**
- * RippleDistortion WebGL Engine
- * High-performance liquid ripple distortion shader for LEALTIX Hero
+ * RippleDistortion WebGL Engine - Alpha Portal Mode
+ * High-performance liquid ripple distortion shader that opens a dynamic liquid hole to reveal LEALTIX logo
  */
 class RippleDistortion {
   constructor(container, options = {}) {
@@ -10,21 +10,19 @@ class RippleDistortion {
     this.options = Object.assign({
       src: 'assets/images/ImagotipoV-hero.png',
       interactiveTarget: '#inicio',
-      brushSize: 180,
-      strength: 0.32,
-      swirl: 0.75,
+      brushSize: 220,
+      strength: 0.35,
+      swirl: 0.85,
       rings: 3.5,
-      spread: 6.5,
-      fade: 2.8,
+      spread: 7.0,
+      fade: 3.2,
       spacing: 12,
-      dispersion: 0.045,
-      glint: 0.35,
+      dispersion: 0.05,
+      glint: 0.45,
       tint: '#00c4b4',
       tintAmount: 0.12,
       grayscale: false,
-      highlightColor: '#ffffff',
-      trigger: 'hover',
-      idleFadeTime: 2200
+      highlightColor: '#ffffff'
     }, options);
 
     this.MAX_WAVES = 80;
@@ -37,8 +35,7 @@ class RippleDistortion {
   init() {
     this.canvas = document.createElement('canvas');
     this.canvas.className = 'ripple-distortion-canvas absolute inset-0 w-full h-full pointer-events-none';
-    this.canvas.style.opacity = '0';
-    this.canvas.style.transition = 'opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1)';
+    this.canvas.style.opacity = '1';
     this.canvas.style.zIndex = '0';
     this.container.style.position = 'absolute';
     this.container.appendChild(this.canvas);
@@ -191,6 +188,13 @@ class RippleDistortion {
 
       void main() {
         float amount = texture2D(uDisplacement, vUv).r;
+        
+        // Liquid Hole Mask: Only render where water waves exist
+        float alpha = smoothstep(0.008, 0.28, amount);
+        if (alpha < 0.001) {
+          discard;
+        }
+
         vec2 base = coverUV(vUv);
         float theta = amount * uSwirl * TAU;
         vec2 dir = vec2(sin(theta), cos(theta));
@@ -224,7 +228,7 @@ class RippleDistortion {
           color += uHighlight * clamp((raw - flatSpec) / max(1.0 - flatSpec, 0.0001), 0.0, 1.0) * uGlint;
         }
 
-        gl_FragColor = vec4(color, 1.0);
+        gl_FragColor = vec4(color, alpha);
       }
     `;
 
@@ -291,7 +295,6 @@ class RippleDistortion {
 
     this.canvas.width = this.width;
     this.canvas.height = this.height;
-    this.gl.viewport(0, 0, this.width, this.height);
   }
 
   setNewWave(x, y, power = 1) {
@@ -308,7 +311,6 @@ class RippleDistortion {
   initEvents() {
     let prevX = 0;
     let prevY = 0;
-    let fadeTimeout = null;
 
     const targetEl = typeof this.options.interactiveTarget === 'string'
       ? document.querySelector(this.options.interactiveTarget)
@@ -336,22 +338,10 @@ class RippleDistortion {
         this.setNewWave(x, y, 1);
         prevX = x;
         prevY = y;
-
-        // Reveal the logo layer on hover
-        this.canvas.style.opacity = '1';
-
-        if (fadeTimeout) clearTimeout(fadeTimeout);
-        fadeTimeout = setTimeout(() => {
-          this.canvas.style.opacity = '0';
-        }, this.options.idleFadeTime);
       }
     };
 
     targetEl.addEventListener('pointermove', onPointerMove, { passive: true });
-    targetEl.addEventListener('pointerleave', () => {
-      if (fadeTimeout) clearTimeout(fadeTimeout);
-      this.canvas.style.opacity = '0';
-    }, { passive: true });
   }
 
   animate(now) {
@@ -414,12 +404,15 @@ class RippleDistortion {
       gl.drawArrays(gl.TRIANGLES, 0, 6);
     }
 
-    // 2. Render composite pass to screen
+    // 2. Render composite pass directly over video with transparent alpha hole
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     gl.viewport(0, 0, this.width, this.height);
-    gl.disable(gl.BLEND);
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
 
     gl.useProgram(this.compositeProgram);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, this.imageTexture);
