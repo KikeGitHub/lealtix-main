@@ -1,7 +1,7 @@
 /**
  * SplitText GSAP Kinetic Typography Controller
  * Staggered character & word entrance and exit animations across all sections.
- * Automatically initializes on section titles and subtitles with ScrollTrigger bidirectional transitions.
+ * Automatically initializes on section titles and subtitles with ScrollTrigger.
  */
 
 class SplitTextAnimation {
@@ -11,10 +11,10 @@ class SplitTextAnimation {
 
     this.options = Object.assign({
       mode: 'chars', // 'chars' or 'words'
-      delay: 20, // ms between items
-      duration: 0.8,
+      delay: 18, // ms between items
+      duration: 0.85,
       ease: 'power3.out',
-      fromY: 110,
+      fromY: 105,
       trigger: this.el,
       isHero: false
     }, options);
@@ -184,11 +184,11 @@ class SplitTextAnimation {
     });
 
     const triggerEl = this.options.trigger || this.el.closest('.text-center') || this.el.closest('section') || this.el;
-    const staggerTime = Math.min(0.025, 0.6 / Math.max(1, this.items.length));
+    const staggerTime = Math.min(0.02, 0.55 / Math.max(1, this.items.length));
 
     ScrollTrigger.create({
       trigger: triggerEl,
-      start: 'top 88%',
+      start: 'top 85%',
       onEnter: () => {
         gsap.to(this.items, {
           opacity: 1,
@@ -239,23 +239,27 @@ function initAllSectionSplitText() {
   // 2. All Section Headings (H2) outside Hero
   const sectionHeadings = document.querySelectorAll('#main-content-stream section h2');
   sectionHeadings.forEach(h2 => {
-    new SplitTextAnimation(h2, {
-      mode: 'chars',
-      duration: 0.85,
-      fromY: 105,
-      trigger: h2.closest('.text-center') || h2
-    });
+    if (!h2.classList.contains('split-parent')) {
+      new SplitTextAnimation(h2, {
+        mode: 'chars',
+        duration: 0.85,
+        fromY: 105,
+        trigger: h2.closest('.text-center') || h2
+      });
+    }
   });
 
   // 3. All Section Subtitles (P) and Upper category badges in section headers
-  const sectionSubtitles = document.querySelectorAll('#main-content-stream section .text-center > p, #main-content-stream section .text-center > span.font-mono');
+  const sectionSubtitles = document.querySelectorAll('#main-content-stream section .text-center > p, #main-content-stream section .text-center > span');
   sectionSubtitles.forEach(sub => {
-    new SplitTextAnimation(sub, {
-      mode: 'words',
-      duration: 0.75,
-      fromY: 90,
-      trigger: sub.closest('.text-center') || sub
-    });
+    if (!sub.classList.contains('split-parent')) {
+      new SplitTextAnimation(sub, {
+        mode: 'words',
+        duration: 0.75,
+        fromY: 90,
+        trigger: sub.closest('.text-center') || sub
+      });
+    }
   });
 }
 

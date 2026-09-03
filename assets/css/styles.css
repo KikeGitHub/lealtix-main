@@ -822,16 +822,16 @@ input[type="range"]::-webkit-slider-thumb:hover {
   overflow: visible;
   display: inline-block;
   white-space: normal;
-  word-wrap: break-word;
-  will-change: transform, opacity;
+.split-parent {
+  overflow: visible;
 }
 
 .split-word {
   display: inline-block;
   white-space: nowrap;
-  vertical-align: baseline;
+  vertical-align: top;
   overflow: hidden;
-  padding-bottom: 2px;
+  padding-bottom: 0.08em;
 }
 
 .split-char {
