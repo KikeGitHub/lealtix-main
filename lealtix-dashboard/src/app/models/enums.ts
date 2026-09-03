@@ -1,0 +1,23 @@
+export enum PromoType {
+  DISCOUNT = 'DISCOUNT',
+  AMOUNT = 'AMOUNT',
+  BOGO = 'BOGO',
+  FREE_ITEM = 'FREE_ITEM',
+  CUSTOM = 'CUSTOM'
+}
+
+export enum CampaignStatus {
+  DRAFT = 'DRAFT',
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+  SCHEDULED = 'SCHEDULED'
+}
+
+export enum RewardType {
+  NONE = 'NONE',
+  PERCENT_DISCOUNT = 'PERCENT_DISCOUNT',
+  FIXED_AMOUNT = 'FIXED_AMOUNT',
+  FREE_PRODUCT = 'FREE_PRODUCT',
+  BUY_X_GET_Y = 'BUY_X_GET_Y',
+  CUSTOM = 'CUSTOM'
+}

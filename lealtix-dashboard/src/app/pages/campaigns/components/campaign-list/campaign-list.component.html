@@ -1,0 +1,182 @@
+<!-- Banner persistente de bienvenida -->
+<div class="mb-4" *ngIf="showWelcomeBanner()">
+    <div class="welcome-banner">
+        <div class="flex align-items-center justify-content-between flex-wrap gap-3">
+            <div class="flex align-items-start gap-3 flex-1">
+                <span class="text-4xl" style="line-height: 1;">🚀</span>
+                <div>
+                    <div class="font-semibold text-xl mb-2 welcome-banner-title">{{ bannerMessage().title }}</div>
+                    <div class="line-height-3 welcome-banner-text">{{ bannerMessage().description }}</div>
+                </div>
+            </div>
+            <p-button
+                [label]="bannerMessage().buttonText"
+                icon="pi pi-arrow-right"
+                iconPos="right"
+                severity="warn"
+                (onClick)="navigateToWelcomeCampaign()"
+                styleClass="white-space-nowrap">
+            </p-button>
+        </div>
+    </div>
+</div>
+
+<p-toolbar styleClass="mb-6">
+    <ng-template #start>
+        <p-button label="Nueva Campaña" icon="pi pi-plus" severity="secondary" class="mr-2" styleClass="text-sm p-button-sm" (onClick)="createNewCampaign()" />
+        <p-button severity="secondary" label="Eliminar" icon="pi pi-trash" outlined (onClick)="deleteSelectedCampaigns()"
+            [disabled]="!selectedCampaigns || !selectedCampaigns.length" />
+    </ng-template>
+    <ng-template #end>
+        <p-button
+            [label]="showOnlyIncomplete ? 'Ver Todas' : 'Solo Incompletas'"
+            [icon]="showOnlyIncomplete ? 'pi pi-eye' : 'pi pi-filter'"
+            [badge]="getIncompleteCount().toString()"
+            [outlined]="!showOnlyIncomplete"
+            severity="contrast"
+            class="mr-2"
+            (onClick)="toggleIncompleteFilter()"
+            aria-label="Filtrar campañas incompletas" />
+        <p-button icon="pi pi-refresh" severity="secondary" (onClick)="refreshData()" aria-label="Refrescar datos" />
+    </ng-template>
+</p-toolbar>
+
+<p-table [value]="filteredCampaigns()" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5, 10, 20]" [loading]="loading()" responsiveLayout="scroll" [globalFilterFields]="['title', 'subtitle', 'description']" [rowHover]="true" [tableStyle]="{ 'min-width': '70rem' }" [(selection)]="selectedCampaigns" dataKey="id">
+    <ng-template pTemplate="caption">
+        <div class="flex items-center justify-between">
+            <h5 class="m-0">Gestión de Campañas</h5>
+            <p-iconfield>
+                <p-inputicon styleClass="pi pi-search" />
+                <input pInputText type="text" (input)="onSearchChange($event)" [(ngModel)]="searchText" />
+            </p-iconfield>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 3rem">
+                <p-tableHeaderCheckbox />
+            </th>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{ col.header }}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+            <th style="min-width: 10rem">Acciones</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+        <tr [ngClass]="{ 'in-use-row': item.campaign.template?.inUse }">
+            <td style="width: 3rem">
+                <p-tableCheckbox [value]="item.campaign" [disabled]="item.campaign.template?.inUse" />
+            </td>
+            <td style="min-width: 14rem">
+                <div class="flex flex-column gap-2">
+                    <div class="flex items-center gap-2">
+                        <span class="font-semibold text-900 line-height-3 text-base">{{ item.campaign.title }}</span>
+                        <p-chip *ngIf="item.campaign.template?.inUse" label="En uso" styleClass="p-chip-outlined text-xs" size="small"></p-chip>
+                        <!-- Badge de validación -->
+                        <span
+                            class="validation-badge"
+                            [ngClass]="{
+                                'badge-complete': item.validation.configComplete,
+                                'badge-incomplete': !item.validation.configComplete
+                            }"
+                            [pTooltip]="getTooltipMessage(item.validation)"
+                            tooltipPosition="top">
+                            <i [class]="item.validation.configComplete ? 'pi pi-check-circle' : 'pi pi-exclamation-triangle'"></i>
+                            <span class="badge-text">
+                                {{ item.validation.configComplete ? 'Completa' : item.validation.missingItems.length + ' pendiente(s)' }}
+                            </span>
+                        </span>
+                    </div>
+                    <small class="text-600 line-height-2 font-normal" *ngIf="item.campaign.subtitle">{{ item.campaign.subtitle }}</small>
+                </div>
+            </td>
+            <td style="min-width: 8rem">
+                <p-chip [label]="item.campaign.template?.defaultPromoType || 'N/A'" styleClass="p-chip-outlined" size="small"> </p-chip>
+            </td>
+            <td style="min-width: 6rem">
+                <p-chip [label]="getStatusLabel(item.campaign.status)" [style]="getStatusStyle(item.campaign.status)" size="small"> </p-chip>
+            </td>
+            <td style="min-width: 10rem">
+                <div class="flex flex-column text-sm" *ngIf="item.campaign.startDate || item.campaign.endDate">
+                    <span *ngIf="item.campaign.startDate" class="text-700">
+                        <i class="pi pi-calendar mr-1 text-xs"></i>
+                        {{ item.campaign.startDate | date: 'dd/MM/yy' }}
+                    </span>
+                    <span *ngIf="item.campaign.endDate" class="text-500 text-xs">
+                        hasta {{ item.campaign.endDate | date: 'dd/MM/yy' }}
+                    </span>
+                </div>
+                <span *ngIf="!item.campaign.startDate && !item.campaign.endDate" class="text-500">-</span>
+            </td>
+            <td style="min-width: 10rem">
+                <div class="flex flex-wrap gap-1" *ngIf="item.campaign.channels?.length">
+                    <p-chip *ngFor="let channel of item.campaign.channels.slice(0, 2)" [label]="channel" size="small" styleClass="p-chip-outlined text-xs"> </p-chip>
+                    <span *ngIf="item.campaign.channels.length > 2" class="text-xs text-500"> +{{ item.campaign.channels.length - 2 }} </span>
+                </div>
+                <span *ngIf="!item.campaign.channels?.length" class="text-500">-</span>
+            </td>
+            <td>
+                <div class="flex gap-1">
+                    <p-button icon="pi pi-pencil" size="small" [rounded]="true" [outlined]="true" severity="secondary" (onClick)="editCampaign(item.campaign)" aria-label="Editar campaña" [disabled]="item.campaign.template?.inUse" />
+                    <p-button icon="pi pi-trash" size="small" [rounded]="true" [outlined]="true" severity="danger" (onClick)="deleteCampaign(item.campaign)" aria-label="Eliminar campaña" [disabled]="item.campaign.template?.inUse" />
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td [attr.colspan]="columns.length + 2" class="py-8">
+                <div class="flex flex-col items-center justify-center gap-2">
+                    <h3 class="text-2xl font-semibold text-900 mb-1 text-center">No se encontraron campañas</h3>
+                    <p class="text-500 mb-4 text-center" style="max-width: 350px;">
+                        {{ searchText || selectedStatus ? 'No hay campañas que coincidan con los filtros.' : 'Crea tu primera campaña para comenzar.' }}
+                    </p>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-confirmDialog header="Confirmar eliminación"></p-confirmDialog>
+
+<!-- Campaign Dialog -->
+<app-campaign-dialog
+    #campaignDialogRef
+    [(visible)]="campaignDialog"
+    [campaign]="selectedCampaign()"
+    [submitted]="submitted()"
+    [isEditMode]="isEditMode()"
+    (save)="saveCampaign(campaignDialogRef)"
+    (hide)="hideCampaignDialog()">
+</app-campaign-dialog>
+
+<!-- Confetti Component for Welcome Campaign Celebration -->
+<app-confetti></app-confetti>
+
+<!-- Welcome Campaign Activated Dialog -->
+<p-dialog
+  [(visible)]="showWelcomeConfetti"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '30rem', textAlign: 'center', borderRadius: '1.5rem' }"
+  [contentStyle]="{ padding: '2.5rem 2rem' }"
+>
+  <div class="flex flex-col items-center gap-4">
+    <div style="font-size: 3.5rem;">🎉</div>
+    <h2 class="font-bold text-2xl text-primary-500 m-0">¡Campaña de bienvenida activada!</h2>
+    <p class="text-lg text-700 m-0">
+      Tu campaña ya está lista. Ahora puedes registrar clientes para que reciban este beneficio automáticamente.
+    </p>
+        <div class="mt-3 w-full">
+            <p-button
+                label="¡Entendido!"
+                severity="success"
+                styleClass="w-full"
+                (onClick)="closeWelcomeConfetti()"
+            ></p-button>
+        </div>
+  </div>
+</p-dialog>
+
+<p-toast></p-toast>

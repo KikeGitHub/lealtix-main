@@ -1,0 +1,589 @@
+<div class="redeem-container">
+  <div class="redeem-wrapper">
+
+    <!-- HEADER -->
+    <div class="redeem-header">
+      <h1>
+        <a href="https://full-accountability-big-rug.trycloudflare.com" target="_blank" rel="noopener noreferrer" class="lealtix-link">
+          🎟️ LEALTIX
+        </a>
+      </h1>
+      <p class="subtitle">Redención de Cupones</p>
+    </div>
+
+    <!-- LOADING STATE -->
+    @if (pageState === 'loading') {
+      <div class="loading-container">
+        <p-progressSpinner
+          styleClass="spinner-custom"
+          strokeWidth="4"
+          fill="transparent"
+          animationDuration="1s">
+        </p-progressSpinner>
+        <p class="loading-text">Validando cupón...</p>
+      </div>
+    }
+
+    <!-- VALID COUPON STATE -->
+    @if (pageState === 'valid') {
+    <p-card styleClass="coupon-card valid-card">
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <i class="pi pi-check-circle success-icon"></i>
+          <h2>CUPÓN VÁLIDO</h2>
+          <p class="view-mode-text" *ngIf="!isStaffView">Vista de Cliente</p>
+        </div>
+      </ng-template>
+
+      <div class="coupon-content">
+        <div class="status-row">
+          <span class="label">Estado:</span>
+          <p-tag
+            [value]="getStatusText(validationData?.status)"
+            [severity]="getStatusSeverity(validationData?.status)"
+            styleClass="status-tag">
+          </p-tag>
+        </div>
+
+        <p-divider></p-divider>
+
+        <div class="info-section">
+          <!-- Cliente: solo visible para staff -->
+          @if (isStaffView) {
+          <div class="info-row">
+            <i class="pi pi-user icon"></i>
+            <div class="info-content">
+              <span class="info-label">Cliente</span>
+              <span class="info-value">{{ validationData?.customerName }}</span>
+            </div>
+          </div>
+          }
+
+          <div class="benefit-box">
+            <i class="pi pi-gift"></i>
+            <div class="benefit-content">
+              <span class="benefit-label">Beneficio</span>
+              <h3 class="benefit-text">{{ validationData?.benefit || validationData?.rewardDescription }}</h3>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <i class="pi pi-tag icon"></i>
+            <div class="info-content">
+              <span class="info-label">Campaña</span>
+              <span class="info-value">{{ validationData?.campaignTitle }}</span>
+            </div>
+          </div>
+
+          @if (validationData?.campaignDescription) {
+          <div class="info-row">
+            <i class="pi pi-info-circle icon"></i>
+            <div class="info-content">
+              <span class="info-label">Descripción</span>
+              <span class="info-value">{{ validationData?.campaignDescription }}</span>
+            </div>
+          </div>
+          }
+
+          @if (validationData?.couponType && validationData?.couponValue) {
+          <div class="info-row">
+            <i class="pi pi-percentage icon"></i>
+            <div class="info-content">
+              <span class="info-label">Tipo de Descuento</span>
+              <span class="info-value">
+                @if (validationData?.couponType === 'PERCENT_DISCOUNT' || validationData?.rewardType === 'PERCENT_DISCOUNT') {
+                  {{ validationData?.couponValue || validationData?.numericValue }}% de descuento
+                }
+                @if (validationData?.couponType === 'FIXED_AMOUNT' || validationData?.rewardType === 'FIXED_AMOUNT') {
+                  ${{ validationData?.couponValue || validationData?.numericValue }} de descuento
+                }
+                @if (validationData?.couponType === 'FREE_ITEM' || validationData?.rewardType === 'FREE_ITEM') {
+                  Artículo gratis
+                }
+              </span>
+            </div>
+          </div>
+          }
+
+          @if (rewardData?.minPurchaseAmount || validationData?.minRedemptionAmount || validationData?.minPurchaseAmount) {
+          <div class="info-row">
+            <i class="pi pi-shopping-cart icon"></i>
+            <div class="info-content">
+              <span class="info-label">Compra Mínima</span>
+              <span class="info-value">
+                ${{ (rewardData?.minPurchaseAmount || validationData?.minPurchaseAmount || validationData?.minRedemptionAmount || 0).toFixed(2) }}
+              </span>
+            </div>
+          </div>
+          }
+
+          @if (rewardData?.usageLimit || validationData?.usageLimit) {
+          <div class="info-row">
+            <i class="pi pi-replay icon"></i>
+            <div class="info-content">
+              <span class="info-label">Límite de Uso</span>
+              <span class="info-value">{{ rewardData?.usageCount || validationData?.usageCount || 0 }} / {{ rewardData?.usageLimit || validationData?.usageLimit }}</span>
+            </div>
+          </div>
+          }
+
+          <div class="info-row">
+            <i class="pi pi-calendar icon"></i>
+            <div class="info-content">
+              <span class="info-label">Válido hasta</span>
+              <span class="info-value">{{ formatDate(validationData?.expiresAt) }}</span>
+            </div>
+          </div>
+
+          @if (validationData?.couponCode) {
+          <div class="info-row">
+            <i class="pi pi-ticket icon"></i>
+            <div class="info-content">
+              <span class="info-label">Código</span>
+              <span class="info-value code">{{ validationData?.couponCode }}</span>
+            </div>
+          </div>
+          }
+        </div>
+
+        <!-- Mensaje para clientes -->
+        @if (!isStaffView) {
+        <div class="client-message">
+          <p-message
+            severity="info"
+            text="Muestra este cupón al personal del negocio para redimirlo."
+            styleClass="info-message">
+          </p-message>
+        </div>
+        }
+      </div>
+
+      <!-- Footer: botón solo visible para staff -->
+      @if (isStaffView) {
+      <ng-template pTemplate="footer">
+        <p-button
+          label="🎁 REDIMIR CUPÓN"
+          styleClass="redeem-button"
+          (onClick)="onRedeemCoupon()"
+          [disabled]="isRedeeming">
+        </p-button>
+      </ng-template>
+      }
+    </p-card>
+    }
+    <!-- REDEEMING STATE -->
+    @if (pageState === 'redeeming') {
+    <p-card styleClass="coupon-card redeeming-card">
+      <div class="loading-container">
+        <p-progressSpinner
+          styleClass="spinner-custom"
+          strokeWidth="4"
+          fill="transparent"
+          animationDuration="1s">
+        </p-progressSpinner>
+        <p class="loading-text">Redimiendo cupón...</p>
+        <p class="loading-subtext">Por favor espere</p>
+      </div>
+    </p-card>
+    }
+
+    <!-- SUCCESS STATE -->
+    @if (pageState === 'success') {
+    <p-card styleClass="coupon-card success-card">
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <i class="pi pi-check-circle success-icon large"></i>
+          <h2>¡CUPÓN REDIMIDO!</h2>
+        </div>
+      </ng-template>
+
+      <div class="coupon-content">
+        <p-message
+          severity="success"
+          [text]="redemptionData?.message || 'El cupón se ha redimido exitosamente'"
+          styleClass="success-message">
+        </p-message>
+
+        <p-divider></p-divider>
+
+        <div class="info-section">
+          <div class="info-row">
+            <i class="pi pi-user icon"></i>
+            <div class="info-content">
+              <span class="info-label">Cliente</span>
+              <span class="info-value">{{ redemptionData?.customerName }}</span>
+            </div>
+          </div>
+
+          <div class="benefit-box success">
+            <i class="pi pi-gift"></i>
+            <div class="benefit-content">
+              <span class="benefit-label">Beneficio aplicado</span>
+              <h3 class="benefit-text">{{ redemptionData?.benefit }}</h3>
+            </div>
+          </div>
+
+          @if (redemptionData?.originalAmount) {
+          <div class="info-row">
+            <i class="pi pi-shopping-cart icon"></i>
+            <div class="info-content">
+              <span class="info-label">Monto Original</span>
+              <span class="info-value">${{ redemptionData?.originalAmount?.toFixed(2) }}</span>
+            </div>
+          </div>
+          }
+
+          @if (redemptionData?.discountAmount) {
+          <div class="info-row">
+            <i class="pi pi-tag icon"></i>
+            <div class="info-content">
+              <span class="info-label">Descuento Aplicado</span>
+              <span class="info-value discount-value">-${{ redemptionData?.discountAmount?.toFixed(2) }}</span>
+            </div>
+          </div>
+          }
+
+          @if (redemptionData?.finalAmount) {
+          <div class="info-row final-amount">
+            <i class="pi pi-money-bill icon"></i>
+            <div class="info-content">
+              <span class="info-label">Total a Pagar</span>
+              <span class="info-value final-value">${{ redemptionData?.finalAmount?.toFixed(2) }}</span>
+            </div>
+          </div>
+          }
+
+          <div class="info-row">
+            <i class="pi pi-calendar icon"></i>
+            <div class="info-content">
+              <span class="info-label">Redimido el</span>
+              <span class="info-value">{{ formatDate(redemptionData?.redeemedAt) }}</span>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <i class="pi pi-user-edit icon"></i>
+            <div class="info-content">
+              <span class="info-label">Redimido por</span>
+              <span class="info-value">{{ redemptionData?.redeemedBy }}</span>
+            </div>
+          </div>
+
+          @if (redemptionData?.redemptionId) {
+          <div class="info-row">
+            <i class="pi pi-hashtag icon"></i>
+            <div class="info-content">
+              <span class="info-label">ID de Redención</span>
+              <span class="info-value code">{{ redemptionData?.redemptionId }}</span>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+
+      <ng-template pTemplate="footer">
+        <p-button
+          label="Validar otro cupón"
+          styleClass="secondary-button"
+          icon="pi pi-refresh"
+          (onClick)="onValidateAnother()">
+        </p-button>
+      </ng-template>
+    </p-card>
+    }
+
+    <!-- ALREADY REDEEMED STATE -->
+    @if (pageState === 'redeemed') {
+    <p-card styleClass="coupon-card error-card">
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <i class="pi pi-times-circle error-icon"></i>
+          <h2>CUPÓN YA REDIMIDO</h2>
+        </div>
+      </ng-template>
+
+      <div class="coupon-content">
+        <p-message
+          severity="error"
+          text="Este cupón ya fue utilizado anteriormente"
+          styleClass="error-message">
+        </p-message>
+
+        <p-divider></p-divider>
+
+        <div class="info-section">
+          <div class="status-row">
+            <span class="label">Estado:</span>
+            <p-tag
+              [value]="getStatusText(validationData?.status)"
+              severity="danger"
+              styleClass="status-tag">
+            </p-tag>
+          </div>
+
+          @if (validationData?.redeemedAt) {
+          <div class="info-row">
+            <i class="pi pi-calendar icon"></i>
+            <div class="info-content">
+              <span class="info-label">Fecha de redención</span>
+              <span class="info-value">{{ formatDate(validationData?.redeemedAt) }}</span>
+            </div>
+          </div>
+          }
+
+          @if (validationData?.campaignTitle) {
+          <div class="info-row">
+            <i class="pi pi-tag icon"></i>
+            <div class="info-content">
+              <span class="info-label">Campaña</span>
+              <span class="info-value">{{ validationData?.campaignTitle }}</span>
+            </div>
+          </div>
+          }
+
+          @if (validationData?.couponCode) {
+          <div class="info-row">
+            <i class="pi pi-ticket icon"></i>
+            <div class="info-content">
+              <span class="info-label">Código</span>
+              <span class="info-value code">{{ validationData?.couponCode }}</span>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </p-card>
+    }
+
+    <!-- EXPIRED STATE -->
+    @if (pageState === 'expired') {
+    <p-card styleClass="coupon-card warning-card">
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <i class="pi pi-clock error-icon"></i>
+          <h2>CUPÓN EXPIRADO</h2>
+        </div>
+      </ng-template>
+
+      <div class="coupon-content">
+        <p-message
+          severity="warn"
+          text="Este cupón ya no es válido"
+          styleClass="warning-message">
+        </p-message>
+
+        <p-divider></p-divider>
+
+        <div class="info-section">
+          <div class="status-row">
+            <span class="label">Estado:</span>
+            <p-tag
+              [value]="getStatusText(validationData?.status)"
+              severity="warn"
+              styleClass="status-tag">
+            </p-tag>
+          </div>
+
+          @if (validationData?.expiresAt) {
+          <div class="info-row">
+            <i class="pi pi-calendar icon"></i>
+            <div class="info-content">
+              <span class="info-label">Fecha de expiración</span>
+              <span class="info-value">{{ formatDate(validationData?.expiresAt) }}</span>
+            </div>
+          </div>
+          }
+
+          @if (validationData?.campaignTitle) {
+          <div class="info-row">
+            <i class="pi pi-tag icon"></i>
+            <div class="info-content">
+              <span class="info-label">Campaña</span>
+              <span class="info-value">{{ validationData?.campaignTitle }}</span>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </p-card>
+    }
+
+    <!-- NOT FOUND STATE -->
+    @if (pageState === 'not-found') {
+    <p-card styleClass="coupon-card error-card">
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <i class="pi pi-exclamation-triangle error-icon"></i>
+          <h2>CUPÓN NO ENCONTRADO</h2>
+        </div>
+      </ng-template>
+
+      <div class="coupon-content">
+        <p-message
+          severity="error"
+          text="El cupón no existe o no es válido para este negocio"
+          styleClass="error-message">
+        </p-message>
+
+        <p-divider></p-divider>
+
+        <div class="help-text">
+          <p><i class="pi pi-info-circle"></i> Por favor, verifica:</p>
+          <ul>
+            <li>El código QR está completo y es legible</li>
+            <li>El cupón pertenece a este negocio</li>
+            <li>El enlace no está corrupto</li>
+          </ul>
+        </div>
+      </div>
+    </p-card>
+    }
+
+    <!-- ERROR STATE -->
+    @if (pageState === 'error') {
+    <p-card styleClass="coupon-card error-card">
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <i class="pi pi-times-circle error-icon"></i>
+          <h2>ERROR</h2>
+        </div>
+      </ng-template>
+
+      <div class="coupon-content">
+        <p-message
+          severity="error"
+          [text]="errorMessage || 'Ocurrió un error inesperado'"
+          styleClass="error-message">
+        </p-message>
+
+        <p-divider></p-divider>
+
+        <div class="help-text">
+          <p>Por favor, intenta nuevamente o contacta al administrador.</p>
+        </div>
+      </div>
+
+      <ng-template pTemplate="footer">
+        <p-button
+          label="Intentar nuevamente"
+          styleClass="secondary-button"
+          icon="pi pi-refresh"
+          (onClick)="onValidateAnother()">
+        </p-button>
+      </ng-template>
+    </p-card>
+    }
+
+  </div>
+</div>
+
+<!-- Confirmation Dialog -->
+<p-confirmDialog></p-confirmDialog>
+
+<!-- Amount Input Dialog -->
+<p-dialog
+  header="Ingrese el Monto de la Compra"
+  [(visible)]="showAmountDialog"
+  [modal]="true"
+  [closable]="true"
+  [style]="{width: '90vw', maxWidth: '450px'}"
+  (onHide)="cancelAmountDialog()">
+
+  <div class="amount-dialog-content">
+    <p class="dialog-description">
+      <i class="pi pi-info-circle"></i>
+      Para redimir este cupón, ingrese el monto total de la compra.
+    </p>
+
+    <div class="amount-info">
+      @if (minRedemptionAmount > 0) {
+      <p-message
+        severity="info"
+        [text]="'Compra mínima requerida: $' + minRedemptionAmount.toFixed(2)"
+        styleClass="w-full">
+      </p-message>
+      }
+    </div>
+
+    <div class="field">
+      <label for="originalAmount" class="amount-label">
+        <i class="pi pi-money-bill"></i> Monto de la Compra
+      </label>
+      <p-inputNumber
+        id="originalAmount"
+        [(ngModel)]="originalAmount"
+        mode="decimal"
+        prefix="$"
+        locale="es-MX"
+        [minFractionDigits]="2"
+        [maxFractionDigits]="2"
+        placeholder="0.00"
+        styleClass="w-full"
+        inputStyleClass="w-full">
+      </p-inputNumber>
+      @if ((originalAmount ?? 0) > 0 && (originalAmount ?? 0) < minRedemptionAmount) {
+      <small class="text-red-600 mt-2 block">
+        <i class="pi pi-exclamation-triangle"></i>
+        El monto debe ser al menos ${{ minRedemptionAmount.toFixed(2) }} para usar este cupón
+      </small>
+      }
+    </div>
+
+    @if ((originalAmount ?? 0) >= minRedemptionAmount && rewardData) {
+    <div class="preview-info">
+      <p-divider></p-divider>
+      <div class="preview-row">
+        <span class="preview-label">Tipo de descuento:</span>
+        <span class="preview-value">
+          @if (rewardData.rewardType === 'PERCENT_DISCOUNT') {
+            {{ rewardData.numericValue }}% de descuento
+          }
+          @if (rewardData.rewardType === 'FIXED_AMOUNT') {
+            ${{ rewardData.numericValue.toFixed(2) }} de descuento fijo
+          }
+        </span>
+      </div>
+      <div class="preview-row">
+        <span class="preview-label">Descuento aplicado:</span>
+        <span class="preview-value discount-preview">
+          @if (rewardData.rewardType === 'PERCENT_DISCOUNT') {
+            -${{ ((originalAmount ?? 0) * rewardData.numericValue / 100).toFixed(2) }}
+          }
+          @if (rewardData.rewardType === 'FIXED_AMOUNT') {
+            -${{ Math.min(rewardData.numericValue, (originalAmount ?? 0)).toFixed(2) }}
+          }
+        </span>
+      </div>
+      <div class="preview-row final">
+        <span class="preview-label"><strong>Total a pagar:</strong></span>
+        <span class="preview-value final-preview">
+          @if (rewardData.rewardType === 'PERCENT_DISCOUNT') {
+            <strong>${{ ((originalAmount ?? 0) - ((originalAmount ?? 0) * rewardData.numericValue / 100)).toFixed(2) }}</strong>
+          }
+          @if (rewardData.rewardType === 'FIXED_AMOUNT') {
+            <strong>${{ ((originalAmount ?? 0) - Math.min(rewardData.numericValue, (originalAmount ?? 0))).toFixed(2) }}</strong>
+          }
+        </span>
+      </div>
+    </div>
+    }
+  </div>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Cancelar"
+      icon="pi pi-times"
+      styleClass="p-button-text"
+      (onClick)="cancelAmountDialog()">
+    </p-button>
+    <p-button
+      label="Continuar"
+      icon="pi pi-check"
+      (onClick)="confirmRedemption()"
+      [disabled]="(originalAmount ?? 0) < minRedemptionAmount">
+    </p-button>
+  </ng-template>
+</p-dialog>
+
+<!-- Toast Messages -->
+<p-toast position="top-center"></p-toast>
