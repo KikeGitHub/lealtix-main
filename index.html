@@ -146,7 +146,7 @@
   <!-- =========================================================================
        2. Hero Section
        ========================================================================= -->
-  <section id="inicio" class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+  <section id="inicio" class="relative pt-32 pb-10 md:pt-40 md:pb-12 overflow-hidden">
     <!-- Video Background at 100% Opacity -->
     <div class="absolute inset-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
       <video autoplay loop muted playsinline class="w-full h-full object-cover object-center opacity-100">
@@ -172,7 +172,7 @@
         </h1>
 
         <!-- CTAs (Directly below Title) -->
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto mb-8">
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
           <button class="open-demo-modal btn-primary-roi text-base py-4 px-8 shadow-lg">
             <span>Agenda una Demo</span>
             <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
@@ -182,29 +182,34 @@
           </a>
         </div>
 
-        <!-- Value Pitch Frosted Glass Container (Directly above bottom texts) -->
-        <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-xl border border-white/80 w-full max-w-3xl mb-6">
-          <p class="font-body text-lg sm:text-xl text-on-surface-variant leading-relaxed">
-            La plataforma de lealtad inteligente para restaurantes, bares y hoteles. Recompensas instantáneas en
-            <strong>Apple Wallet</strong> y <strong>Google Wallet</strong> sin obligar a descargar apps. Captura datos,
-            automatiza visitas y multiplica el ticket promedio.
-          </p>
-        </div>
+        <!-- Bottom Glued Group (Container + Texts pushed down near hero bottom edge) -->
+        <div class="mt-20 md:mt-28 w-full flex flex-col items-center">
 
-        <!-- Proof & Trust Badges (Bottom texts of Hero) -->
-        <div class="flex flex-wrap items-center justify-center gap-6 mt-4 w-full text-[#cccccc]">
-          <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined fill text-secondary text-xl">verified</span>
-            <span class="text-xs sm:text-sm font-medium text-[#cccccc]">Sin descargar apps</span>
+          <!-- Value Pitch Frosted Glass Container -->
+          <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-xl border border-white/80 w-full max-w-3xl mb-3">
+            <p class="font-body text-lg sm:text-xl text-on-surface-variant leading-relaxed">
+              La plataforma de lealtad inteligente para restaurantes, bares y hoteles. Recompensas instantáneas en
+              <strong>Apple Wallet</strong> y <strong>Google Wallet</strong> sin obligar a descargar apps. Captura datos,
+              automatiza visitas y multiplica el ticket promedio.
+            </p>
           </div>
-          <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined fill text-secondary text-xl">point_of_sale</span>
-            <span class="text-xs sm:text-sm font-medium text-[#cccccc]">Compatible con tu POS</span>
+
+          <!-- Proof & Trust Badges (Tightly glued right below container) -->
+          <div class="flex flex-wrap items-center justify-center gap-6 mt-1 w-full text-[#cccccc]">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined fill text-secondary text-xl">verified</span>
+              <span class="text-xs sm:text-sm font-medium text-[#cccccc]">Sin descargar apps</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined fill text-secondary text-xl">point_of_sale</span>
+              <span class="text-xs sm:text-sm font-medium text-[#cccccc]">Compatible con tu POS</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined fill text-roi-orange text-xl">bolt</span>
+              <span class="text-xs sm:text-sm font-medium text-[#cccccc]">Activación en 24h</span>
+            </div>
           </div>
-          <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined fill text-roi-orange text-xl">bolt</span>
-            <span class="text-xs sm:text-sm font-medium text-[#cccccc]">Activación en 24h</span>
-          </div>
+
         </div>
 
       </div>
