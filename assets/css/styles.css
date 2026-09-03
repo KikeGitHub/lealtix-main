@@ -594,50 +594,61 @@ input[type="range"]::-webkit-slider-thumb:hover {
   color: #2dd4bf !important;
 }
 
-/* Dark Theme Header State (#062e3b) */
+/* Default & Clean Light Theme Header State (White Frosted Glass) */
+#main-nav.header-theme-light,
 #main-nav.header-theme-dark {
-  background-color: rgba(6, 46, 59, 0.95) !important;
-  border-bottom-color: rgba(0, 106, 97, 0.35) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+  background-color: rgba(255, 255, 255, 0.94) !important;
+  border-bottom-color: rgba(11, 28, 48, 0.08) !important;
+  box-shadow: 0 4px 25px rgba(11, 28, 48, 0.06) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
 }
 
+#main-nav.header-theme-light .nav-link,
 #main-nav.header-theme-dark .nav-link {
-  color: #cccccc !important;
-  --specular-line-color: #2dd4bf;
-  --specular-glow-color: rgba(45, 212, 191, 0.25);
+  color: #475569 !important;
+  --specular-line-color: #00877a;
+  --specular-glow-color: rgba(0, 106, 97, 0.15);
 }
 
+#main-nav.header-theme-light .nav-link:hover,
 #main-nav.header-theme-dark .nav-link:hover {
-  color: #ffffff !important;
+  color: #0b1c30 !important;
 }
 
+#main-nav.header-theme-light .nav-link.active,
 #main-nav.header-theme-dark .nav-link.active {
-  color: #2dd4bf !important;
+  color: #006a61 !important;
   font-weight: 600 !important;
   --specular-intensity: 0.85 !important;
-  background-color: rgba(45, 212, 191, 0.08);
+  background-color: rgba(0, 106, 97, 0.08);
 }
 
+#main-nav.header-theme-light #mobile-menu-btn,
 #main-nav.header-theme-dark #mobile-menu-btn {
-  color: #2dd4bf !important;
+  color: #0b1c30 !important;
 }
 
+#main-nav.header-theme-light #mobile-menu,
 #main-nav.header-theme-dark #mobile-menu {
-  background-color: rgba(6, 46, 59, 0.98) !important;
-  border-bottom-color: rgba(0, 106, 97, 0.35) !important;
+  background-color: rgba(255, 255, 255, 0.98) !important;
+  border-bottom-color: rgba(11, 28, 48, 0.1) !important;
 }
 
+#main-nav.header-theme-light #mobile-menu .mobile-nav-link,
 #main-nav.header-theme-dark #mobile-menu .mobile-nav-link {
-  color: #cccccc !important;
-  border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+  color: #334155 !important;
+  border-bottom-color: rgba(0, 0, 0, 0.06) !important;
 }
 
+#main-nav.header-theme-light #mobile-menu .mobile-nav-link:hover,
 #main-nav.header-theme-dark #mobile-menu .mobile-nav-link:hover {
-  color: #ffffff !important;
+  color: #0b1c30 !important;
 }
 
+#main-nav.header-theme-light #mobile-menu .mobile-nav-link.active,
 #main-nav.header-theme-dark #mobile-menu .mobile-nav-link.active {
-  color: #2dd4bf !important;
+  color: #006a61 !important;
 }
 
 /* Light Theme Header State (White / Clean) */

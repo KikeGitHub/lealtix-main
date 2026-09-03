@@ -152,33 +152,11 @@ function initNavbarScroll() {
 
     // If in Hero range, force transparent header (Zero background)
     if (isHero) {
-      navbar.classList.remove('header-theme-dark', 'header-theme-light');
+      navbar.classList.remove('header-theme-light', 'header-theme-dark');
       navbar.classList.add('header-theme-transparent');
-      return;
-    }
-
-    navbar.classList.remove('header-theme-transparent');
-
-    // Find all sections or footer elements by viewport position
-    const sections = document.querySelectorAll('section, footer');
-    let currentTheme = 'dark';
-
-    sections.forEach(sec => {
-      const rect = sec.getBoundingClientRect();
-      if (rect.top <= probeY && rect.bottom > probeY) {
-        const theme = sec.getAttribute('data-theme');
-        if (theme) {
-          currentTheme = theme;
-        }
-      }
-    });
-
-    if (currentTheme === 'light') {
-      navbar.classList.remove('header-theme-dark');
-      navbar.classList.add('header-theme-light');
     } else {
-      navbar.classList.remove('header-theme-light');
-      navbar.classList.add('header-theme-dark');
+      navbar.classList.remove('header-theme-transparent', 'header-theme-dark');
+      navbar.classList.add('header-theme-light');
     }
   }
 
