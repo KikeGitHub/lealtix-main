@@ -181,10 +181,10 @@
 
       <!-- Bottom Glued Group (Left: CTA + Badges | Right: Platform Text at bottom edge) -->
       <div id="hero-bottom-group"
-        class="w-full flex flex-col md:flex-row items-start md:items-end justify-between gap-6 sm:gap-8 mt-auto pt-6 will-change-[opacity,transform]">
+        class="w-full flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6 lg:gap-8 mt-auto pt-6 will-change-[opacity,transform]">
 
         <!-- Left Column: CTA Button (Top) + Proof & Trust Badges (Bottom Left) -->
-        <div class="flex flex-col items-start text-left gap-3 max-w-xl">
+        <div class="flex flex-col items-start text-left gap-3 shrink-0">
           <!-- CTA Button -->
           <div id="hero-cta-wrapper"
             class="flex items-center justify-start w-full sm:w-auto will-change-[opacity,transform]">
@@ -195,27 +195,27 @@
             </a>
           </div>
 
-          <!-- Proof & Trust Badges (Pinned to the LEFT margin at the bottom) -->
-          <div class="flex flex-wrap items-center justify-start gap-4 sm:gap-6 w-full text-[#cccccc]">
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined fill text-secondary text-xl">verified</span>
-              <span class="text-xs sm:text-sm font-medium text-[#cccccc]">Sin descargar apps</span>
+          <!-- Proof & Trust Badges (Pinned to the LEFT margin at the bottom in a clean single line) -->
+          <div class="flex flex-wrap sm:flex-nowrap items-center justify-start gap-4 sm:gap-5 text-[#cccccc]">
+            <div class="flex items-center gap-1.5 shrink-0">
+              <span class="material-symbols-outlined fill text-secondary text-lg sm:text-xl">verified</span>
+              <span class="text-xs sm:text-[13px] font-medium text-[#cccccc] whitespace-nowrap">Sin descargar apps</span>
             </div>
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined fill text-secondary text-xl">point_of_sale</span>
-              <span class="text-xs sm:text-sm font-medium text-[#cccccc]">Compatible con tu POS</span>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <span class="material-symbols-outlined fill text-secondary text-lg sm:text-xl">point_of_sale</span>
+              <span class="text-xs sm:text-[13px] font-medium text-[#cccccc] whitespace-nowrap">Compatible con tu POS</span>
             </div>
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined fill text-roi-orange text-xl">bolt</span>
-              <span class="text-xs sm:text-sm font-medium text-[#cccccc]">Activación en 24h</span>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <span class="material-symbols-outlined fill text-roi-orange text-lg sm:text-xl">bolt</span>
+              <span class="text-xs sm:text-[13px] font-medium text-[#cccccc] whitespace-nowrap">Activación en 24h</span>
             </div>
           </div>
         </div>
 
         <!-- Right Column: Value Pitch Text (Pinned flush to the BOTTOM RIGHT border) -->
-        <div class="w-full max-w-xl lg:max-w-2xl text-left md:text-right self-end pb-0.5">
+        <div class="w-full max-w-lg lg:max-w-[480px] xl:max-w-xl text-left lg:text-right self-end pb-0.5">
           <p
-            class="font-body text-xs sm:text-[14px] lg:text-[15px] leading-snug sm:leading-relaxed text-[#d4ffdf] font-medium drop-shadow-md">
+            class="font-body text-xs sm:text-[13px] lg:text-[14px] leading-relaxed text-[#d4ffdf] font-medium drop-shadow-md">
             La plataforma de lealtad inteligente para restaurantes, bares y hoteles.<br class="hidden sm:inline" />
             Recompensas instantáneas en <strong class="text-white font-semibold">Apple Wallet</strong> y <strong class="text-white font-semibold">Google Wallet</strong>.<br class="hidden sm:inline" />
             Captura datos, automatiza visitas y multiplica el ticket promedio.
