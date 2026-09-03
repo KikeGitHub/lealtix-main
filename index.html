@@ -168,24 +168,24 @@
     <div
       class="relative z-10 max-w-container-max mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex flex-col justify-between items-center text-center">
 
-      <!-- Top Hero Title (Glued right below header) -->
-      <div class="max-w-4xl mx-auto flex flex-col items-center mt-1 sm:mt-2 mb-auto">
+      <!-- Top Hero Title (Glued right below header, pinned to LEFT margin) -->
+      <div class="w-full flex flex-col items-start text-left mt-1 sm:mt-2 mb-auto">
 
-        <!-- Main Title (Outside container) - Reduced by 40% (2 Lines) -->
+        <!-- Main Title (Left-aligned) -->
         <h1 id="hero-main-title"
-          class="font-display font-extrabold text-[22px] sm:text-[29px] lg:text-[35px] leading-[1.25] text-[#2dd4bf] tracking-tight will-change-transform">
+          class="font-display font-extrabold text-[22px] sm:text-[29px] lg:text-[35px] leading-[1.25] text-[#2dd4bf] tracking-tight text-left will-change-transform max-w-2xl">
           Convierte visitas ocasionales en <span class="block gradient-text mt-0.5 sm:mt-1">clientes habituales</span>
         </h1>
 
       </div>
 
-      <!-- Bottom Glued Group (CTA + Platform Text + Badges anchored at bottom of screen) -->
+      <!-- Bottom Glued Group (CTA + Platform Text pinned to RIGHT margin + Badges) -->
       <div id="hero-bottom-group"
-        class="w-full flex flex-col items-center mt-auto pt-6 will-change-[opacity,transform]">
+        class="w-full flex flex-col items-end mt-auto pt-6 will-change-[opacity,transform]">
 
-        <!-- CTA (Glued directly above Platform text) -->
+        <!-- CTA (Aligned above right-aligned Platform text) -->
         <div id="hero-cta-wrapper"
-          class="flex items-center justify-center w-full sm:w-auto mb-4 will-change-[opacity,transform]">
+          class="flex items-center justify-end w-full sm:w-auto mb-3 will-change-[opacity,transform]">
           <a href="#soluciones"
             class="btn-specular-header text-[#2dd4bf] text-base py-2.5 px-8 font-semibold rounded-full shadow-lg">
             <span>Explorar Soluciones</span>
@@ -193,10 +193,10 @@
           </a>
         </div>
 
-        <!-- Value Pitch Text (Clean Background) -->
-        <div class="px-4 sm:px-6 w-full max-w-[1080px] mb-3">
+        <!-- Value Pitch Text (Pinned to RIGHT margin) -->
+        <div class="w-full max-w-2xl ml-auto text-right mb-4">
           <p
-            class="font-body text-base sm:text-lg text-[#d4ffdf] font-medium leading-relaxed max-w-4xl mx-auto drop-shadow-md">
+            class="font-body text-base sm:text-lg text-[#d4ffdf] font-medium leading-relaxed drop-shadow-md text-right">
             La plataforma de lealtad inteligente para restaurantes, bares y hoteles. Recompensas instantáneas en
             <strong class="text-white font-semibold">Apple Wallet</strong> y <strong
               class="text-white font-semibold">Google Wallet</strong>. Captura datos,
@@ -204,8 +204,8 @@
           </p>
         </div>
 
-        <!-- Proof & Trust Badges (Tightly glued right below container) -->
-        <div class="flex flex-wrap items-center justify-center gap-6 mt-1 w-full text-[#cccccc]">
+        <!-- Proof & Trust Badges (Anchored on the bottom right) -->
+        <div class="flex flex-wrap items-center justify-end gap-6 mt-1 w-full text-[#cccccc]">
           <div class="flex items-center gap-2">
             <span class="material-symbols-outlined fill text-secondary text-xl">verified</span>
             <span class="text-xs sm:text-sm font-medium text-[#cccccc]">Sin descargar apps</span>
