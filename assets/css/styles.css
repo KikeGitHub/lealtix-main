@@ -800,14 +800,10 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .gradient-text {
   display: inline !important;
   background: none !important;
-  -webkit-text-fill-color: initial !important;
-  color: inherit !important;
 }
 
 .gradient-text .split-char {
-  background: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 30%, #fb923c 70%, #f97316 100%) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  color: transparent !important;
+  display: inline-block;
+  font-weight: 800;
+  text-shadow: 0 4px 18px rgba(249, 115, 22, 0.25);
 }

@@ -1,6 +1,7 @@
 /**
  * SplitText GSAP Kinetic Typography Controller
  * Staggered character entrance & exit animation for LEALTIX Hero Title (Bottom to Top, Letter by Letter)
+ * Accurately maps continuous color gradients across characters
  */
 class SplitTextAnimation {
   constructor(target, options = {}) {
@@ -68,6 +69,41 @@ class SplitTextAnimation {
     const newChildren = Array.from(this.el.childNodes).map(splitNode);
     this.el.innerHTML = '';
     newChildren.forEach(child => this.el.appendChild(child));
+
+    // Map smooth continuous multi-stop gradient across .gradient-text characters
+    const gradientChars = Array.from(this.el.querySelectorAll('.gradient-text .split-char'));
+    if (gradientChars.length > 1) {
+      const stops = [
+        { t: 0.0, r: 45, g: 212, b: 191 },   // #2dd4bf Teal
+        { t: 0.3, r: 56, g: 189, b: 248 },   // #38bdf8 Sky Blue
+        { t: 0.7, r: 251, g: 146, b: 60 },   // #fb923c Amber
+        { t: 1.0, r: 249, g: 115, b: 22 }    // #f97316 Vibrant Orange
+      ];
+
+      const interpolateColor = t => {
+        t = Math.max(0, Math.min(1, t));
+        for (let i = 0; i < stops.length - 1; i++) {
+          const s0 = stops[i];
+          const s1 = stops[i + 1];
+          if (t >= s0.t && t <= s1.t) {
+            const localT = (t - s0.t) / (s1.t - s0.t);
+            const r = Math.round(s0.r + (s1.r - s0.r) * localT);
+            const g = Math.round(s0.g + (s1.g - s0.g) * localT);
+            const b = Math.round(s0.b + (s1.b - s0.b) * localT);
+            return `rgb(${r}, ${g}, ${b})`;
+          }
+        }
+        const last = stops[stops.length - 1];
+        return `rgb(${last.r}, ${last.g}, ${last.b})`;
+      };
+
+      gradientChars.forEach((charEl, idx) => {
+        const factor = idx / (gradientChars.length - 1);
+        const col = interpolateColor(factor);
+        charEl.style.color = col;
+        charEl.style.webkitTextFillColor = col;
+      });
+    }
 
     this.chars = Array.from(this.el.querySelectorAll('.split-char'));
   }
