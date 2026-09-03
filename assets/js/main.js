@@ -52,16 +52,22 @@ function initNavbarScroll() {
 
   function updateNavbarState() {
     const navHeight = navbar.offsetHeight || 80;
-    const probeY = window.scrollY + navHeight / 2;
-    
-    // Find all sections or footer elements
+    const probeY = navHeight / 2; // Exact probe line under header
+
+    // If at the very top of the page (Hero section), always force dark header
+    if (window.scrollY < 80) {
+      navbar.classList.remove('header-theme-light');
+      navbar.classList.add('header-theme-dark');
+      return;
+    }
+
+    // Find all sections or footer elements by viewport position
     const sections = document.querySelectorAll('section, footer');
-    let currentTheme = 'dark'; // Default for Hero section (#062e3b)
+    let currentTheme = 'dark';
 
     sections.forEach(sec => {
-      const top = sec.offsetTop;
-      const bottom = top + sec.offsetHeight;
-      if (probeY >= top && probeY < bottom) {
+      const rect = sec.getBoundingClientRect();
+      if (rect.top <= probeY && rect.bottom > probeY) {
         const theme = sec.getAttribute('data-theme');
         if (theme) {
           currentTheme = theme;
