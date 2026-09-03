@@ -1,6 +1,6 @@
 /**
  * RippleDistortion WebGL Engine
- * High-performance liquid ripple distortion shader for LEALTIX
+ * High-performance liquid ripple distortion shader for LEALTIX Hero
  */
 class RippleDistortion {
   constructor(container, options = {}) {
@@ -8,21 +8,23 @@ class RippleDistortion {
     if (!this.container) return;
 
     this.options = Object.assign({
-      src: 'assets/images/ImagotipoV.png',
-      brushSize: 160,
-      strength: 0.28,
-      swirl: 0.8,
+      src: 'assets/images/ImagotipoV-hero.png',
+      interactiveTarget: '#inicio',
+      brushSize: 180,
+      strength: 0.32,
+      swirl: 0.75,
       rings: 3.5,
-      spread: 6,
+      spread: 6.5,
       fade: 2.8,
       spacing: 12,
-      dispersion: 0.04,
-      glint: 0.25,
+      dispersion: 0.045,
+      glint: 0.35,
       tint: '#00c4b4',
       tintAmount: 0.12,
       grayscale: false,
       highlightColor: '#ffffff',
-      trigger: 'hover'
+      trigger: 'hover',
+      idleFadeTime: 2200
     }, options);
 
     this.MAX_WAVES = 80;
@@ -34,10 +36,11 @@ class RippleDistortion {
 
   init() {
     this.canvas = document.createElement('canvas');
-    this.canvas.className = 'ripple-distortion-canvas absolute inset-0 w-full h-full pointer-events-none rounded-2xl';
-    this.canvas.style.opacity = '1';
-    this.canvas.style.transition = 'opacity 0.4s ease';
-    this.container.style.position = 'relative';
+    this.canvas.className = 'ripple-distortion-canvas absolute inset-0 w-full h-full pointer-events-none';
+    this.canvas.style.opacity = '0';
+    this.canvas.style.transition = 'opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1)';
+    this.canvas.style.zIndex = '0';
+    this.container.style.position = 'absolute';
     this.container.appendChild(this.canvas);
 
     this.gl = this.canvas.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: false });
@@ -232,7 +235,6 @@ class RippleDistortion {
   initBuffers() {
     const gl = this.gl;
 
-    // Full screen Quad
     const quadVertices = new Float32Array([
       -1, -1, 0, 0,
        1, -1, 1, 0,
@@ -246,7 +248,6 @@ class RippleDistortion {
     gl.bindBuffer(gl.ARRAY_BUFFER, this.quadBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, quadVertices, gl.STATIC_DRAW);
 
-    // Framebuffer for displacement simulation
     this.fbo = gl.createFramebuffer();
     this.fboTexture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, this.fboTexture);
@@ -270,11 +271,11 @@ class RippleDistortion {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
-    this.textureSize = [1200, 900];
+    this.textureSize = [2400, 1350];
     const image = new Image();
     image.crossOrigin = 'anonymous';
     image.onload = () => {
-      this.textureSize = [image.naturalWidth || 1200, image.naturalHeight || 900];
+      this.textureSize = [image.naturalWidth || 2400, image.naturalHeight || 1350];
       gl.bindTexture(gl.TEXTURE_2D, this.imageTexture);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
     };
@@ -307,6 +308,13 @@ class RippleDistortion {
   initEvents() {
     let prevX = 0;
     let prevY = 0;
+    let fadeTimeout = null;
+
+    const targetEl = typeof this.options.interactiveTarget === 'string'
+      ? document.querySelector(this.options.interactiveTarget)
+      : this.options.interactiveTarget || this.container;
+
+    if (!targetEl) return;
 
     const onPointerMove = e => {
       const rect = this.container.getBoundingClientRect();
@@ -316,7 +324,9 @@ class RippleDistortion {
         e.clientX > rect.right ||
         e.clientY < rect.top ||
         e.clientY > rect.bottom
-      ) return;
+      ) {
+        return;
+      }
 
       const x = (e.clientX - rect.left) * dpr;
       const y = (rect.height - (e.clientY - rect.top)) * dpr;
@@ -326,15 +336,22 @@ class RippleDistortion {
         this.setNewWave(x, y, 1);
         prevX = x;
         prevY = y;
+
+        // Reveal the logo layer on hover
+        this.canvas.style.opacity = '1';
+
+        if (fadeTimeout) clearTimeout(fadeTimeout);
+        fadeTimeout = setTimeout(() => {
+          this.canvas.style.opacity = '0';
+        }, this.options.idleFadeTime);
       }
     };
 
-    window.addEventListener('pointermove', onPointerMove, { passive: true });
-
-    // Initial ambient water drops
-    setTimeout(() => {
-      this.setNewWave(this.width * 0.5, this.height * 0.5, 1.2);
-    }, 500);
+    targetEl.addEventListener('pointermove', onPointerMove, { passive: true });
+    targetEl.addEventListener('pointerleave', () => {
+      if (fadeTimeout) clearTimeout(fadeTimeout);
+      this.canvas.style.opacity = '0';
+    }, { passive: true });
   }
 
   animate(now) {

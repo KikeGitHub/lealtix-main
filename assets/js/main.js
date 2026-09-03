@@ -21,21 +21,23 @@ function initHeroRipple() {
   if (!container || typeof RippleDistortion === 'undefined') return;
 
   new RippleDistortion('#hero-ripple-container', {
-    src: 'assets/images/ImagotipoV.png',
-    brushSize: 150,
-    strength: 0.25,
+    src: 'assets/images/ImagotipoV-hero.png',
+    interactiveTarget: '#inicio',
+    brushSize: 180,
+    strength: 0.32,
     swirl: 0.8,
     rings: 3.5,
-    spread: 6,
-    fade: 2.8,
-    spacing: 10,
-    dispersion: 0.04,
+    spread: 6.5,
+    fade: 2.6,
+    spacing: 12,
+    dispersion: 0.045,
     glint: 0.35,
     tint: '#00c4b4',
-    tintAmount: 0.1,
+    tintAmount: 0.12,
     grayscale: false,
     highlightColor: '#ffffff',
-    trigger: 'hover'
+    trigger: 'hover',
+    idleFadeTime: 2200
   });
 }
 
