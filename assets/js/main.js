@@ -111,17 +111,9 @@ function initHeroVideoFade() {
 }
 
 function initHeroTitleSplitText() {
-  const title = document.getElementById('hero-main-title');
-  if (!title || typeof SplitTextAnimation === 'undefined') return;
-
-  new SplitTextAnimation('#hero-main-title', {
-    delay: 38,
-    duration: 1.15,
-    ease: 'power3.out',
-    from: { opacity: 0, y: 40, rotateX: -20 },
-    to: { opacity: 1, y: 0, rotateX: 0 },
-    exitTo: { opacity: 0, y: -35, rotateX: 20 }
-  });
+  if (typeof window.initAllSectionSplitText === 'function') {
+    window.initAllSectionSplitText();
+  }
 }
 
 function initCtaRipple() {

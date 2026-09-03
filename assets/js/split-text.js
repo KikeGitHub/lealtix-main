@@ -1,21 +1,22 @@
 /**
  * SplitText GSAP Kinetic Typography Controller
- * Staggered character entrance & exit animation for LEALTIX Hero Title (Bottom to Top, Letter by Letter)
- * Accurately maps continuous color gradients across characters
+ * Staggered character & word entrance and exit animations across all sections.
+ * Automatically initializes on section titles and subtitles with ScrollTrigger bidirectional transitions.
  */
+
 class SplitTextAnimation {
   constructor(target, options = {}) {
     this.el = typeof target === 'string' ? document.querySelector(target) : target;
     if (!this.el) return;
 
     this.options = Object.assign({
-      delay: 28, // ms between each character
-      duration: 0.95,
+      mode: 'chars', // 'chars' or 'words'
+      delay: 20, // ms between items
+      duration: 0.8,
       ease: 'power3.out',
-      from: { opacity: 0, yPercent: 115, y: 25 },
-      to: { opacity: 1, yPercent: 0, y: 0 },
-      exitTo: { opacity: 0, yPercent: -115, y: -25 },
-      trigger: this.el
+      fromY: 110,
+      trigger: this.el,
+      isHero: false
     }, options);
 
     this.init();
@@ -23,13 +24,17 @@ class SplitTextAnimation {
 
   init() {
     this.splitElements();
-    this.initAnimation();
+    if (this.options.isHero) {
+      this.initHeroAnimation();
+    } else {
+      this.initScrollTriggerAnimation();
+    }
   }
 
   splitElements() {
     this.el.classList.add('split-parent');
 
-    // Recursively split text nodes while preserving span wrappers (such as .gradient-text)
+    // Recursively split text nodes while preserving span wrappers (such as .gradient-text, bold, etc.)
     const splitNode = node => {
       if (node.nodeType === Node.TEXT_NODE) {
         const text = node.textContent;
@@ -45,11 +50,15 @@ class SplitTextAnimation {
             const wordSpan = document.createElement('span');
             wordSpan.className = 'split-word';
 
-            for (const char of word) {
-              const charSpan = document.createElement('span');
-              charSpan.className = 'split-char';
-              charSpan.textContent = char;
-              wordSpan.appendChild(charSpan);
+            if (this.options.mode === 'words') {
+              wordSpan.textContent = word;
+            } else {
+              for (const char of word) {
+                const charSpan = document.createElement('span');
+                charSpan.className = 'split-char';
+                charSpan.textContent = char;
+                wordSpan.appendChild(charSpan);
+              }
             }
             fragment.appendChild(wordSpan);
           }
@@ -70,7 +79,7 @@ class SplitTextAnimation {
     this.el.innerHTML = '';
     newChildren.forEach(child => this.el.appendChild(child));
 
-    // Map smooth continuous multi-stop gradient across .gradient-text characters
+    // Map smooth continuous multi-stop gradient across .gradient-text characters if present
     const gradientChars = Array.from(this.el.querySelectorAll('.gradient-text .split-char'));
     if (gradientChars.length > 1) {
       const stops = [
@@ -105,62 +114,167 @@ class SplitTextAnimation {
       });
     }
 
-    this.chars = Array.from(this.el.querySelectorAll('.split-char'));
+    this.items = this.options.mode === 'words' 
+      ? Array.from(this.el.querySelectorAll('.split-word'))
+      : Array.from(this.el.querySelectorAll('.split-char'));
   }
 
-  initAnimation() {
-    if (typeof gsap === 'undefined') return;
+  initHeroAnimation() {
+    if (typeof gsap === 'undefined' || !this.items.length) return;
 
-    // Set initial from state (below the baseline)
-    gsap.set(this.chars, {
-      ...this.options.from,
+    gsap.set(this.items, {
+      opacity: 0,
+      yPercent: 115,
+      y: 20,
       force3D: true
     });
 
     let isInHero = true;
-
     const handleScroll = () => {
       const scrollY = window.scrollY || window.pageYOffset;
-      const hideThreshold = window.innerHeight * 0.20; // Triggers exit as sections slide over Hero
+      const hideThreshold = window.innerHeight * 0.20;
 
       if (scrollY > hideThreshold && isInHero) {
         isInHero = false;
-        this.animateOut();
+        gsap.to(this.items, {
+          opacity: 0,
+          yPercent: -115,
+          y: -20,
+          duration: 0.6,
+          ease: 'power2.in',
+          stagger: 0.008,
+          overwrite: 'auto'
+        });
       } else if (scrollY <= hideThreshold && !isInHero) {
         isInHero = true;
-        this.animateIn();
+        gsap.to(this.items, {
+          opacity: 1,
+          yPercent: 0,
+          y: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          stagger: 0.02,
+          overwrite: 'auto'
+        });
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Initial entrance on page load
     setTimeout(() => {
-      this.animateIn();
+      gsap.to(this.items, {
+        opacity: 1,
+        yPercent: 0,
+        y: 0,
+        duration: 0.95,
+        ease: 'power3.out',
+        stagger: 0.024
+      });
     }, 120);
   }
 
-  animateIn() {
-    if (!this.chars || !this.chars.length) return;
-    gsap.to(this.chars, {
-      ...this.options.to,
-      duration: this.options.duration,
-      ease: this.options.ease,
-      stagger: this.options.delay / 1000,
-      overwrite: 'auto'
-    });
-  }
+  initScrollTriggerAnimation() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined' || !this.items.length) return;
 
-  animateOut() {
-    if (!this.chars || !this.chars.length) return;
-    gsap.to(this.chars, {
-      ...this.options.exitTo,
-      duration: this.options.duration * 0.7,
-      ease: 'power2.in',
-      stagger: (this.options.delay * 0.4) / 1000,
-      overwrite: 'auto'
+    // Set initial hidden state
+    gsap.set(this.items, {
+      opacity: 0,
+      yPercent: this.options.fromY,
+      force3D: true
+    });
+
+    const triggerEl = this.options.trigger || this.el.closest('.text-center') || this.el.closest('section') || this.el;
+    const staggerTime = Math.min(0.025, 0.6 / Math.max(1, this.items.length));
+
+    ScrollTrigger.create({
+      trigger: triggerEl,
+      start: 'top 88%',
+      end: 'bottom 12%',
+      onEnter: () => {
+        gsap.to(this.items, {
+          opacity: 1,
+          yPercent: 0,
+          duration: this.options.duration,
+          ease: 'power3.out',
+          stagger: staggerTime,
+          overwrite: 'auto'
+        });
+      },
+      onLeave: () => {
+        gsap.to(this.items, {
+          opacity: 0,
+          yPercent: -this.options.fromY,
+          duration: this.options.duration * 0.7,
+          ease: 'power2.in',
+          stagger: staggerTime * 0.5,
+          overwrite: 'auto'
+        });
+      },
+      onEnterBack: () => {
+        gsap.to(this.items, {
+          opacity: 1,
+          yPercent: 0,
+          duration: this.options.duration,
+          ease: 'power3.out',
+          stagger: staggerTime,
+          overwrite: 'auto'
+        });
+      },
+      onLeaveBack: () => {
+        gsap.to(this.items, {
+          opacity: 0,
+          yPercent: this.options.fromY,
+          duration: this.options.duration * 0.7,
+          ease: 'power2.in',
+          stagger: staggerTime * 0.5,
+          overwrite: 'auto'
+        });
+      }
     });
   }
 }
 
+// Auto-initialize SplitText on all non-hero sections
+function initAllSectionSplitText() {
+  // 1. Hero Title (Character level)
+  const heroTitle = document.querySelector('#hero-main-title') || document.querySelector('#hero-title');
+  if (heroTitle && !heroTitle.classList.contains('split-parent')) {
+    new SplitTextAnimation(heroTitle, {
+      isHero: true,
+      mode: 'chars',
+      delay: 24,
+      duration: 0.95
+    });
+  }
+
+  // 2. All Section Headings (H2) outside Hero
+  const sectionHeadings = document.querySelectorAll('#main-content-stream section h2');
+  sectionHeadings.forEach(h2 => {
+    new SplitTextAnimation(h2, {
+      mode: 'chars',
+      duration: 0.85,
+      fromY: 105,
+      trigger: h2.closest('.text-center') || h2
+    });
+  });
+
+  // 3. All Section Subtitles (P) and Upper category badges in section headers
+  const sectionSubtitles = document.querySelectorAll('#main-content-stream section .text-center > p, #main-content-stream section .text-center > span.font-mono');
+  sectionSubtitles.forEach(sub => {
+    new SplitTextAnimation(sub, {
+      mode: 'words',
+      duration: 0.75,
+      fromY: 90,
+      trigger: sub.closest('.text-center') || sub
+    });
+  });
+}
+
 window.SplitTextAnimation = SplitTextAnimation;
+window.initAllSectionSplitText = initAllSectionSplitText;
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAllSectionSplitText);
+} else {
+  initAllSectionSplitText();
+}
