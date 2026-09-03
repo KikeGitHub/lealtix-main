@@ -165,30 +165,30 @@
     <div
       class="relative z-10 max-w-container-max mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex flex-col justify-between items-center text-center">
 
-      <!-- Top / Middle Hero Content (Title & CTAs) elevated by 140px -->
+      <!-- Top / Middle Hero Content (Title) elevated by 140px -->
       <div class="max-w-4xl mx-auto flex flex-col items-center my-auto -translate-y-[140px]">
 
         <!-- Main Title (Outside container) -->
         <h1 id="hero-main-title"
-          class="font-display font-extrabold text-4xl sm:text-5xl lg:text-[58px] leading-[1.12] text-[#2dd4bf] tracking-tight mb-8 will-change-transform">
+          class="font-display font-extrabold text-4xl sm:text-5xl lg:text-[58px] leading-[1.12] text-[#2dd4bf] tracking-tight will-change-transform">
           Convierte visitas ocasionales en <span class="gradient-text">clientes habituales</span>
         </h1>
 
-        <!-- CTA (Directly below Title) -->
+      </div>
+
+      <!-- Bottom Glued Group (CTA + Platform Text + Badges anchored at bottom of screen) -->
+      <div id="hero-bottom-group"
+        class="w-full flex flex-col items-center mt-auto pt-6 will-change-[opacity,transform]">
+
+        <!-- CTA (Glued directly above Platform text) -->
         <div id="hero-cta-wrapper"
-          class="flex items-center justify-center w-full sm:w-auto will-change-[opacity,transform]">
+          class="flex items-center justify-center w-full sm:w-auto mb-4 will-change-[opacity,transform]">
           <a href="#soluciones"
-            class="btn-specular-header text-[#2dd4bf] text-base py-3 px-8 font-semibold rounded-full shadow-lg">
+            class="btn-specular-header text-[#2dd4bf] text-base py-2.5 px-8 font-semibold rounded-full shadow-lg">
             <span>Explorar Soluciones</span>
             <span class="material-symbols-outlined text-[20px]">arrow_downward</span>
           </a>
         </div>
-
-      </div>
-
-      <!-- Bottom Glued Group (Container + Texts anchored at bottom of screen) -->
-      <div id="hero-bottom-group"
-        class="w-full flex flex-col items-center mt-auto pt-6 will-change-[opacity,transform]">
 
         <!-- Value Pitch Text (Clean Background) -->
         <div class="px-4 sm:px-6 w-full max-w-[1080px] mb-3">
@@ -196,8 +196,7 @@
             class="font-body text-base sm:text-lg text-[#d4ffdf] font-medium leading-relaxed max-w-4xl mx-auto drop-shadow-md">
             La plataforma de lealtad inteligente para restaurantes, bares y hoteles. Recompensas instantáneas en
             <strong class="text-white font-semibold">Apple Wallet</strong> y <strong
-              class="text-white font-semibold">Google Wallet</strong>
-            . Captura datos,
+              class="text-white font-semibold">Google Wallet</strong>. Captura datos,
             automatiza visitas y multiplica el ticket promedio.
           </p>
         </div>
