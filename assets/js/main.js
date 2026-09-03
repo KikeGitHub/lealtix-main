@@ -21,7 +21,7 @@ function initHeroRipple() {
   if (!container || typeof RippleDistortion === 'undefined') return;
 
   new RippleDistortion('#hero-ripple-container', {
-    src: 'assets/images/ImagotipoV-hero.png',
+    src: 'assets/images/ImagotipoV.png?t=' + Date.now(),
     interactiveTarget: '#inicio',
     brushSize: 180,
     strength: 0.32,
@@ -36,8 +36,7 @@ function initHeroRipple() {
     tintAmount: 0.12,
     grayscale: false,
     highlightColor: '#ffffff',
-    trigger: 'hover',
-    idleFadeTime: 2200
+    trigger: 'hover'
   });
 }
 
