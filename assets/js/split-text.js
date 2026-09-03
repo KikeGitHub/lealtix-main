@@ -189,7 +189,6 @@ class SplitTextAnimation {
     ScrollTrigger.create({
       trigger: triggerEl,
       start: 'top 88%',
-      end: 'bottom 12%',
       onEnter: () => {
         gsap.to(this.items, {
           opacity: 1,
@@ -200,23 +199,13 @@ class SplitTextAnimation {
           overwrite: 'auto'
         });
       },
-      onLeave: () => {
-        gsap.to(this.items, {
-          opacity: 0,
-          yPercent: -this.options.fromY,
-          duration: this.options.duration * 0.7,
-          ease: 'power2.in',
-          stagger: staggerTime * 0.5,
-          overwrite: 'auto'
-        });
-      },
       onEnterBack: () => {
         gsap.to(this.items, {
           opacity: 1,
           yPercent: 0,
-          duration: this.options.duration,
+          duration: this.options.duration * 0.6,
           ease: 'power3.out',
-          stagger: staggerTime,
+          stagger: staggerTime * 0.5,
           overwrite: 'auto'
         });
       },
@@ -224,7 +213,7 @@ class SplitTextAnimation {
         gsap.to(this.items, {
           opacity: 0,
           yPercent: this.options.fromY,
-          duration: this.options.duration * 0.7,
+          duration: this.options.duration * 0.6,
           ease: 'power2.in',
           stagger: staggerTime * 0.5,
           overwrite: 'auto'
