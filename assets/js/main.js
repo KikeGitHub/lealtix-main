@@ -50,20 +50,46 @@ function initNavbarScroll() {
   const navbar = document.getElementById('main-nav');
   if (!navbar) return;
 
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) {
-      navbar.classList.add('shadow-md', 'bg-white/95');
-      navbar.classList.remove('bg-surface/80');
+  function updateNavbarState() {
+    const navHeight = navbar.offsetHeight || 80;
+    const probeY = window.scrollY + navHeight / 2;
+    
+    // Find all sections or footer elements
+    const sections = document.querySelectorAll('section, footer');
+    let currentTheme = 'dark'; // Default for Hero section (#062e3b)
+
+    sections.forEach(sec => {
+      const top = sec.offsetTop;
+      const bottom = top + sec.offsetHeight;
+      if (probeY >= top && probeY < bottom) {
+        const theme = sec.getAttribute('data-theme');
+        if (theme) {
+          currentTheme = theme;
+        }
+      }
+    });
+
+    if (currentTheme === 'light') {
+      navbar.classList.remove('header-theme-dark');
+      navbar.classList.add('header-theme-light');
     } else {
-      navbar.classList.remove('shadow-md', 'bg-white/95');
-      navbar.classList.add('bg-surface/80');
+      navbar.classList.remove('header-theme-light');
+      navbar.classList.add('header-theme-dark');
     }
+  }
+
+  window.addEventListener('scroll', () => {
+    updateNavbarState();
     highlightActiveNavLink();
-  });
+  }, { passive: true });
+
+  // Initial trigger
+  updateNavbarState();
+  highlightActiveNavLink();
 }
 
 function highlightActiveNavLink() {
-  const sections = document.querySelectorAll('section[id], header[id]');
+  const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-link');
   let currentSection = '';
 
