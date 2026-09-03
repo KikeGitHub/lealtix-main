@@ -42,8 +42,8 @@ function initHeroVideoCrossDissolve() {
       isDissolving = true;
       nextVideo.currentTime = 0;
       nextVideo.play().then(() => {
-        // Smooth cross-dissolve transition: nextVideo fades in, activeVideo fades out
-        nextVideo.style.opacity = '1';
+        // Smooth cross-dissolve transition: nextVideo fades to 90% opacity, activeVideo fades out
+        nextVideo.style.opacity = '0.9';
         activeVideo.style.opacity = '0';
 
         setTimeout(() => {
