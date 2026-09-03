@@ -144,7 +144,7 @@ function initNavbarScroll() {
         logoImg.style.opacity = '0';
         setTimeout(() => {
           logoImg.src = 'assets/images/ImagotipoH2.png';
-          logoImg.className = 'h-10 sm:h-12 w-auto object-contain transition-all duration-300 group-hover:scale-105';
+          logoImg.className = 'h-8 sm:h-[38px] w-auto object-contain transition-all duration-300 group-hover:scale-105';
           logoImg.style.opacity = '1';
         }, 120);
       }
