@@ -936,7 +936,8 @@ input[type="range"]::-webkit-slider-thumb:hover {
    Lealbox Chatbot & Animated Isotipo Engine
    ========================================================================== */
 .isotipo-center-spinner {
-  transform-origin: 50px 50px;
+  transform-box: fill-box;
+  transform-origin: center;
   animation: isotipoSpin 4s linear infinite;
 }
 
