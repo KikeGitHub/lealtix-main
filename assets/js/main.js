@@ -6,6 +6,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initNavbarScroll();
+  initSpecularEffect();
   initRoiCalculator();
   initPricingToggle();
   initDashboardSimulator();
@@ -566,4 +567,83 @@ function initFaqAccordion() {
       }
     });
   });
+}
+
+/* ==========================================================================
+   8. Specular Interactive Pointer Beam & Rim Light Controller
+   ========================================================================== */
+function initSpecularEffect() {
+  const items = document.querySelectorAll('#main-nav .nav-link, #main-nav .open-demo-modal');
+  if (!items.length) return;
+
+  const proximityMax = 220; // Proximity threshold in pixels
+  let pointerX = -1000;
+  let pointerY = -1000;
+  let lastTime = performance.now();
+
+  const itemStates = Array.from(items).map(el => ({
+    el,
+    angle: 2.4,
+    idleAngle: 2.4,
+    bright: 0,
+    speed: 0.35
+  }));
+
+  window.addEventListener('pointermove', e => {
+    pointerX = e.clientX;
+    pointerY = e.clientY;
+  }, { passive: true });
+
+  function render(now) {
+    const dt = Math.min((now - lastTime) / 1000, 0.05);
+    lastTime = now;
+
+    itemStates.forEach(item => {
+      const rect = item.el.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+
+      // Distance to element bounding box
+      const dx = Math.max(rect.left - pointerX, 0, pointerX - rect.right);
+      const dy = Math.max(rect.top - pointerY, 0, pointerY - rect.bottom);
+      const dist = Math.hypot(dx, dy);
+
+      // Angle calculation towards cursor
+      let pointerAngle;
+      if (dist === 0) {
+        const nx = (pointerX - cx) / (rect.width / 2);
+        const ny = (cy - pointerY) / (rect.height / 2);
+        pointerAngle = Math.atan2(2 / rect.height, -2 / rect.width) + nx * 0.3 + ny * 0.15;
+      } else {
+        pointerAngle = Math.atan2(cy - pointerY, pointerX - cx);
+      }
+
+      // Smooth proximity Hermite curve
+      const t = Math.max(0, 1 - dist / proximityMax);
+      const proximityT = t * t * (3 - 2 * t);
+
+      // Damped angle steering
+      item.idleAngle += item.speed * dt;
+      const targetAngle = pointerX > 0 ? pointerAngle : item.idleAngle;
+      const diff = ((targetAngle - item.angle + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
+      item.angle += diff * (1 - Math.exp(-dt * 8));
+
+      // Damped brightness intensity
+      item.bright += (proximityT - item.bright) * (1 - Math.exp(-dt * 9));
+
+      // Update CSS Variables on element
+      item.el.style.setProperty('--specular-angle', `${item.angle}rad`);
+      const intensity = item.el.classList.contains('active') ? Math.max(0.85, item.bright) : item.bright;
+      item.el.style.setProperty('--specular-intensity', intensity.toFixed(3));
+      
+      const localX = Math.round(((pointerX - rect.left) / rect.width) * 100);
+      const localY = Math.round(((pointerY - rect.top) / rect.height) * 100);
+      item.el.style.setProperty('--specular-x', `${Math.max(0, Math.min(100, localX))}%`);
+      item.el.style.setProperty('--specular-y', `${Math.max(0, Math.min(100, localY))}%`);
+    });
+
+    requestAnimationFrame(render);
+  }
+
+  requestAnimationFrame(render);
 }
