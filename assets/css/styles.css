@@ -870,3 +870,24 @@ input[type="range"]::-webkit-slider-thumb:hover {
   isolation: isolate;
   background-color: var(--color-surface, #f8f9ff);
 }
+
+/* ==========================================================================
+   Liquid Glass Morphism Design Engine
+   ========================================================================== */
+.liquid-glass-panel {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.45),
+              0 0 40px rgba(45, 212, 191, 0.15),
+              inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
+}
+
+.liquid-glass-subcard {
+  background: rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
+}
