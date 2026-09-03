@@ -722,16 +722,16 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 
 /* ==========================================================================
-   GlareHover Effect (Diagonal Light Reflection Sweep)
+   GlareHover Effect (Diagonal Light Reflection Sweep - Smooth 20% Speed)
    ========================================================================== */
 .glare-hover {
   position: relative;
   overflow: hidden;
   --gh-angle: -45deg;
-  --gh-duration: 700ms;
-  --gh-size: 250%;
-  --gh-rgba: rgba(255, 255, 255, 0.45);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
+  --gh-duration: 3200ms;
+  --gh-size: 260%;
+  --gh-rgba: rgba(255, 255, 255, 0.42);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s ease;
 }
 
 .glare-hover::before {
@@ -739,24 +739,24 @@ input[type="range"]::-webkit-slider-thumb:hover {
   position: absolute;
   top: -60%;
   left: -60%;
-  width: var(--gh-size, 250%);
+  width: var(--gh-size, 260%);
   height: 220%;
   background: linear-gradient(
     var(--gh-angle, -45deg),
     transparent 0%,
     transparent 38%,
-    var(--gh-rgba, rgba(255, 255, 255, 0.45)) 50%,
+    var(--gh-rgba, rgba(255, 255, 255, 0.42)) 50%,
     transparent 62%,
     transparent 100%
   );
-  transform: translateX(-120%) translateY(-120%);
-  transition: transform var(--gh-duration, 700ms) cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform: translateX(-125%) translateY(-125%);
+  transition: transform var(--gh-duration, 3200ms) cubic-bezier(0.25, 1, 0.5, 1);
   pointer-events: none;
   z-index: 20;
 }
 
 .glare-hover:hover::before {
-  transform: translateX(100%) translateY(100%);
+  transform: translateX(105%) translateY(105%);
 }
 
 .glare-hover:hover {
