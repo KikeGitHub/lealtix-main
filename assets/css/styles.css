@@ -360,19 +360,19 @@ input[type="range"]::-webkit-slider-thumb:hover {
   position: relative;
   font-family: var(--font-body);
   font-weight: 500;
-  color: var(--color-on-surface-variant);
-  transition: color var(--transition-fast);
+  color: #cccccc;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
   padding: 8px 12px;
   border-radius: var(--radius-sm);
 }
 
 .nav-link:hover {
-  color: var(--color-primary);
-  background-color: var(--color-surface-container-low);
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .nav-link.active {
-  color: var(--color-secondary);
+  color: #2dd4bf;
   font-weight: 600;
 }
 
@@ -383,7 +383,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   left: 12px;
   right: 12px;
   height: 2px;
-  background-color: var(--color-secondary);
+  background-color: #2dd4bf;
   border-radius: 2px;
 }
 
