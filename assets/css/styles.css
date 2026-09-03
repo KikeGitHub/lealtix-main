@@ -909,3 +909,26 @@ input[type="range"]::-webkit-slider-thumb:hover {
   background: #ffffff !important;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25) !important;
 }
+
+/* Solutions Panels Subtle Blur Cross-Fade Transition */
+@keyframes solutionPanelBlurIn {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(5px) scale(0.995);
+  }
+  50% {
+    opacity: 0.7;
+    filter: blur(3px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0) scale(1);
+  }
+}
+
+.solution-panel:not(.hidden) {
+  animation: solutionPanelBlurIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, filter, transform;
+}
