@@ -144,15 +144,12 @@
        ========================================================================= -->
   <section id="inicio" data-theme="dark"
     class="relative min-h-screen min-h-[100dvh] w-full flex flex-col justify-between pt-28 pb-6 sm:pt-36 sm:pb-8 overflow-hidden">
-    <!-- Video Background (Rendered with real-time WebGL Liquid Water Ripple Refraction) -->
+    <!-- Video Background at 100% Opacity -->
     <div class="absolute inset-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-      <video id="hero-bg-video" autoplay loop muted playsinline class="w-full h-full object-cover object-center opacity-100">
+      <video autoplay loop muted playsinline class="w-full h-full object-cover object-center opacity-100">
         <source src="assets/videos/hero-background.mp4" type="video/mp4" />
       </video>
     </div>
-
-    <!-- WebGL Pure Water Ripple Layer (Interactive Cursor Fluid Waves) -->
-    <div id="hero-ripple-container" class="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none"></div>
 
     <!-- Ambient Background Blobs -->
     <div
@@ -1250,10 +1247,13 @@
   <!-- =========================================================================
        11. Final Call To Action Banner
        ========================================================================= -->
-  <section data-theme="dark"
+  <section id="cta-section" data-theme="dark"
     class="py-20 bg-gradient-to-br from-primary via-primary-container to-[#071220] text-white relative overflow-hidden">
+    <!-- WebGL Liquid Water Ripple Background Layer -->
+    <div id="cta-ripple-container" class="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0"></div>
+
     <div
-      class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-secondary/30 via-transparent to-transparent">
+      class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-secondary/30 via-transparent to-transparent pointer-events-none z-0">
     </div>
 
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">

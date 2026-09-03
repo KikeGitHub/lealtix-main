@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initNavbarScroll();
   initSpecularEffect();
-  initHeroRipple();
+  initCtaRipple();
   initRoiCalculator();
   initPricingToggle();
   initDashboardSimulator();
@@ -16,22 +16,18 @@ document.addEventListener('DOMContentLoaded', () => {
   initFaqAccordion();
 });
 
-function initHeroRipple() {
-  const container = document.getElementById('hero-ripple-container');
+function initCtaRipple() {
+  const container = document.getElementById('cta-ripple-container');
   if (!container || typeof RippleDistortion === 'undefined') return;
 
-  new RippleDistortion('#hero-ripple-container', {
-    videoSelector: '#hero-bg-video',
-    interactiveTarget: '#inicio',
-    brushSize: 200,
-    strength: 0.38,
-    swirl: 0.85,
+  new RippleDistortion('#cta-ripple-container', {
+    interactiveTarget: '#cta-section',
+    brushSize: 180,
     rings: 3.5,
-    spread: 7.0,
+    spread: 6.5,
     fade: 2.8,
     spacing: 10,
-    dispersion: 0.045,
-    glint: 0.65,
+    glint: 0.85,
     tint: '#2dd4bf'
   });
 }

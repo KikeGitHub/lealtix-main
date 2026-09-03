@@ -1,6 +1,6 @@
 /**
- * WebGL Live Video Ripple & Fluid Refraction Engine
- * Dynamically distorts the playing Hero video background in real-time with fluid water ripples
+ * WebGL Liquid Water Ripple Background Engine
+ * Interactive fluid ripple waves and specular caustics for CTA Section background
  */
 class RippleDistortion {
   constructor(container, options = {}) {
@@ -8,17 +8,13 @@ class RippleDistortion {
     if (!this.container) return;
 
     this.options = Object.assign({
-      videoSelector: '#hero-bg-video',
-      interactiveTarget: '#inicio',
-      brushSize: 190,
-      strength: 0.35,
-      swirl: 0.8,
+      interactiveTarget: '#cta-section',
+      brushSize: 180,
       rings: 3.5,
       spread: 6.5,
       fade: 2.8,
       spacing: 10,
-      dispersion: 0.04,
-      glint: 0.6,
+      glint: 0.85,
       tint: '#2dd4bf'
     }, options);
 
@@ -30,15 +26,13 @@ class RippleDistortion {
   }
 
   init() {
-    this.video = document.querySelector(this.options.videoSelector);
-
     this.canvas = document.createElement('canvas');
     this.canvas.className = 'ripple-distortion-canvas absolute inset-0 w-full h-full pointer-events-none';
     this.canvas.style.zIndex = '0';
     this.container.style.position = 'absolute';
     this.container.appendChild(this.canvas);
 
-    this.gl = this.canvas.getContext('webgl', { alpha: false, antialias: false, premultipliedAlpha: false });
+    this.gl = this.canvas.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: false });
     if (!this.gl) {
       console.warn('WebGL not supported for RippleDistortion');
       return;
@@ -51,13 +45,8 @@ class RippleDistortion {
     this.initWaves();
     this.initShaders();
     this.initBuffers();
-    this.initVideoTexture();
     this.initEvents();
     this.resize();
-
-    if (this.video) {
-      this.video.style.opacity = '0'; // WebGL renders the video with liquid ripple distortion
-    }
 
     window.addEventListener('resize', () => this.resize(), { passive: true });
 
@@ -162,62 +151,30 @@ class RippleDistortion {
     const screenFS = `
       precision highp float;
       varying vec2 vUv;
-      uniform sampler2D uVideo;
       uniform sampler2D uDisplacement;
-      uniform vec2 uResolution;
-      uniform vec2 uVideoSize;
       uniform vec2 uTexel;
       uniform vec3 uTint;
-      uniform float uStrength;
-      uniform float uSwirl;
-      uniform float uDispersion;
       uniform float uGlint;
-
-      const float TAU = 6.283185307179586;
-
-      vec2 coverUV(vec2 uv) {
-        vec2 safe = max(uVideoSize, vec2(1.0));
-        vec2 s = uResolution / safe;
-        vec2 scaledSize = safe * max(s.x, s.y);
-        vec2 offset = (uResolution - scaledSize) * 0.5;
-        vec2 p = (uv * uResolution - offset) / scaledSize;
-        return clamp(vec2(p.x, 1.0 - p.y), 0.0, 1.0);
-      }
 
       void main() {
         float amount = texture2D(uDisplacement, vUv).r;
-        vec2 base = coverUV(vUv);
-
-        float theta = amount * uSwirl * TAU;
-        vec2 dir = vec2(sin(theta), cos(theta));
-        vec2 push = dir * amount * uStrength;
-
-        vec2 samplePos = clamp(base + push, vec2(0.001), vec2(0.999));
-
-        vec3 color;
-        if (uDispersion > 0.001) {
-          float split = uDispersion * 0.25;
-          color.r = texture2D(uVideo, clamp(samplePos + push * split, vec2(0.001), vec2(0.999))).r;
-          color.g = texture2D(uVideo, samplePos).g;
-          color.b = texture2D(uVideo, clamp(samplePos - push * split, vec2(0.001), vec2(0.999))).b;
-        } else {
-          color = texture2D(uVideo, samplePos).rgb;
+        if (amount < 0.002) {
+          discard;
         }
 
-        if (amount > 0.002 && uGlint > 0.001) {
-          float ex = texture2D(uDisplacement, vUv + vec2(uTexel.x, 0.0)).r - texture2D(uDisplacement, vUv - vec2(uTexel.x, 0.0)).r;
-          float ey = texture2D(uDisplacement, vUv + vec2(0.0, uTexel.y)).r - texture2D(uDisplacement, vUv - vec2(0.0, uTexel.y)).r;
-          vec3 normal = normalize(vec3(-ex * 30.0, -ey * 30.0, 1.0));
-          vec3 light = normalize(vec3(-0.35, 0.55, 1.0));
-          
-          float raw = pow(max(dot(normal, light), 0.0), 18.0);
-          float flatSpec = pow(max(light.z, 0.0), 18.0);
-          float glint = clamp((raw - flatSpec) / max(1.0 - flatSpec, 0.0001), 0.0, 1.0) * uGlint;
+        float ex = texture2D(uDisplacement, vUv + vec2(uTexel.x, 0.0)).r - texture2D(uDisplacement, vUv - vec2(uTexel.x, 0.0)).r;
+        float ey = texture2D(uDisplacement, vUv + vec2(0.0, uTexel.y)).r - texture2D(uDisplacement, vUv - vec2(0.0, uTexel.y)).r;
+        vec3 normal = normalize(vec3(-ex * 32.0, -ey * 32.0, 1.0));
+        vec3 light = normalize(vec3(-0.35, 0.55, 1.0));
+        
+        float raw = pow(max(dot(normal, light), 0.0), 18.0);
+        float flatSpec = pow(max(light.z, 0.0), 18.0);
+        float glint = clamp((raw - flatSpec) / max(1.0 - flatSpec, 0.0001), 0.0, 1.0) * uGlint;
 
-          color += mix(uTint, vec3(1.0), 0.6) * glint;
-        }
+        vec3 waterColor = mix(uTint, vec3(1.0), clamp(glint * 1.2, 0.0, 1.0));
+        float alpha = smoothstep(0.003, 0.16, amount) * (0.45 + glint * 0.55);
 
-        gl_FragColor = vec4(color, 1.0);
+        gl_FragColor = vec4(waterColor, alpha);
       }
     `;
 
@@ -253,19 +210,6 @@ class RippleDistortion {
     gl.bindFramebuffer(gl.FRAMEBUFFER, this.fbo);
     gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.fboTexture, 0);
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-  }
-
-  initVideoTexture() {
-    const gl = this.gl;
-    this.videoTexture = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, this.videoTexture);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-
-    // Initial dummy 1x1 pixel until video loads
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([6, 46, 59, 255]));
   }
 
   resize() {
@@ -324,11 +268,6 @@ class RippleDistortion {
     };
 
     targetEl.addEventListener('pointermove', onPointerMove, { passive: true });
-
-    // Initial ambient water drops
-    setTimeout(() => {
-      this.setNewWave(this.width * 0.5, this.height * 0.5, 1.2);
-    }, 400);
   }
 
   animate(now) {
@@ -338,16 +277,6 @@ class RippleDistortion {
 
     const dt = Math.min(0.05, (now - this.lastTime) / 1000);
     this.lastTime = now;
-
-    // Update video texture frame in WebGL
-    if (this.video && this.video.readyState >= this.video.HAVE_CURRENT_DATA) {
-      gl.activeTexture(gl.TEXTURE0);
-      gl.bindTexture(gl.TEXTURE_2D, this.videoTexture);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.video);
-      this.videoSize = [this.video.videoWidth || 1920, this.video.videoHeight || 1080];
-    } else {
-      this.videoSize = [1920, 1080];
-    }
 
     const growth = 1 - Math.exp(-dt * 1.09);
     const decay = Math.exp((-dt * this.LIFE_CONSTANT) / Math.max(0.15, this.options.fade));
@@ -401,30 +330,24 @@ class RippleDistortion {
       gl.drawArrays(gl.TRIANGLES, 0, 6);
     }
 
-    // 2. Render real-time video ripple distortion to screen
+    // 2. Render water wave highlights directly over section background
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     gl.viewport(0, 0, this.width, this.height);
-    gl.disable(gl.BLEND);
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
 
     gl.useProgram(this.screenProgram);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
     gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, this.videoTexture);
-    gl.uniform1i(gl.getUniformLocation(this.screenProgram, 'uVideo'), 0);
-
-    gl.activeTexture(gl.TEXTURE1);
     gl.bindTexture(gl.TEXTURE_2D, this.fboTexture);
-    gl.uniform1i(gl.getUniformLocation(this.screenProgram, 'uDisplacement'), 1);
+    gl.uniform1i(gl.getUniformLocation(this.screenProgram, 'uDisplacement'), 0);
 
-    gl.uniform2f(gl.getUniformLocation(this.screenProgram, 'uResolution'), this.width, this.height);
-    gl.uniform2f(gl.getUniformLocation(this.screenProgram, 'uVideoSize'), this.videoSize[0], this.videoSize[1]);
     gl.uniform2f(gl.getUniformLocation(this.screenProgram, 'uTexel'), 1 / 512, 1 / 512);
 
     const tintRGB = this.hexToRGB(this.options.tint);
     gl.uniform3f(gl.getUniformLocation(this.screenProgram, 'uTint'), tintRGB[0], tintRGB[1], tintRGB[2]);
-    gl.uniform1f(gl.getUniformLocation(this.screenProgram, 'uStrength'), this.options.strength);
-    gl.uniform1f(gl.getUniformLocation(this.screenProgram, 'uSwirl'), this.options.swirl);
-    gl.uniform1f(gl.getUniformLocation(this.screenProgram, 'uDispersion'), this.options.dispersion);
     gl.uniform1f(gl.getUniformLocation(this.screenProgram, 'uGlint'), this.options.glint);
 
     const cPosLoc = gl.getAttribLocation(this.screenProgram, 'position');
@@ -436,48 +359,6 @@ class RippleDistortion {
     gl.vertexAttribPointer(cUvLoc, 2, gl.FLOAT, false, 16, 8);
 
     gl.drawArrays(gl.TRIANGLES, 0, 6);
-
-    // 3. Physically ripple & displace the Hero Title Text in sync with water waves
-    if (!this.titleEl) {
-      this.titleEl = document.getElementById('hero-main-title');
-    }
-
-    if (this.titleEl) {
-      const rect = this.titleEl.getBoundingClientRect();
-      const heroRect = this.container.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-      const titleCenterX = (rect.left + rect.width * 0.5 - heroRect.left) * dpr;
-      const titleCenterY = (heroRect.height - (rect.top + rect.height * 0.5 - heroRect.top)) * dpr;
-
-      let pushX = 0;
-      let pushY = 0;
-
-      for (let i = 0; i < this.MAX_WAVES; i++) {
-        const wave = this.waves[i];
-        if (wave.opacity <= 0.005) continue;
-
-        const dx = titleCenterX - wave.x;
-        const dy = titleCenterY - wave.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const radius = (wave.scale * wave.size) * 0.85;
-
-        if (dist < radius && dist > 0.001) {
-          const normDist = dist / radius;
-          const waveForce = Math.sin(normDist * Math.PI * 2.0 * this.options.rings) * wave.opacity * (1.0 - normDist);
-          pushX += (dx / dist) * waveForce * 18.0;
-          pushY += (dy / dist) * waveForce * 18.0;
-        }
-      }
-
-      if (Math.abs(pushX) > 0.04 || Math.abs(pushY) > 0.04) {
-        this.titleEl.style.transform = `translate3d(${pushX.toFixed(2)}px, ${(-pushY).toFixed(2)}px, 0) skewX(${(pushX * 0.35).toFixed(2)}deg) skewY(${(-pushY * 0.25).toFixed(2)}deg)`;
-        this.titleEl.style.filter = `drop-shadow(${(pushX * 0.6).toFixed(1)}px ${(-pushY * 0.6).toFixed(1)}px 6px rgba(45, 212, 191, 0.4))`;
-      } else {
-        this.titleEl.style.transform = 'translate3d(0, 0, 0)';
-        this.titleEl.style.filter = 'none';
-      }
-    }
   }
 }
 
