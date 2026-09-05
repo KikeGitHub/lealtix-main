@@ -17,6 +17,15 @@
   </div>
 </div>
 
+<div class="lealbot-floating-button-open" *ngIf="state.isOpen" (click)="toggleChat()">
+  <button
+    type="button"
+    class="lealbot-bot-button"
+    aria-label="Cerrar chat con Lealbot">
+    <i class="pi pi-times"></i>
+  </button>
+</div>
+
 <!-- Ventana de Chat -->
 <div class="lealbot-chat-window" data-drag [ngClass]="{'lealbot-open': state.isOpen}" *ngIf="state.isOpen">
   <!-- Header -->
