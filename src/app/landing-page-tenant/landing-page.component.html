@@ -14,6 +14,17 @@
     [menuCategorias]="menuCategorias"
     [defaultImg]="''"></app-menu>
 
+<!-- Banner Promocional 20% -->
+<section class="promo-banner-container">
+  <div class="promo-content">
+    <h2 class="promo-title">20% Off Your First Order</h2>
+    <p class="promo-description">
+      Disfruta de un descuento especial en tu primer pedido. Conoce nuestras especialidades artesanales recién horneadas.
+    </p>
+    <button type="button" class="promo-btn">Learn More</button>
+  </div>
+</section>
+
 <app-offer [tenantId]="tenantId"></app-offer>
 
 <app-footer
@@ -26,6 +37,7 @@
     [instagram]="footerData.instagram"
     [tiktok]="footerData.tiktok"
     [schelules]="footerData.schelules"
+    [bussinessName]="navBarData.bussinessName"
   ></app-footer>
 
 <!-- Lealbot Chatbot -->

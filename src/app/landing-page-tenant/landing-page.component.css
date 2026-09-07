@@ -34,3 +34,74 @@
 }
 
 
+
+
+.promo-banner-container {
+  position: relative !important;
+  width: 100% !important;
+  background-color: #f5f3ef !important;
+  background-image: url('/assets/img/promo-bg.jpeg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  padding: 80px 20px !important;
+  min-height: 400px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  margin: 40px 0 !important;
+}
+
+.promo-content {
+  max-width: 550px !important;
+  text-align: center !important;
+  z-index: 10 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 16px !important;
+}
+
+.promo-title {
+  color: #a3432b !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: 2.8rem !important;
+  font-weight: 700 !important;
+  font-style: italic !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9) !important;
+}
+
+.promo-description {
+  color: #44403c !important;
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+  margin: 0 !important;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.85) !important;
+  font-weight: 500 !important;
+}
+
+.promo-btn {
+  background-color: #a3432b !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 12px 28px !important;
+  border-radius: 6px !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s ease !important;
+  box-shadow: 0 4px 10px rgba(163, 67, 43, 0.2) !important;
+}
+
+.promo-btn:hover {
+  background-color: #8b3823 !important;
+}
+
+@media (max-width: 768px) {
+  .promo-title {
+    font-size: 2.2rem !important;
+  }
+}

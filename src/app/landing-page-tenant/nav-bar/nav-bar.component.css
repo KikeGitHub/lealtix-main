@@ -1,4 +1,35 @@
 /* Glass effect nav styling */
+.hero-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  letter-spacing: 0.01em;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.55);
+}
+
+/* Slogan del hero con tipografía cursiva elegante */
+.hero-slogan {
+  font-family: 'Dancing Script', cursive;
+  letter-spacing: 0.01em;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Nombre del negocio en el navbar del hero */
+.hero-nav-brand {
+  font-family: 'Playfair Display', Georgia, serif;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* Links del menú superior del hero: gris muy claro (text-gray-100), sin subrayado,
+   sin color azul por defecto del navegador */
+.hero-nav a {
+  color: #f3f4f6 !important; /* gray-100 */
+  text-decoration: none !important;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.8);
+}
+
+.hero-nav a:hover {
+  color: #fcd34d !important; /* amber-200 */
+}
+
 .glass-nav {
   background: rgba(44, 30, 26, 0.72);
   backdrop-filter: blur(18px) saturate(160%);
@@ -145,4 +176,33 @@ header .bg-white\/5 h3::after {
   border-radius: 3px;
   background: linear-gradient(90deg, #C68B59, transparent);
   margin-top: 0.4rem;
+}
+
+/* Hover profesional para los enlaces del menú */
+.hero-nav a {
+  position: relative !important;
+  transition: color 0.25s ease, text-shadow 0.25s ease !important;
+}
+
+.hero-nav a::after {
+  content: '' !important;
+  position: absolute !important;
+  left: 50% !important;
+  bottom: -6px !important;
+  height: 2px !important;
+  width: 0 !important;
+  transform: translateX(-50%) !important;
+  border-radius: 2px !important;
+  background: linear-gradient(90deg, #a3432b, #f59e0b) !important;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.45) !important;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.hero-nav a:hover {
+  color: #ffffff !important;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.35) !important;
+}
+
+.hero-nav a:hover::after {
+  width: 100% !important;
 }

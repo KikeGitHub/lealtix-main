@@ -1,38 +1,64 @@
-<section class="py-12 md:py-24 px-4 md:px-6 bg-background-light" id="promotions" *ngIf="promotions.length > 0">
-  <div class="max-w-7xl mx-auto">
-    <div class="text-center mb-8 md:mb-16">
-      <span class="text-caramel font-bold tracking-[0.2em] uppercase text-xs md:text-sm">Ofertas Limitadas</span>
-      <h2 class="text-3xl md:text-5xl font-black text-espresso mt-3 md:mt-4">Promociones activas</h2>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-      <div class="promo-card bg-bone-white p-6 md:p-8 rounded-xl md:rounded-2xl border border-primary/10 relative group" *ngFor="let promo of promotions; let i = index">
-        <span class="absolute top-4 md:top-6 right-4 md:right-6 bg-caramel text-white text-[8px] md:text-[10px] font-black px-2 md:px-3 py-1 rounded-full uppercase tracking-widest">
-          {{ i === 0 ? 'Temporada' : (i === 1 ? 'Exclusiva' : 'Nuevo') }}
-        </span>
-        <div class="flex flex-col md:flex-row items-stretch gap-4">
-          <div class="md:w-1/4">
-            <img *ngIf="promo.imageUrl; else iconBlock" [src]="promo.imageUrl" [alt]="promo.title || 'Promoción'" class="w-full h-32 md:h-32 object-cover rounded-lg shadow-inner" />
-            <ng-template #iconBlock>
-              <div class="size-12 md:size-14 bg-caramel/10 rounded-lg md:rounded-xl flex items-center justify-center text-caramel mb-4 md:mb-0 h-32 md:h-32">
-                <span class="material-symbols-outlined text-2xl md:text-3xl">
-                  {{ i === 0 ? 'local_fire_department' : (i === 1 ? 'bakery_dining' : 'package_2') }}
-                </span>
-              </div>
-            </ng-template>
-          </div>
-          <div class="md:w-3/4 flex flex-col justify-between">
-            <div>
-              <h3 class="text-lg md:text-2xl font-bold text-espresso mb-2 md:mb-3">{{ promo.title }}</h3>
-              <p class="text-xs md:text-sm text-espresso/70 mb-3 leading-relaxed">{{ promo.promotionReward?.description || promo.description }}</p>
-              <div class="flex items-center gap-2 text-[10px] md:text-xs text-caramel/80 font-medium">
-                <span class="material-symbols-outlined text-sm">schedule</span>
-                <span>Válido: {{ formatDate(promo.startDate) }} - {{ formatDate(promo.endDate) }}</span>
-              </div>
-            </div>
+<section class="promos-section" id="promotions" *ngIf="promotions.length > 0">
+  <div class="promos-header">
+    <span class="promos-subtitle">OFERTAS LIMITADAS</span>
+    <h2 class="promos-title">Promociones activas</h2>
+  </div>
 
+  <div class="carousel-wrapper">
+    <!-- Flecha Izquierda -->
+    <button type="button" (click)="prevPromo()" class="nav-arrow left-arrow" aria-label="Anterior">‹</button>
+
+    <!-- Tarjeta Dinámica -->
+    <div class="promo-banner-card" *ngIf="currentSlide as slide">
+      <div class="banner-image-wrapper">
+        <img
+          *ngIf="slide.image; else promoFallback"
+          [src]="slide.image"
+          [alt]="slide.title"
+          class="banner-image"
+        />
+        <ng-template #promoFallback>
+          <div class="banner-fallback">
+            <span class="material-symbols-outlined text-5xl text-neutral-600">local_fire_department</span>
           </div>
+        </ng-template>
+      </div>
+
+      <div class="banner-info">
+        <div class="badge-row">
+          <span class="promo-badge">{{ slide.badge }}</span>
         </div>
+
+        <div class="text-content">
+          <h3 class="banner-heading">{{ slide.title }}</h3>
+          <p class="banner-description">{{ slide.description }}</p>
+        </div>
+
+        <div class="validity-row">
+          <span class="clock-icon">🕒</span>
+          <span>{{ slide.validity }}</span>
+        </div>
+
+        <div class="coupon-code-box" *ngIf="slide.code">
+          <span class="code-label">CÓDIGO:</span>
+          <span class="code-text">{{ slide.code }}</span>
+        </div>
+
+        <button type="button" class="claim-btn">{{ slide.buttonText }}</button>
       </div>
     </div>
+
+    <!-- Flecha Derecha -->
+    <button type="button" (click)="nextPromo()" class="nav-arrow right-arrow" aria-label="Siguiente">›</button>
+  </div>
+
+  <!-- Puntos del Carrusel -->
+  <div class="carousel-dots">
+    <span
+      *ngFor="let slide of slides; let i = index"
+      [class.active]="i === activePromoIndex"
+      (click)="setPromo(i)"
+      class="dot"
+    ></span>
   </div>
 </section>
