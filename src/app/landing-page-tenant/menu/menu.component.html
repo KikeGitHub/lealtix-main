@@ -1,15 +1,15 @@
-<section class="py-12 md:py-24 px-4 md:px-6 bg-espresso text-white" id="menu">
+<section class="py-12 md:py-24 px-4 md:px-6 bg-white text-neutral-900" id="menu">
   <div class="max-w-7xl mx-auto">
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-12 gap-6 md:gap-8">
+    <div class="flex flex-col items-center text-center mb-8 md:mb-12 gap-6 md:gap-8">
       <div>
         <h2 class="text-3xl md:text-5xl font-black mb-4 md:mb-6">Nuestro Menu</h2>
-        <div class="flex flex-wrap gap-2 md:gap-4">
+        <div class="flex flex-wrap gap-2 md:gap-4 justify-center">
           <button
             *ngFor="let catName of getCategoryNames()"
             (click)="selectCategory(catName)"
             [ngClass]="{
-              'bg-caramel text-white': selectedCategory === catName,
-              'bg-white/5 hover:bg-white/10 text-white/70': selectedCategory !== catName
+              'bg-[#a3432b] text-white': selectedCategory === catName,
+              'bg-neutral-200 hover:bg-neutral-300 text-neutral-700': selectedCategory !== catName
             }"
             class="px-4 md:px-6 py-2 rounded-full font-bold text-xs md:text-sm transition-colors">
             {{ catName }}
@@ -17,53 +17,37 @@
         </div>
       </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-x-12 md:gap-y-2">
-      <ng-container *ngFor="let categoria of getFilteredCategories(); let catIdx = index">
-        <div class="space-y-1" *ngIf="productosPorColumna(catIdx, 0) as prods1">
-          <ng-container *ngFor="let producto of prods1">
-            <div class="menu-grid-item">
-              <div class="menu-img-wrapper">
-                <img
-                  [src]="producto.img || ''"
-                  alt="{{producto.prod}}"
-                  class="w-full h-full object-cover"
-                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
-                />
-                <div class="hidden items-center justify-center text-white/20">
-                  <span class="material-symbols-outlined">coffee</span>
-                </div>
-              </div>
-              <div class="flex-grow">
-                <h4 class="font-bold text-lg leading-tight">{{producto.prod}}</h4>
-                <p class="text-white/50 text-xs">{{producto.descProd}}</p>
-              </div>
-              <span class="menu-price-img-custom">{{producto.precio}}</span>
+
+    <!-- Catálogo de productos: grid de tarjetas -->
+    <div class="catalog-container">
+      <div class="products-grid">
+        <div *ngFor="let producto of getFilteredProducts()" class="product-card">
+          <div class="product-image-container">
+            <img
+              *ngIf="productImage(producto)"
+              [src]="productImage(producto)"
+              [alt]="producto.prod"
+              class="product-image"
+              onerror="this.style.display='none'"
+            />
+            <ng-container *ngIf="!productImage(producto)">
+              <span class="material-symbols-outlined text-white/30 text-5xl">coffee</span>
+            </ng-container>
+          </div>
+
+          <div class="product-details">
+            <div class="top-row">
+              <span class="product-price">{{ producto.precio }}</span>
+              <button type="button" class="info-btn" [title]="producto.descProd">i</button>
             </div>
-          </ng-container>
-        </div>
-        <div class="space-y-1" *ngIf="productosPorColumna(catIdx, 1) as prods2">
-          <ng-container *ngFor="let producto of prods2">
-            <div class="menu-grid-item">
-              <div class="menu-img-wrapper">
-                <img
-                  [src]="producto.img || ''"
-                  alt="{{producto.prod}}"
-                  class="w-full h-full object-cover"
-                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
-                />
-                <div class="hidden items-center justify-center text-white/20">
-                  <span class="material-symbols-outlined">coffee</span>
-                </div>
-              </div>
-              <div class="flex-grow">
-                <h4 class="font-bold text-lg leading-tight">{{producto.prod}}</h4>
-                <p class="text-white/50 text-xs">{{producto.descProd}}</p>
-              </div>
-              <span class="menu-price-img-custom">{{producto.precio}}</span>
+
+            <div class="bottom-row">
+              <h3 class="product-title">{{ producto.prod }}</h3>
+              <button type="button" class="add-btn">Add</button>
             </div>
-          </ng-container>
+          </div>
         </div>
-      </ng-container>
+      </div>
     </div>
   </div>
 </section>

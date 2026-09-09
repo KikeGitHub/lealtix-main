@@ -1,61 +1,43 @@
-<nav class="fixed top-0 left-0 right-0 z-50 px-3 md:px-6 py-3 md:py-4">
-  <div class="max-w-7xl mx-auto glass-nav rounded-full px-4 md:px-8 py-2 md:py-3 flex items-center justify-between border border-white/10 shadow-2xl">
-    <div class="flex items-center gap-2 md:gap-3 min-w-0">
-      <div class="text-caramel w-6 md:w-8 h-6 md:h-8 flex-shrink-0">
-        <img *ngIf="logoUrl" [src]="logoUrl" [alt]="bussinessName + ' logo'" class="w-6 md:w-8 h-6 md:h-8 object-contain rounded-full" />
-        <ng-container *ngIf="!logoUrl">
-          <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-            <path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z"></path>
-          </svg>
-        </ng-container>
-      </div>
-      <h1 class="text-white text-sm md:text-xl font-bold tracking-tight truncate">{{bussinessName}}</h1>
-    </div>
-    <div class="hidden md:flex items-center gap-8 md:gap-10">
-      <a class="text-white/80 hover:text-caramel text-xs md:text-sm font-medium transition-colors" href="#promotions" (click)="scrollToPromociones($event)" *ngIf="hasPromotions">Promociones</a>
-      <a class="text-white/80 hover:text-caramel text-xs md:text-sm font-medium transition-colors" href="#menu" (click)="scrollToMenu($event)">Menú</a>
-      <a class="text-white/80 hover:text-caramel text-xs md:text-sm font-medium transition-colors" href="#rewards" (click)="scrollToOffer($event)">Registrate</a>
-    </div>
-    <div class="flex items-center gap-2 md:gap-4 flex-shrink-0">
-      <button class="bg-caramel hover:bg-caramel/90 text-white px-4 md:px-6 py-2 rounded-full text-xs md:text-sm font-bold transition-all shadow-lg shadow-caramel/20 whitespace-nowrap">
-        Ordenar
-      </button>
-    </div>
-  </div>
-</nav>
+<!-- ============================================================
+     HERO PRUEBA (estilo KEITHSTON / Sweet Treats)
+     Solo preview: fondo único con todo el contenido superpuesto.
+     ============================================================ -->
+<div
+  class="relative min-h-screen w-full bg-cover bg-center bg-no-repeat overflow-hidden"
+  style="background-image: url('/assets/img/hero-bodegon.jpeg');">
 
-<!-- Hero Header -->
-<header class="relative h-[85vh] w-full overflow-hidden pt-16 md:pt-20">
-  <div class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 scale-105" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuBsxVbRtVpWYEWS0y3HHr6ENYFyfhgvvZhveRoS5QHsrmp8bZtKgkJnYF9WqHgmtoVwOoaiRz6SyTmXtzj0Ada4mJCog_4UcXWgHf-DK43czbEUVyCx99NrAOGVPpHsNDOM29JpwjKCh9lU1E8L7l8AEOrTP9RV3WtIzAotdhFiR7gts-y89lknjfXPW3q27cO7HT4rtWcTWTp3QQe9WmP39Nce8s_OKwbB45HeMR0pbe7wepsC-K_UaJl35t1bnxypsNdz60hmBmI');"></div>
-  <div class="relative h-full flex flex-col items-center justify-center text-center px-4">
-    <h1 class="text-white text-4xl sm:text-5xl md:text-8xl font-black leading-tight tracking-tighter mb-4 md:mb-6">
-      {{since}}<br/>
+  <!-- Navbar Flotante (arriba) -->
+  <header class="hero-nav absolute top-0 left-0 w-full z-10 flex items-center px-8 lg:px-16 py-6 space-x-12 bg-gradient-to-b from-black/60 to-transparent">
+    <!-- Logo + Nombre del negocio -->
+    <div class="flex items-center gap-3 whitespace-nowrap">
+      <img *ngIf="logoUrl" [src]="logoUrl" [alt]="bussinessName + ' logo'" class="w-10 h-10 object-contain rounded-full drop-shadow-[0_2px_2px_rgba(0,0,0,0.6)]" />
+      <span class="hero-nav-brand text-white text-2xl lg:text-3xl font-bold tracking-wide">{{ bussinessName }}</span>
+    </div>
+
+    <!-- Menú en una sola fila, junto al logo (zona oscura) -->
+    <nav class="flex items-center space-x-8">
+      <a href="#promotions" (click)="scrollToSection('promotions', $event)" class="text-lg md:text-xl font-semibold tracking-wide text-gray-100 hover:text-amber-200 transition-colors duration-200 no-underline drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">Promociones</a>
+      <a href="#menu" (click)="scrollToSection('menu', $event)" class="text-lg md:text-xl font-semibold tracking-wide text-gray-100 hover:text-amber-200 transition-colors duration-200 no-underline drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">Menu</a>
+      <a href="#rewards" (click)="scrollToSection('rewards', $event)" class="text-lg md:text-xl font-semibold tracking-wide text-gray-100 hover:text-amber-200 transition-colors duration-200 no-underline drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">Registrate</a>
+      <a href="#" (click)="scrollToFooter($event)" class="text-lg md:text-xl font-semibold tracking-wide text-gray-100 hover:text-amber-200 transition-colors duration-200 no-underline drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">Nosotros</a>
+    </nav>
+  </header>
+
+  <!-- Bloque de texto y botones (sobre el lado oscuro izquierdo) -->
+  <div class="relative max-w-3xl pl-8 lg:pl-16 pt-32 lg:pt-48 pb-16">
+    <p class="text-amber-200/90 text-xl md:text-3xl tracking-[0.2em] uppercase mb-3">{{ bussinessName }}</p>
+
+    <h1 class="hero-slogan text-6xl md:text-7xl lg:text-8xl text-white font-bold leading-[1.05] mb-10">
+      {{ since }}
     </h1>
 
-    <div class="flex flex-col sm:flex-row gap-3 md:gap-4">
-      <button class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 md:px-10 py-3 md:py-4 rounded-full text-sm md:text-lg font-bold hover:bg-white/20 transition-all" (click)="scrollToMenu($event)">
-        Ver menú
-      </button>
-    </div>
-
-    <!-- Misión y Visión -->
-    <div *ngIf="story || vision" class="mt-8 w-full max-w-4xl mx-auto px-4">
-      <div class="bg-white/5 backdrop-blur-sm rounded-xl p-6 md:p-8 flex flex-col md:flex-row gap-6">
-        <div class="md:w-1/2">
-          <h3 class="text-white text-lg md:text-xl font-bold mb-2">Misión</h3>
-          <p class="text-white/80 text-sm md:text-base leading-relaxed" *ngIf="story; else noStory" [innerHTML]="story"></p>
-          <ng-template #noStory>
-            <p class="text-white/80 text-sm md:text-base">Nuestra misión es ofrecer productos y experiencias excepcionales.</p>
-          </ng-template>
-        </div>
-        <div class="md:w-1/2">
-          <h3 class="text-white text-lg md:text-xl font-bold mb-2">Visión</h3>
-          <p class="text-white/80 text-sm md:text-base leading-relaxed" *ngIf="vision; else noVision" [innerHTML]="vision"></p>
-          <ng-template #noVision>
-            <p class="text-white/80 text-sm md:text-base">Nuestra visión es ser la referencia local en calidad y servicio.</p>
-          </ng-template>
-        </div>
-      </div>
+    <div class="flex items-center space-x-6 md:space-x-8">
+      <a href="#" class="bg-[#a3432b] hover:bg-[#8b3823] text-white text-lg md:text-xl px-10 py-4 rounded-md font-medium transition-colors shadow-lg inline-block">
+        Shop Now
+      </a>
+      <a href="#" class="text-amber-100 hover:text-white text-lg md:text-xl font-medium transition-colors">
+        Learn More
+      </a>
     </div>
   </div>
-</header>
+</div>

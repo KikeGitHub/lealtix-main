@@ -91,3 +91,186 @@ section#rewards button[type='submit']:disabled {
     flex-basis: 100%;
   }
 }
+
+.form-wrapper {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  padding: 40px 16px !important;
+}
+
+.form-card-grid {
+  display: grid !important;
+  grid-template-columns: 320px 1fr !important;
+  max-width: 850px !important;
+  width: 100% !important;
+  background-color: #ffffff !important;
+  border-radius: 20px !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
+  overflow: hidden !important;
+  border: 1px solid #eaeaea !important;
+}
+
+@media (max-width: 768px) {
+  .form-card-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.left-banner {
+  background-color: #1a1817 !important;
+  padding: 36px 28px !important;
+  color: #ffffff !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+}
+
+.banner-title {
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 12px !important;
+  color: #ffffff !important;
+}
+
+.banner-sub {
+  font-size: 0.8rem !important;
+  color: #a1a1aa !important;
+  line-height: 1.5 !important;
+  margin-bottom: 24px !important;
+}
+
+.benefits-list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+}
+
+.benefits-list li {
+  font-size: 0.8rem !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  color: #e4e4e7 !important;
+}
+
+.check-icon {
+  color: #d97706 !important;
+  font-weight: bold !important;
+}
+
+.right-form {
+  padding: 36px 32px !important;
+  background-color: #ffffff !important;
+}
+
+.form-title {
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  color: #18181b !important;
+  margin-bottom: 20px !important;
+}
+
+.form-body {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+}
+
+.field-group {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+
+.field-group label {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  color: #52525b !important;
+}
+
+.input-box {
+  display: flex !important;
+  align-items: center !important;
+  background-color: #eef3f8 !important;
+  border-radius: 8px !important;
+  border: 1px solid #cbd5e1 !important;
+  overflow: hidden !important;
+}
+
+.icon-badge {
+  background-color: #d1e7dd !important;
+  color: #0f5132 !important;
+  padding: 10px 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.input-box input {
+  width: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 8px 12px !important;
+  font-size: 0.85rem !important;
+  outline: none !important;
+  color: #18181b !important;
+}
+
+.select-box {
+  width: 100% !important;
+  background-color: #eef3f8 !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  padding: 9px 12px !important;
+  font-size: 0.85rem !important;
+  outline: none !important;
+  color: #18181b !important;
+}
+
+.row-2-cols {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 12px !important;
+}
+
+.checkbox-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  font-size: 0.75rem !important;
+  color: #3f3f46 !important;
+  margin-top: 4px !important;
+}
+
+.orange-check {
+  accent-color: #f57c00 !important;
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.highlight {
+  color: #b45309 !important;
+  font-weight: 600 !important;
+  text-decoration: underline !important;
+}
+
+.submit-btn-orange {
+  background-color: #f57c00 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 12px !important;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  margin-top: 8px !important;
+  transition: background-color 0.2s !important;
+}
+
+.submit-btn-orange:hover {
+  background-color: #e06d00 !important;
+}

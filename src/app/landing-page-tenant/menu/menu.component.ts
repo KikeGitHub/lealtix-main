@@ -31,6 +31,36 @@ export class MenuComponent {
     return this.menuCategorias.filter(cat => cat.nombre === this.selectedCategory);
   }
 
+  // Aplana los productos de las categorías filtradas para el grid de tarjetas
+  getFilteredProducts(): any[] {
+    const products: any[] = [];
+    this.getFilteredCategories().forEach(cat => {
+      (cat.productos || []).forEach((p: any) => products.push(p));
+    });
+    return products;
+  }
+
+  // Imagen local para productos específicos; el resto usa la del backend
+  productImage(product: any): string {
+    const name = product?.prod ? String(product.prod).toLowerCase() : '';
+    if (name.includes('chila')) {
+      return '/assets/img/chilaquiles.png';
+    }
+    if (name.includes('huevos')) {
+      return '/assets/img/huevos.png';
+    }
+    if (name.includes('molletes')) {
+      return '/assets/img/molletes.png';
+    }
+    if (name.includes('arroz')) {
+      return '/assets/img/arroz-con-leche.png';
+    }
+    if (name.includes('cheese') || name.includes('pay de queso')) {
+      return '/assets/img/pay-queso.png';
+    }
+    return product?.img || '';
+  }
+
   selectCategory(categoryName: string): void {
     this.selectedCategory = categoryName;
   }

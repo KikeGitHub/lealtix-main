@@ -41,4 +41,20 @@ export class NavBarComponent {
       promociones.scrollIntoView({ behavior: 'smooth' });
     }
   }
+
+  scrollToSection(id: string, event: Event) {
+    event.preventDefault();
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  scrollToFooter(event: Event) {
+    event.preventDefault();
+    const footer = document.querySelector('app-footer');
+    if (footer) {
+      footer.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 }

@@ -13,8 +13,10 @@ import { Campaign } from '../../models/campaign.model';
 export class PromotionsComponent implements OnInit {
   @Input() tenantId: number = 0;
   promotions: Campaign[] = [];
+  slides: any[] = [];
   loading = true;
   error: string | null = null;
+  activePromoIndex = 0;
 
   constructor(private tenantService: TenantLandingPageService) {}
 
@@ -22,6 +24,56 @@ export class PromotionsComponent implements OnInit {
     if (this.tenantId) {
       this.loadPromotions();
     }
+  }
+
+  nextPromo(): void {
+    if (this.slides.length === 0) return;
+    this.activePromoIndex = (this.activePromoIndex + 1) % this.slides.length;
+  }
+
+  prevPromo(): void {
+    if (this.slides.length === 0) return;
+    this.activePromoIndex =
+      (this.activePromoIndex - 1 + this.slides.length) % this.slides.length;
+  }
+
+  setPromo(index: number): void {
+    this.activePromoIndex = index;
+  }
+
+  get currentSlide(): any {
+    return this.slides[this.activePromoIndex] || null;
+  }
+
+  // Construye los slides del carrusel desde las promociones reales
+  private buildSlides(): void {
+    this.slides = this.promotions.map((promo, i) => ({
+      title: promo.title || '¡Bienvenido(a)!',
+      description: promo.promotionReward?.description || promo.description || '',
+      validity: `Válido: ${this.formatDate(promo.startDate)} - ${this.formatDate(promo.endDate)}`,
+      badge: i === 0 ? 'Temporada' : i === 1 ? 'Exclusiva' : 'Nuevo',
+      image: promo.imageUrl || '',
+      buttonText: 'Usar Descuento',
+      code: 'BIENVENIDA10'
+    }));
+
+    // Vista previa: si solo hay 1 promoción real, agrega una de cumpleaños
+    // reutilizando la misma imagen para probar el carrusel con 2 slides.
+    if (this.slides.length === 1) {
+      const img = this.slides[0].image;
+      this.slides.push({
+        title: '¡Feliz Cumpleaños!',
+        description:
+          'Beneficio especial en tu cumpleaños: un postre de cortesía con tu café favorito.',
+        validity: 'Válido: Todo el año',
+        badge: 'Cumpleaños',
+        image: img || '',
+        buttonText: 'Usar Descuento',
+        code: 'CUMPLE10'
+      });
+    }
+
+    this.activePromoIndex = 0;
   }
 
   // Detect changes if tenantId changes later (unlikely but good practice)
@@ -63,6 +115,7 @@ export class PromotionsComponent implements OnInit {
           return p;
         });
 
+        this.buildSlides();
         this.loading = false;
       },
       error: (err) => {
